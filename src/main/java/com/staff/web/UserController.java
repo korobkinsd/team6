@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.staff.model.User;
+import com.staff.api.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.staff.service.UserService;
+import com.staff.api.service.IUserService;
 import com.staff.validator.UserFormValidator;
 //import javax.validation.Valid;
 
@@ -47,10 +47,10 @@ public class UserController {
 		binder.setValidator(userFormValidator);
 	}
 
-	private UserService userService;
+	private IUserService userService;
 
 	@Autowired
-	public void setUserService(UserService userService) {
+	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
 
@@ -78,7 +78,6 @@ public class UserController {
 		logger.debug("saveOrUpdateUser() : {}", user);
 
 		if (result.hasErrors()) {
-			populateDefaultModel(model);
 			return "users/userform";
 		} else {
 
@@ -112,19 +111,9 @@ public class UserController {
 		// set default value
 		user.setName("mkyong123");
 		user.setEmail("test@gmail.com");
-		user.setAddress("abc 88");
-		//user.setPassword("123");
-		//user.setConfirmPassword("123");
-		user.setNewsletter(true);
-		user.setSex("M");
-		user.setFramework(new ArrayList<String>(Arrays.asList("Spring MVC", "GWT")));
-		user.setSkill(new ArrayList<String>(Arrays.asList("Spring", "Grails", "Groovy")));
-		user.setCountry("SG");
-		user.setNumber(2);
+		user.setSurname("mySurname");
 
 		model.addAttribute("userForm", user);
-
-		populateDefaultModel(model);
 
 		return "users/userform";
 
@@ -138,8 +127,6 @@ public class UserController {
 
 		User user = userService.findById(id);
 		model.addAttribute("userForm", user);
-		
-		populateDefaultModel(model);
 		
 		return "users/userform";
 
@@ -174,42 +161,6 @@ public class UserController {
 		model.addAttribute("user", user);
 
 		return "users/show";
-
-	}
-
-	private void populateDefaultModel(Model model) {
-
-		List<String> frameworksList = new ArrayList<String>();
-		frameworksList.add("Spring MVC");
-		frameworksList.add("Struts 2");
-		frameworksList.add("JSF 2");
-		frameworksList.add("GWT");
-		frameworksList.add("Play");
-		frameworksList.add("Apache Wicket");
-		model.addAttribute("frameworkList", frameworksList);
-
-		Map<String, String> skill = new LinkedHashMap<String, String>();
-		skill.put("Hibernate", "Hibernate");
-		skill.put("Spring", "Spring");
-		skill.put("Struts", "Struts");
-		skill.put("Groovy", "Groovy");
-		skill.put("Grails", "Grails");
-		model.addAttribute("javaSkillList", skill);
-
-		List<Integer> numbers = new ArrayList<Integer>();
-		numbers.add(1);
-		numbers.add(2);
-		numbers.add(3);
-		numbers.add(4);
-		numbers.add(5);
-		model.addAttribute("numberList", numbers);
-
-		Map<String, String> country = new LinkedHashMap<String, String>();
-		country.put("US", "United Stated");
-		country.put("CN", "China");
-		country.put("SG", "Singapore");
-		country.put("MY", "Malaysia");
-		model.addAttribute("countryList", country);
 
 	}
 

@@ -1,4 +1,4 @@
-<%@ page session="false"%>
+<%@ page session="false" isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -39,40 +39,9 @@
 	</div>
 
 	<div class="row">
-		<label class="col-sm-2">Address</label>
-		<div class="col-sm-10">${user.address}</div>
+		<label class="col-sm-2">Surname</label>
+		<div class="col-sm-10">${user.surname}</div>
 	</div>
-
-	<div class="row">
-		<label class="col-sm-2">Newsletter</label>
-		<div class="col-sm-10">${user.newsletter}</div>
-	</div>
-
-	<div class="row">
-		<label class="col-sm-2">Web Frameworks</label>
-		<div class="col-sm-10">${user.framework}</div>
-	</div>
-
-	<div class="row">
-		<label class="col-sm-2">Sex</label>
-		<div class="col-sm-10">${user.sex}</div>
-	</div>
-
-	<div class="row">
-		<label class="col-sm-2">Number</label>
-		<div class="col-sm-10">${user.number}</div>
-	</div>
-
-	<div class="row">
-		<label class="col-sm-2">Country</label>
-		<div class="col-sm-10">${user.country}</div>
-	</div>
-
-	<div class="row">
-		<label class="col-sm-2">Skill</label>
-		<div class="col-sm-10">${user.skill}</div>
-	</div>
-
 </div>
 
 <jsp:include page="../layouts/footer.jsp" />

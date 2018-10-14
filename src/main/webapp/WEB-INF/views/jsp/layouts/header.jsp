@@ -2,7 +2,7 @@
 
 <head>
 <title>Spring MVC Form Handling Example</title>
-
+	<meta charset="utf-8">
 	<spring:url value="/resources/core/css/core.css" var="coreCss" />
 	<spring:url value="/resources/core/lib/bootstrap/css/bootstrap.min.css"	var="bootstrapCss" />
 	<link href="${bootstrapCss}" rel="stylesheet" />

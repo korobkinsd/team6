@@ -1,11 +1,10 @@
-<%@ page session="false"%>
+<%@ page session="false" isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <jsp:include page="../layouts/header.jsp" />
 
 <body>
@@ -29,7 +28,8 @@
 					<th>#ID</th>
 					<th>Name</th>
 					<th>Email</th>
-					<th>framework</th>
+					<th>Surname</th>
+					<th>IsBlocked</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -41,10 +41,8 @@
 					</td>
 					<td>${user.name}</td>
 					<td>${user.email}</td>
-					<td><c:forEach var="framework" items="${user.framework}" varStatus="loop">
-						${framework}
-    					<c:if test="${not loop.last}">,</c:if>
-						</c:forEach></td>
+					<td>${user.surname}</td>
+					<td>${user.isBlocked}</td>
 					<td>
 						<spring:url value="/users/${user.id}" var="userUrl" />
 						<spring:url value="/users/${user.id}/delete" var="deleteUrl" /> 
