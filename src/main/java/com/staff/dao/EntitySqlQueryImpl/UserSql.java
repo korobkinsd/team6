@@ -15,7 +15,7 @@ public class UserSql implements ISqlQuery {
 
     @Override
     public String getSaveSql() {
-        return "INSERT INTO USER(NAME, EMAIL, SURNAME, PASSWORD, IsBLOCKED, FRAMEWORK, SEX, NUMBER, COUNTRY, SKILL) "
+        return "INSERT INTO USER(NAME, EMAIL, SURNAME, PASSWORD, IsBLOCKED) "
                 + "VALUES ( :name, :email, :surname, :password, :isBlocked)";
     }
 

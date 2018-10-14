@@ -61,22 +61,22 @@
 			<div class="form-group ${status.error ? 'has-error' : ''}">
 				<label class="col-sm-2 control-label">Surname</label>
 				<div class="col-sm-10">
-					<form:textarea path="surname" rows="5" class="form-control" id="surname" placeholder="surname" />
+					<form:input path="surname" rows="5" class="form-control" id="surname" placeholder="surname" />
 					<form:errors path="surname" class="control-label" />
 				</div>
 			</div>
 		</spring:bind>
 
-		<%--<spring:bind path="isBlocked">--%>
-			<%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-				<%--<label class="col-sm-2 control-label">IsBlocked</label>--%>
-				<%--<div class="col-sm-10">--%>
-					<%--<label class="radio-inline"> <form:checkbox path="isBlocked"></form:checkbox>--%>
-					<%--</label> <br />--%>
-					<%--<form:errors path="isBlocked" class="control-label" />--%>
-				<%--</div>--%>
-			<%--</div>--%>
-		<%--</spring:bind>--%>
+		<spring:bind path="isBlocked">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">IsBlocked</label>
+				<div class="col-sm-10">
+					<label class="radio-inline"> <form:checkbox path="isBlocked"></form:checkbox>
+					</label> <br />
+					<form:errors path="isBlocked" class="control-label" />
+				</div>
+			</div>
+		</spring:bind>
 
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
