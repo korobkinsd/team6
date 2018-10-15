@@ -3,9 +3,7 @@ CREATE SCHEMA `team6` ;
 use team6;
 
 
-drop table role;
-
-create table role
+create table if not exists role
 ( `id` int not null AUTO_INCREMENT
 , `name` varchar(255) not null
 , primary key (`id`)
@@ -18,9 +16,7 @@ insert into role (`name`) values ('Developer');
 
 insert into role (`name`) values ('Manager');
 
-drop table user;
-
-create table user
+create table if not exists user
 ( `id` int not null AUTO_INCREMENT
 , `email` varchar(100) not null
 , `password` varchar(255) not null
@@ -33,9 +29,7 @@ create table user
 
 insert into user (`email`, `name`, `surname`, `password`) values ('admin@sj.com','Администратор','','111111');
 
-drop table userRoles;
-
-create table userRoles
+create table if not exists userRoles
 ( `idUser` int not null
 , `idRole` int not null
 , unique key (`idUser`,`idRole`)
@@ -48,9 +42,7 @@ alter table userRoles add constraint userRolesFK_roleId foreign key (idRole) ref
 insert into userRoles (`idUser`, `idRole`) values ((select `id` from user where email = 'admin@sj.com'), (select `id` from role where name = 'Administrator'));
 
 
-drop table candidateState;
-
-create table candidateState
+create table if not exists candidateState
 ( `name` varchar(255) not null
 , primary key (`name`)
 ) ENGINE=InnoDB;
@@ -60,9 +52,7 @@ insert into candidateState (`name`) values ('Активен');
 insert into candidateState (`name`) values ('В архиве');
 
 
-drop table suitableState;
-
-create table suitableState
+create table if not exists suitableState
 ( `name` varchar(255) not null
 , primary key (`name`)
 ) ENGINE=InnoDB;
@@ -72,9 +62,7 @@ insert into suitableState (`name`) values ('Подходит');
 insert into suitableState (`name`) values ('Не подходит');
 
 
-drop table feedbackState;
-
-create table feedbackState
+create table if not exists feedbackState
 ( `name` varchar(255) not null
 , primary key (`name`)
 ) ENGINE=InnoDB;
@@ -84,9 +72,7 @@ insert into feedbackState (`name`) values ('Принять');
 insert into feedbackState (`name`) values ('Отказать');
 
 
-drop table skill;
-
-create table skill
+create table if not exists skill
 ( `name` varchar(255) not null
 , primary key (`name`)
 ) ENGINE=InnoDB;
@@ -102,9 +88,7 @@ insert into skill (`name`) values ('.Net');
 insert into skill (`name`) values ('C++');
 
 
-drop table candidate;
-
-create table candidate
+create table if not exists candidate
 ( `id` int not null AUTO_INCREMENT
 , `name` varchar(255) not null
 , `surname` varchar(255)
@@ -121,9 +105,7 @@ insert into candidate (`name`, `surname`, `birthday`, `salary`, `candidateState`
 insert into candidate (`name`, `surname`, `birthday`, `salary`, `candidateState`) values ('Зайцев','Стёпа','1997-02-20', 450.55, 'Активен');
 
 
-drop table contactDetails;
-
-create table contactDetails
+create table if not exists contactDetails
 ( `idCandidate` int not null
 , `contactType` enum ('Mobile phone','E-mail','Address')
 , `contactDetails` varchar(1000)
@@ -162,9 +144,7 @@ values (
 , 'zaytsev@sj.com'
 );
 
-drop table candidateExperience;
-
-create table candidateExperience
+create table if not exists candidateExperience
 ( `idCandidate` int not null
 , `dateFrom` date not null
 , `dateTo` date not null
@@ -178,9 +158,7 @@ create table candidateExperience
 alter table candidateExperience add constraint candidateExperienceFK_candidate foreign key (idCandidate) references `candidate`(id) on delete cascade on update cascade;
 
 
-drop table attachment;
-
-create table attachment
+create table if not exists attachment
 ( `idCandidate` int not null
 , `filePath` varchar(1000)
 , `attachmentType` enum ('CV', 'Cover Letter','Photo') not null
@@ -188,9 +166,8 @@ create table attachment
 
 alter table attachment add constraint attachmentFK_candidate foreign key (idCandidate) references `candidate`(id) on delete cascade on update cascade;
 
-drop table candidateCompetence;
 
-create table candidateCompetence
+create table if not exists candidateCompetence
 ( `idCandidate` int not null
 , `skill` varchar(255) not null
 , unique key (`idCandidate`,`skill`)
@@ -200,9 +177,8 @@ alter table candidateCompetence add constraint candidateCompetenceFK_candidate f
 
 alter table candidateCompetence add constraint candidateCompetenceFK_skill foreign key (skill) references `skill`(name) on delete cascade on update cascade;
 
-drop table vacancy;
 
-create table vacancy
+create table if not exists vacancy
 ( `id` int not null AUTO_INCREMENT
 , `position` varchar(1000)
 , `idDeveloper` int not null
@@ -215,9 +191,8 @@ create table vacancy
 
 alter table vacancy add constraint vacancyFK_developer foreign key (idDeveloper) references `user`(id) on delete cascade on update cascade;
 
-drop table vacancyRequirement;
 
-create table vacancyRequirement
+create table if not exists vacancyRequirement
 ( `idVacancy` int not null
 , `skill` varchar(255) not null
 , unique key (`idVacancy`,`skill`)
@@ -227,9 +202,8 @@ alter table vacancyRequirement add constraint vacancyRequirementFK_vacancy forei
 
 alter table vacancyRequirement add constraint vacancyRequirementFK_skill foreign key (skill) references `skill`(name) on delete cascade on update cascade;
 
-drop table vacancyCandidates;
 
-create table vacancyCandidates
+create table if not exists vacancyCandidates
 ( `idVacancy` int not null
 , `idCandidate` int not null
 , `suitableState` varchar(255)
@@ -244,9 +218,8 @@ alter table vacancyCandidates add constraint vacancyCandidatesFK_candidate forei
 alter table vacancyCandidates add constraint vacancyCandidatesFK_state foreign key (suitableState) references `suitableState`(name) on delete cascade on update cascade;
 
 
-drop table interview;
 
-create table interview
+create table if not exists interview
 ( `id` int not null AUTO_INCREMENT
 , `idVacancy` int not null
 , `planDate` datetime not null
@@ -260,9 +233,8 @@ alter table interview add constraint interviewFK_vacancy foreign key (idVacancy)
 
 alter table interview add constraint interviewFK_candidate foreign key (idCandidate) references `candidate`(id) on delete cascade on update cascade;
 
-drop table interviewFeedback;
 
-create table interviewFeedback
+create table if not exists interviewFeedback
 ( `idInterview` int not null
 , `idInterviewer` int not null
 , `feedbackState` varchar(255)
