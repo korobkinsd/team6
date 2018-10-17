@@ -15,13 +15,13 @@ public class UserSql implements ISqlQuery {
 
     @Override
     public String getSaveSql() {
-        return "INSERT INTO USER(NAME, EMAIL, SURNAME, PASSWORD, IsBLOCKED) "
-                + "VALUES ( :name, :email, :surname, :password, :isBlocked)";
+        return "INSERT INTO USER(NAME, EMAIL, SURNAME, PASSWORD) "
+                + "VALUES ( :name, :email, :surname, :password)";
     }
 
     @Override
     public String getUpdateSql() {
-        return "UPDATE USER SET NAME=:name, EMAIL=:email, SURNAME=:surname, " + "PASSWORD=:password, IsBLOCKED=:isBlocked WHERE id=:id";
+        return "UPDATE USER SET NAME=:name, EMAIL=:email, SURNAME=:surname, " + "PASSWORD=:password WHERE id=:id";
     }
 
     @Override

@@ -33,7 +33,6 @@ public class UserDao extends GrudDao<User> implements IUserDao {
 		paramSource.addValue("email", user.getEmail());
 		paramSource.addValue("surname", user.getSurname());
 		paramSource.addValue("password", user.getPassword());
-		paramSource.addValue("isBlocked", user.getIsBlocked());
 
 		return paramSource;
 	}
@@ -48,7 +47,6 @@ public class UserDao extends GrudDao<User> implements IUserDao {
 			user.setEmail(rs.getString("email"));
 			user.setSurname(rs.getString("surname"));
 			user.setPassword(rs.getString("password"));
-			user.setIsBlocked(rs.getBoolean("isBlocked"));
 			return user;
 		}
 	}

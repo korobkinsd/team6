@@ -29,7 +29,6 @@
 					<th>Name</th>
 					<th>Email</th>
 					<th>Surname</th>
-					<th>IsBlocked</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -42,7 +41,6 @@
 					<td>${user.name}</td>
 					<td>${user.email}</td>
 					<td>${user.surname}</td>
-					<td>${user.isBlocked}</td>
 					<td>
 						<spring:url value="/users/${user.id}" var="userUrl" />
 						<spring:url value="/users/${user.id}/delete" var="deleteUrl" /> 

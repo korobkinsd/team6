@@ -42,11 +42,6 @@
 		<label class="col-sm-2">Surname</label>
 		<div class="col-sm-10">${user.surname}</div>
 	</div>
-
-	<div class="row">
-		<label class="col-sm-2">IsBlocked</label>
-		<div class="col-sm-10">${user.isBlocked}</div>
-	</div>
 </div>
 
 <jsp:include page="../layouts/footer.jsp" />

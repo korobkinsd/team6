@@ -17,7 +17,6 @@ public class User implements IEntity<User> {
 
 	String surname;
 
-	boolean isBlocked;
 
 	public boolean isNew() {
 		return (this.id == null);
@@ -63,18 +62,10 @@ public class User implements IEntity<User> {
 		this.surname = surname;
 	}
 
-	public boolean getIsBlocked() {
-		return isBlocked;
-	}
-
-	public void setIsBlocked(boolean isBlocked) {
-		this.isBlocked = isBlocked;
-	}
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", surname=" + surname
-				+ ", password=" + password + ", confirmPassword="+ ", newsletter=" + "]" + isNew();
+				+ "]" + isNew();
 	}
 
 }

@@ -1,14 +1,11 @@
 package com.staff.web;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.staff.api.entity.User;
+import com.staff.api.sort.ISort;
+import com.staff.sort.Sort;
+import com.staff.specification.EntityRepository.UserSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +32,7 @@ import com.staff.validator.UserFormValidator;
 //https://en.wikipedia.org/wiki/Post/Redirect/Get
 //http://www.oschina.net/translate/spring-mvc-flash-attribute-example
 @Controller
-public class UserController {
+public class UserController extends BaseController {
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -65,7 +62,11 @@ public class UserController {
 	public String showAllUsers(Model model) {
 
 		logger.debug("showAllUsers()");
-		model.addAttribute("users", userService.findAll());
+
+		ISort sort = new Sort();
+		sort.setColumnName("name");
+		sort.setSortType("");
+		model.addAttribute("users", userService.FindWithPaging(new UserSpecification(), sort, 1, 10));
 		return "users/list";
 
 	}
@@ -106,10 +107,12 @@ public class UserController {
 
 		logger.debug("showAddUserForm()");
 
+		int t = this.userService.Count(new UserSpecification());
+
 		User user = new User();
 
 		// set default value
-		user.setName("mkyong123");
+		user.setName(Integer.toString(t));
 		user.setEmail("test@gmail.com");
 		user.setSurname("mySurname");
 
