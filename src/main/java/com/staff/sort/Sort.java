@@ -1,37 +1,61 @@
 package com.staff.sort;
 
+import com.staff.api.enums.Sort.SortOrder;
+import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.api.sort.ISort;
 
 public class Sort implements ISort {
 
-    protected String columnName;
-    protected String sortType;
+    protected SortUserFields columnName;
+    protected SortOrder sortOrder;
 
     @Override
     public String getColumnName() {
-        return columnName;
+        return columnName != null ? columnName.toString() : "";
     }
 
     @Override
-    public void setColumnName(String columnName) {
-        if (columnName == null){
-            this.columnName = "id";
+    public ISort setColumnName(String columnName) {
+        if (columnName == null || columnName.isEmpty()){
+            this.columnName = SortUserFields.ID;
         }else{
-            this.columnName = columnName;
+            this.columnName = SortUserFields.valueOf(columnName.trim().toUpperCase());
         }
+        return this;
     }
 
     @Override
-    public String getSortType() {
-        return sortType;
+    public ISort setColumnName(SortUserFields columnName) {
+        this.columnName = columnName;
+        return this;
     }
 
     @Override
-    public void setSortType(String sortType) {
-        if (sortType == null){
-            this.sortType = "";
+    public String getSortOrder() {
+        return sortOrder != null ? sortOrder.toString() : "";
+    }
+
+    @Override
+    public ISort setSortOrder(String sortOrder) {
+        if (sortOrder == null || sortOrder.isEmpty()){
+            this.sortOrder = SortOrder.ASC;
         }else{
-            this.sortType = sortType;
+            this.sortOrder = SortOrder.valueOf(sortOrder.trim().toUpperCase());
         }
+        return this;
+    }
+
+    @Override
+    public ISort setSortOrder(SortOrder sortOrder) {
+        this.sortOrder = sortOrder;
+        return this;
+    }
+
+    @Override
+    public String Builder() {
+        if (!this.getColumnName().isEmpty() && !this.getSortOrder().isEmpty()){
+            return " ORDER BY ".concat(this.getColumnName()).concat(" ").concat(this.getSortOrder()).concat(" ");
+        }
+        return "";
     }
 }

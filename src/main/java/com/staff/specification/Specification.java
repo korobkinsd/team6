@@ -1,17 +1,16 @@
 package com.staff.specification;
 
 import com.staff.api.specification.ISpecification;
-
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Specification<T> implements ISpecification<T> {
 
-    private String specification;
+    private String specification = "";
 
     @Override
     public String getSpecification() {
-        return specification == null ? " where " : specification;
+        return specification == "" ? " where " : specification;
     }
 
     protected void setSpecification(String specification) {
@@ -19,8 +18,8 @@ public abstract class Specification<T> implements ISpecification<T> {
     }
 
     @Override
-    public ISpecification<T> Builder() {
-        return this;
+    public String Builder() {
+        return this.getSpecification() == " where " ? "" : getSpecification();
     }
 
     @Override
@@ -29,20 +28,29 @@ public abstract class Specification<T> implements ISpecification<T> {
         return this;
     }
 
-    protected  <L> void ConcatenationOrList(List<L> list){
-        this.setSpecification(this.getSpecification() + " ( ");
-        int size = list.size();
-        for(int i = 0; i < size; i++) {
-            this.Concatenation(list.get(i));
-            if(i+1 < size){
-                this.setSpecification(this.getSpecification() + " , ");
+    protected  void ConcatForOrListInt(List<Integer> list){
+        StringBuilder valueString  = new StringBuilder();
+        Iterator<Integer> iterator = list.iterator();
+        while(iterator.hasNext())
+        {
+            valueString.append(iterator.next());
+            if(iterator.hasNext()){
+                valueString.append(", ");
             }
         }
-        this.setSpecification(this.getSpecification() + " ) ");
+        this.WrapForOperationIn(valueString.toString());
     }
 
-    protected  <L> void Concatenation(L value){
-        String query = " " + this.getSpecification() + value.toString() + " ";
+    protected void ConcatForOrListString(List<String> list){
+        this.WrapForOperationIn(String.join(", ", list));
+    }
+
+    protected void WrapForOperationIn(String valueString){
+        this.setSpecification(this.getSpecification() + " in ( " + valueString + " ) ");
+    }
+
+    protected  <L> void ConcatForEquals(L value){
+        String query = this.getSpecification() + " = " + value.toString() + " ";
         this.setSpecification(query);
     }
 }

@@ -5,7 +5,6 @@ import com.staff.api.entity.IEntity;
 import com.staff.api.service.ICrudService;
 import com.staff.api.sort.ISort;
 import com.staff.api.specification.ISpecification;
-
 import java.util.List;
 
 public abstract class CrudService<T> implements ICrudService<T> {
@@ -30,15 +29,12 @@ public abstract class CrudService<T> implements ICrudService<T> {
         } else {
             this.dao.update(entity);
         }
-
     }
 
     @Override
     public void delete(int id) {
         this.dao.delete(id);
     }
-
-
 
     @Override
     public List<T> Find(ISpecification<T> specification) {

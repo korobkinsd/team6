@@ -1,6 +1,7 @@
 package com.staff.specification.EntityRepository;
 
 import com.staff.api.entity.User;
+import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.api.specification.IUserSpecification;
 import com.staff.specification.Specification;
 
@@ -9,14 +10,16 @@ import java.util.List;
 public class UserSpecification extends Specification<User> implements IUserSpecification{
     @Override
     public IUserSpecification GetById(Integer id) {
-        this.setSpecification(this.getSpecification() + " id = ");
-        this.Concatenation(id);
+        this.setSpecification(this.getSpecification() + " ".concat(SortUserFields.ID.toString()));
+        this.ConcatForEquals(id);
         return this;
     }
 
     @Override
     public IUserSpecification GetByIdIn(List<Integer> ids) {
-        return null;
+        this.setSpecification(" ".concat(SortUserFields.ID.toString()));
+        this.ConcatForOrListInt(ids);
+        return this;
     }
 
     @Override

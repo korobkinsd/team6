@@ -3,6 +3,7 @@ package com.staff.dao;
 import com.staff.api.dao.IGrudDao;
 import com.staff.api.dao.ISqlQuery;
 import com.staff.api.entity.IEntity;
+import com.staff.api.enums.Paging;
 import com.staff.api.sort.ISort;
 import com.staff.api.specification.ISpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,23 +96,28 @@ public abstract class GrudDao<T> implements IGrudDao<T> {
 
     @Override
     public List<T> FindWithPaging(ISpecification<T> specification, ISort sort, int page, int pageSize) {
-
-        String sql = "SELECT * FROM USER ORDER BY %s %s LIMIT :LIMIT OFFSET :OFFSET";
-        sql = String.format(sql, sort.getColumnName(), sort.getSortType());
-
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("LIMIT", pageSize);
-        params.put("OFFSET", page*pageSize-pageSize);
-        return namedParameterJdbcTemplate.query(sql, params, rowMapper);
+        params.put(Paging.LIMIT.toString(), pageSize);
+        params.put(Paging.OFFSET.toString(), page*pageSize-pageSize);
+        return namedParameterJdbcTemplate.query(String.format(getSqlQuery().getCompositeSql(), specification.Builder(), sort.Builder()), params, rowMapper);
     }
 
     @Override
     public T Read(ISpecification<T> specification) {
-        return null;
+
+        ISqlQuery sqlQuery = getSqlQuery();
+        T result = null;
+        try {
+            result = namedParameterJdbcTemplate.queryForObject(String.format(sqlQuery.getBaseSql().concat(sqlQuery.getSpecificationSql()), specification.Builder(), ""), new HashMap<String, Object>(), rowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            // do nothing, return null
+        }
+
+        return result;
     }
 
     @Override
-    public int Count(ISpecification<T> specification) {//SELECT count(*) FROM team6.user;
+    public int Count(ISpecification<T> specification) {
 
         List<T> result = namedParameterJdbcTemplate.query(getSqlQuery().getFindAllSql(), getRowMapper());
 

@@ -1,9 +1,9 @@
 package com.staff.web;
 
 import javax.servlet.http.HttpServletRequest;
-
 import com.staff.api.entity.User;
-import com.staff.api.sort.ISort;
+import com.staff.api.enums.Sort.SortOrder;
+import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.sort.Sort;
 import com.staff.specification.EntityRepository.UserSpecification;
 import org.slf4j.Logger;
@@ -23,14 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.staff.api.service.IUserService;
 import com.staff.validator.UserFormValidator;
-//import javax.validation.Valid;
 
-//http://www.tikalk.com/redirectattributes-new-feature-spring-mvc-31/
-//https://en.wikipedia.org/wiki/Post/Redirect/Get
-//http://www.oschina.net/translate/spring-mvc-flash-attribute-example
 @Controller
 public class UserController extends BaseController {
 
@@ -63,10 +58,7 @@ public class UserController extends BaseController {
 
 		logger.debug("showAllUsers()");
 
-		ISort sort = new Sort();
-		sort.setColumnName("name");
-		sort.setSortType("");
-		model.addAttribute("users", userService.FindWithPaging(new UserSpecification(), sort, 1, 10));
+		model.addAttribute("users", userService.FindWithPaging(new UserSpecification(), new Sort().setColumnName(SortUserFields.NAME).setSortOrder(SortOrder.ASC), 1, 10));
 		return "users/list";
 
 	}
@@ -90,13 +82,8 @@ public class UserController extends BaseController {
 			}
 			
 			userService.saveOrUpdate(user);
-			
-			// POST/REDIRECT/GET
+
 			return "redirect:/users/" + user.getId();
-
-			// POST/FORWARD/GET
-			// return "user/list";
-
 		}
 
 	}
@@ -112,9 +99,9 @@ public class UserController extends BaseController {
 		User user = new User();
 
 		// set default value
-		user.setName(Integer.toString(t));
-		user.setEmail("test@gmail.com");
-		user.setSurname("mySurname");
+		user.setName("TestName");
+		user.setEmail("test@mail.ru");
+		user.setSurname("TestSurname");
 
 		model.addAttribute("userForm", user);
 
@@ -128,7 +115,7 @@ public class UserController extends BaseController {
 
 		logger.debug("showUpdateUserForm() : {}", id);
 
-		User user = userService.findById(id);
+		User user = userService.Read(new UserSpecification().GetById(id));
 		model.addAttribute("userForm", user);
 		
 		return "users/userform";

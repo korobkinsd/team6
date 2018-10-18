@@ -1,9 +1,16 @@
 package com.staff.api.sort;
 
+import com.staff.api.enums.Sort.SortOrder;
+import com.staff.api.enums.Sort.SortUserFields;
+
 public interface ISort {
     String getColumnName();
-    void setColumnName(String name);
+    ISort setColumnName(String columnName);
+    ISort setColumnName(SortUserFields columnName);
 
-    String getSortType();
-    void setSortType(String name);
+    String getSortOrder();
+    ISort setSortOrder(String sortOrder);
+    ISort setSortOrder(SortOrder sortOrder);
+
+    String Builder();
 }
