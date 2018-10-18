@@ -30,7 +30,7 @@ public class SpringDBConfig {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUrl("jdbc:mysql://localhost:3306/team6?useSll=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
 		dataSource.setUsername("root");
-		dataSource.setPassword("A2t=A2t=");
+		dataSource.setPassword("root");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		return dataSource;
 	}
@@ -38,9 +38,8 @@ public class SpringDBConfig {
 	@PostConstruct
 	public void startDBManager() {
 
-		// hsqldb
-		// DatabaseManagerSwing.main(new String[] { "--url",
-		// "jdbc:hsqldb:mem:testdb", "--user", "sa", "--password", "" });
+//	    DatabaseManagerSwing.main(new String[] { "--url",
+//		 "jdbc:mysql://localhost:3306/team6", "--user", "root", "--password", "root" });
 
 	}
 
