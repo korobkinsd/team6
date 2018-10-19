@@ -3,9 +3,13 @@ package com.staff.web;
 
 import com.staff.api.entity.User;
 import com.staff.api.entity.Vacancy;
+import com.staff.api.enums.Sort.SortOrder;
+import com.staff.api.enums.Sort.SortVacancyFields;
 import com.staff.api.service.IUserService;
 import com.staff.api.service.IVacancyService;
 
+import com.staff.sort.Sort;
+import com.staff.specification.EntityRepository.VacancySpecification;
 import com.staff.validator.VacancyFormValidator;
 
 import org.slf4j.Logger;
@@ -48,11 +52,14 @@ public class VacancyController {
 
     // list page
     @RequestMapping(value = "/vacancy", method = RequestMethod.GET)
-    public String showAllvacancy(Model model) {
+    public String showAllvacancy(Model model,@RequestParam(value = "page", defaultValue = "1") int page) {
+
+        model.addAttribute("vacancyCount",Math.ceil(vacancyService.Count(new VacancySpecification())/10.0));
+
+        model.addAttribute("vacancy", vacancyService.FindWithPaging(new VacancySpecification(), new Sort().setColumnName(SortVacancyFields.ID).setSortOrder(SortOrder.ASC), page, 10));
 
         logger.debug("showAllvacancy()");
-        model.addAttribute("vacancy", vacancyService.findAll());
-        return "vacancy/list";
+          return "vacancy/list";
 
     }
     // show add vacancy form

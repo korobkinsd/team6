@@ -2,16 +2,22 @@ package com.staff.sort;
 
 import com.staff.api.enums.Sort.SortOrder;
 import com.staff.api.enums.Sort.SortUserFields;
+import com.staff.api.enums.Sort.SortVacancyFields;
 import com.staff.api.sort.ISort;
 
 public class Sort implements ISort {
 
     protected SortUserFields columnName;
     protected SortOrder sortOrder;
-
+    protected SortVacancyFields vacancyColumnName;
     @Override
     public String getColumnName() {
         return columnName != null ? columnName.toString() : "";
+    }
+    @Override
+    public ISort setColumnName(SortVacancyFields columnName) {
+        this.vacancyColumnName = columnName;
+        return this;
     }
 
     @Override

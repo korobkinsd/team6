@@ -57,9 +57,11 @@
 				</tr>
 			</c:forEach>
 		</table>
-
+		${vacancyCount}
 	</div>
-
+	<c:forEach begin="1" end="${vacancyCount}" varStatus="loop">
+		<a href="?page=${loop.index}">${loop.index}</a>
+	</c:forEach>
 	<jsp:include page="../layouts/footer.jsp" />
 
 </body>
