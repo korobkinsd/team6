@@ -54,7 +54,7 @@ public class VacancyController {
     @RequestMapping(value = "/vacancy", method = RequestMethod.GET)
     public String showAllvacancy(Model model,@RequestParam(value = "page", defaultValue = "1") int page) {
 
-        model.addAttribute("vacancyCount",Math.ceil(vacancyService.Count(new VacancySpecification())/10.0));
+        model.addAttribute("pageCount",Math.ceil(vacancyService.Count(new VacancySpecification())/10.0));
 
         model.addAttribute("vacancy", vacancyService.FindWithPaging(new VacancySpecification(), new Sort().setColumnName(SortVacancyFields.ID).setSortOrder(SortOrder.ASC), page, 10));
 

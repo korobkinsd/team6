@@ -1,4 +1,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="container">
+	<c:forEach begin="1" end="${pageCount}" varStatus="loop">
+		<a href="?page=${loop.index}">${loop.index}</a>
+	</c:forEach>
+</div>
+
 <div class="container">
 	<hr>
 	<footer>
