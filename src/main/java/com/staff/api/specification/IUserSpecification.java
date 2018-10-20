@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUserSpecification extends ISpecification<User> {
 
-    IUserSpecification GetById(Integer id);
+    IUserSpecification GetById(String id);
 
     IUserSpecification GetByIdIn(List<Integer> ids);
 

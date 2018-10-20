@@ -1,15 +1,15 @@
-package com.staff.specification.EntityRepository;
+package com.staff.dao.specification.EntityRepository;
 
 import com.staff.api.entity.User;
 import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.api.specification.IUserSpecification;
-import com.staff.specification.Specification;
+import com.staff.dao.specification.Specification;
 
 import java.util.List;
 
 public class UserSpecification extends Specification<User> implements IUserSpecification{
     @Override
-    public IUserSpecification GetById(Integer id) {
+    public IUserSpecification GetById(String id) {
         this.setSpecification(this.getSpecification() + " ".concat(SortUserFields.ID.toString()));
         this.ConcatForEquals(id);
         return this;
@@ -18,7 +18,7 @@ public class UserSpecification extends Specification<User> implements IUserSpeci
     @Override
     public IUserSpecification GetByIdIn(List<Integer> ids) {
         this.setSpecification(" ".concat(SortUserFields.ID.toString()));
-        this.ConcatForOrListInt(ids);
+        this.ConcatForOr(ids);
         return this;
     }
 

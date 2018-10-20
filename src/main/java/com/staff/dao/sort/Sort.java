@@ -1,4 +1,4 @@
-package com.staff.sort;
+package com.staff.dao.sort;
 
 import com.staff.api.enums.Sort.SortOrder;
 import com.staff.api.enums.Sort.SortUserFields;

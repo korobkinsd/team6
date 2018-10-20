@@ -2,7 +2,7 @@
 <div class="container">
 	<hr>
 	<footer>
-		<p>&copy; team6.com 2018</p>
+		<p>&copy; team6.com 2019</p>
 	</footer>
 </div>
 

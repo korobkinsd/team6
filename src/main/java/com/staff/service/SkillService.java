@@ -1,3 +1,4 @@
+/*
 package com.staff.service;
 
 import com.staff.api.dao.ISkillDao;
@@ -24,3 +25,4 @@ public class SkillService implements ISkillService {
 
 
 }
+*/

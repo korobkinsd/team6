@@ -1,19 +1,19 @@
-package com.staff.dao.EntityDaoImpl;
+package com.staff.dao.EntityDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.staff.api.dao.IUserDao;
 import com.staff.api.entity.IEntity;
 import com.staff.api.entity.User;
-import com.staff.dao.GrudDao;
-import com.staff.dao.EntitySqlQueryImpl.UserSql;
+import com.staff.dao.CrudDao;
+import com.staff.dao.EntitySqlQuery.UserSql;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDao extends GrudDao<User> implements IUserDao {
+public class UserDao extends CrudDao<User> implements IUserDao {
 
 	public UserDao(){
 		super();

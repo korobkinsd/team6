@@ -1,4 +1,4 @@
-package com.staff.dao.EntitySqlQueryImpl;
+package com.staff.dao.EntitySqlQuery;
 
 import com.staff.api.dao.ISqlQuery;
 
@@ -6,16 +6,6 @@ public class SkillSql implements ISqlQuery{
 
     @Override
     public String getBaseSql() {
-        return null;
-    }
-
-    @Override
-    public String getFindByIdSql() {
-        return "SELECT * FROM skill WHERE name=:name";
-    }
-
-    @Override
-    public String getFindAllSql() {
         return "SELECT * FROM skill";
     }
 
@@ -35,8 +25,8 @@ public class SkillSql implements ISqlQuery{
     }
 
     @Override
-    public String getCompositeSql() {
-        return null;
+    public String getFullSql() {
+        return this.getBaseSql().concat(this.getSpecificationSql()).concat(this.getSortSql()).concat(this.getPagingSql());
     }
 
     @Override

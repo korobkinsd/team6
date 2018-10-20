@@ -65,7 +65,17 @@ public class User implements IEntity<User> {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", surname=" + surname
-				+ "]" + isNew();
+				+ "]";
 	}
 
+	@Override
+	public void setForeignKey(String foreignKey) {
+		this.id = Integer.parseInt(foreignKey);
+	}
+
+	@Override
+	public String getForeignKey() {
+		/*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
+		return this.id != null ? this.id.toString() : "0000000000000000000000000000";
+	}
 }

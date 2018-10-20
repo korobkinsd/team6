@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.staff.api.entity.User;
 import com.staff.api.enums.Sort.SortOrder;
 import com.staff.api.enums.Sort.SortUserFields;
-import com.staff.sort.Sort;
-import com.staff.specification.EntityRepository.UserSpecification;
+import com.staff.dao.sort.Sort;
+import com.staff.dao.specification.EntityRepository.UserSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +81,7 @@ public class UserController extends BaseController {
 				redirectAttributes.addFlashAttribute("msg", "User updated successfully!");
 			}
 			
-			userService.saveOrUpdate(user);
+			userService.saveOrUpdate(user, new UserSpecification().GetById(user.getForeignKey()));
 
 			return "redirect:/users/" + user.getId();
 		}
@@ -93,8 +93,6 @@ public class UserController extends BaseController {
 	public String showAddUserForm(Model model) {
 
 		logger.debug("showAddUserForm()");
-
-		int t = this.userService.Count(new UserSpecification());
 
 		User user = new User();
 
@@ -115,7 +113,7 @@ public class UserController extends BaseController {
 
 		logger.debug("showUpdateUserForm() : {}", id);
 
-		User user = userService.Read(new UserSpecification().GetById(id));
+		User user = userService.Read(new UserSpecification().GetById(String.valueOf(id)));
 		model.addAttribute("userForm", user);
 		
 		return "users/userform";
@@ -128,7 +126,7 @@ public class UserController extends BaseController {
 
 		logger.debug("deleteUser() : {}", id);
 
-		userService.delete(id);
+		userService.delete(new UserSpecification().GetById(String.valueOf(id)));
 		
 		redirectAttributes.addFlashAttribute("css", "success");
 		redirectAttributes.addFlashAttribute("msg", "User is deleted!");
@@ -143,7 +141,7 @@ public class UserController extends BaseController {
 
 		logger.debug("showUser() id: {}", id);
 
-		User user = userService.findById(id);
+		User user = userService.Read(new UserSpecification().GetById(String.valueOf(id)));
 		if (user == null) {
 			model.addAttribute("css", "danger");
 			model.addAttribute("msg", "User not found");

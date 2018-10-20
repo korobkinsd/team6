@@ -1,6 +1,6 @@
 package com.staff.dao;
 
-import com.staff.api.dao.IGrudDao;
+import com.staff.api.dao.ICrudDao;
 import com.staff.api.dao.ISqlQuery;
 import com.staff.api.entity.IEntity;
 import com.staff.api.enums.Paging;
@@ -19,13 +19,13 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 
-public abstract class GrudDao<T> implements IGrudDao<T> {
+public abstract class CrudDao<T> implements ICrudDao<T> {
 
     protected RowMapper<T> rowMapper;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     protected ISqlQuery sqlQuery;
 
-    public GrudDao(){}
+    public CrudDao(){}
 
     @Autowired
     public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) throws DataAccessException {
@@ -49,34 +49,11 @@ public abstract class GrudDao<T> implements IGrudDao<T> {
     }
 
     @Override
-    public T findById(Integer id) {
-
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", id);
-
-        T result = null;
-        try {
-            result = namedParameterJdbcTemplate.queryForObject(getSqlQuery().getFindByIdSql(), params, rowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            // do nothing, return null
-        }
-
-        return result;
-    }
-
-    @Override
-    public List findAll() {
-        List<T> result = namedParameterJdbcTemplate.query(getSqlQuery().getFindAllSql(), getRowMapper());
-
-        return result;
-    }
-
-    @Override
     public void save(IEntity<T> entity) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         namedParameterJdbcTemplate.update(getSqlQuery().getSaveSql(), getSqlParameterByModel(entity), keyHolder);
-        entity.setId(keyHolder.getKey().intValue());
+        entity.setForeignKey(String.valueOf(keyHolder.getKey().intValue()));
     }
 
     @Override
@@ -85,13 +62,15 @@ public abstract class GrudDao<T> implements IGrudDao<T> {
     }
 
     @Override
-    public void delete(Integer id) {
-        namedParameterJdbcTemplate.update(getSqlQuery().getDeleteSql(), new MapSqlParameterSource("id", id));
+    public void delete(ISpecification<T> specification) {
+        namedParameterJdbcTemplate.update(String.format(getSqlQuery().getDeleteSql(), specification.Builder()), new MapSqlParameterSource());
     }
 
     @Override
     public List<T> Find(ISpecification<T> specification) {
-        return null;
+        List<T> result = namedParameterJdbcTemplate.query(getSqlQuery().getBaseSql(), getRowMapper());
+
+        return result;
     }
 
     @Override
@@ -99,7 +78,7 @@ public abstract class GrudDao<T> implements IGrudDao<T> {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(Paging.LIMIT.toString(), pageSize);
         params.put(Paging.OFFSET.toString(), page*pageSize-pageSize);
-        return namedParameterJdbcTemplate.query(String.format(getSqlQuery().getCompositeSql(), specification.Builder(), sort.Builder()), params, rowMapper);
+        return namedParameterJdbcTemplate.query(String.format(getSqlQuery().getFullSql(), specification.Builder(), sort.Builder()), params, rowMapper);
     }
 
     @Override
@@ -119,7 +98,7 @@ public abstract class GrudDao<T> implements IGrudDao<T> {
     @Override
     public int Count(ISpecification<T> specification) {
 
-        List<T> result = namedParameterJdbcTemplate.query(getSqlQuery().getFindAllSql(), getRowMapper());
+        List<T> result = namedParameterJdbcTemplate.query(getSqlQuery().getBaseSql(), getRowMapper());
 
         return result.size();
     }

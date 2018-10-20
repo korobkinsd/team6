@@ -8,13 +8,9 @@ import java.util.List;
 
 public interface ICrudService<T> {
 
-    T findById(Integer id);
+    void saveOrUpdate(IEntity<T> entity, ISpecification<T> specification);
 
-    List<T> findAll();
-
-    void saveOrUpdate(IEntity<T> entity);
-
-    void delete(int id);
+    void delete(ISpecification<T> specification);
 
     List<T> Find(ISpecification<T> specification);
     List<T> FindWithPaging(ISpecification<T> specification, ISort sort, int page, int pageSize);

@@ -1,4 +1,4 @@
-package com.staff.specification;
+package com.staff.dao.specification;
 
 import com.staff.api.specification.ISpecification;
 import java.util.Iterator;
@@ -7,10 +7,11 @@ import java.util.List;
 public abstract class Specification<T> implements ISpecification<T> {
 
     private String specification = "";
+    private String whereStr = " where ";
 
     @Override
     public String getSpecification() {
-        return specification == "" ? " where " : specification;
+        return specification == "" ? whereStr : specification;
     }
 
     protected void setSpecification(String specification) {
@@ -19,7 +20,7 @@ public abstract class Specification<T> implements ISpecification<T> {
 
     @Override
     public String Builder() {
-        return this.getSpecification() == " where " ? "" : getSpecification();
+        return this.getSpecification() == whereStr ? "" : getSpecification();
     }
 
     @Override
@@ -28,9 +29,9 @@ public abstract class Specification<T> implements ISpecification<T> {
         return this;
     }
 
-    protected  void ConcatForOrListInt(List<Integer> list){
+    protected <L> void ConcatForOr(List<L> list){
         StringBuilder valueString  = new StringBuilder();
-        Iterator<Integer> iterator = list.iterator();
+        Iterator<L> iterator = list.iterator();
         while(iterator.hasNext())
         {
             valueString.append(iterator.next());
@@ -39,10 +40,6 @@ public abstract class Specification<T> implements ISpecification<T> {
             }
         }
         this.WrapForOperationIn(valueString.toString());
-    }
-
-    protected void ConcatForOrListString(List<String> list){
-        this.WrapForOperationIn(String.join(", ", list));
     }
 
     protected void WrapForOperationIn(String valueString){

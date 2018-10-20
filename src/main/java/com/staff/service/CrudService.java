@@ -1,30 +1,21 @@
 package com.staff.service;
 
-import com.staff.api.dao.IGrudDao;
+import com.staff.api.dao.ICrudDao;
 import com.staff.api.entity.IEntity;
 import com.staff.api.service.ICrudService;
 import com.staff.api.sort.ISort;
 import com.staff.api.specification.ISpecification;
+
 import java.util.List;
 
 public abstract class CrudService<T> implements ICrudService<T> {
 
-    IGrudDao<T> dao;
+    ICrudDao<T> dao;
 
     @Override
-    public T findById(Integer id) {
-        return this.dao.findById(id);
-    }
+    public void saveOrUpdate(IEntity<T> entity, ISpecification<T> specification) {
 
-    @Override
-    public List<T> findAll() {
-        return this.dao.findAll();
-    }
-
-    @Override
-    public void saveOrUpdate(IEntity<T> entity) {
-
-        if (findById(entity.getId())==null) {
+        if (Read(specification)==null) {
             this.dao.save(entity);
         } else {
             this.dao.update(entity);
@@ -32,8 +23,8 @@ public abstract class CrudService<T> implements ICrudService<T> {
     }
 
     @Override
-    public void delete(int id) {
-        this.dao.delete(id);
+    public void delete(ISpecification<T> specification) {
+        this.dao.delete(specification);
     }
 
     @Override

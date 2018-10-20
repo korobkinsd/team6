@@ -1,10 +1,10 @@
-package com.staff.dao.EntityDaoImpl;
+package com.staff.dao.EntityDao;
 
 import com.staff.api.dao.ISkillDao;
 import com.staff.api.entity.IEntity;
 import com.staff.api.entity.Skill;
-import com.staff.dao.EntitySqlQueryImpl.SkillSql;
-import com.staff.dao.GrudDao;
+import com.staff.dao.EntitySqlQuery.SkillSql;
+import com.staff.dao.CrudDao;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SkillDao extends GrudDao<Skill> implements ISkillDao {
+public class SkillDao extends CrudDao<Skill> implements ISkillDao {
 
     public SkillDao(){
         super();
