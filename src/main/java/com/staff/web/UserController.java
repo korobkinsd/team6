@@ -58,7 +58,7 @@ public class UserController extends BaseController {
 
 		logger.debug("showAllUsers()");
 
-		model.addAttribute("users", userService.FindWithPaging(new UserSpecification(), new Sort().setColumnName(SortUserFields.NAME).setSortOrder(SortOrder.ASC), 1, 10));
+		model.addAttribute("users", userService.FindWithPaging(new UserSpecification(), new Sort().setColumnName(SortUserFields.NAME.toString()).setSortOrder(SortOrder.ASC.toString()), 1, 10));
 		return "users/list";
 
 	}

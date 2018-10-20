@@ -29,8 +29,8 @@ public class SpringDBConfig {
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUrl("jdbc:mysql://localhost:3306/team6?useSll=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-		dataSource.setUsername("Max");
-		dataSource.setPassword("qaz.12345");
+		dataSource.setUsername("root");
+		dataSource.setPassword("A2t=A2t=");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		return dataSource;
 	}

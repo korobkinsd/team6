@@ -1,3 +1,4 @@
+/*
 package com.staff.api.specification;
 
 
@@ -22,3 +23,4 @@ public interface IVacancySpecification extends ISpecification<Vacancy> {
 
     IVacancySpecification GetBySurnameLike(String surname);
 }
+*/

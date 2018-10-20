@@ -1,3 +1,4 @@
+/*
 package com.staff.api.entity;
 
 
@@ -81,3 +82,4 @@ public class Vacancy implements IEntity<Vacancy> {
 
 }
 
+*/

@@ -1,3 +1,4 @@
+/*
 package com.staff.dao.EntityDaoImpl;
 
 
@@ -57,4 +58,4 @@ public class VacancyDao extends GrudDao<Vacancy> implements IVacancyDao {
             return vacancy;
         }
     }
-}
+}*/

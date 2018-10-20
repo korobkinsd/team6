@@ -1,3 +1,4 @@
+/*
 package com.staff.specification.EntityRepository;
 
 import com.staff.api.entity.User;
@@ -50,3 +51,4 @@ public class VacancySpecification extends Specification<Vacancy> implements IVac
         return null;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.staff.dao.EntitySqlQueryImpl;
 
 import com.staff.api.dao.ISqlQuery;
@@ -36,7 +37,9 @@ public class VacancySql implements ISqlQuery {
 
     @Override
     public String getCompositeSql() {
-        /*%1$s - для WHERE, %2$s - для ORDER BY*/
+        */
+/*%1$s - для WHERE, %2$s - для ORDER BY*//*
+
         return this.getFindAllSql().concat(this.getSpecificationSql()).concat(this.getSortSql()).concat(this.getPagingSql());
     }
 
@@ -57,3 +60,4 @@ public class VacancySql implements ISqlQuery {
 
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.staff.service;
 
 import com.staff.api.dao.IUserDao;
@@ -24,3 +25,4 @@ public class VacancyService  extends CrudService<Vacancy> implements IVacancySer
 
 
 }
+*/
