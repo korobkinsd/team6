@@ -11,16 +11,28 @@
 
 <spring:url value="/" var="urlHome" />
 <spring:url value="/users/add" var="urlAddUser" />
-
+<spring:url value="/vacancy" var="urlVacancy" />
+<spring:url value="/vacancy/add" var="urlAddVacancy" />
 <nav class="navbar navbar-inverse ">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${urlHome}">Users</a>
+			<a class="navbar-brand" href="${urlHome}">List Users</a>
+			<a class="navbar-brand" href="${urlVacancy}">List Vacancy</a>
+		</div>
+
+
+		<div clsdd="navbar-brand">
+		<span style="float: right">
+			<a href="?lang=en">en</a>
+			<a href="?lang=ru">ru</a>
+			</span>
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="${urlAddUser}">Add User</a></li>
+				<li class="active"><a href="${urlAddVacancy}">Add vacancy</a></li>
 			</ul>
 		</div>
+
 	</div>
 </nav>
