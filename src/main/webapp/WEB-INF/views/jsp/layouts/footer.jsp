@@ -5,7 +5,7 @@
 <nav aria-label="Page navigation example">
 	<ul class="pagination justify-content-center">
 		<c:forEach begin="1" end="${pageCount}" varStatus="loop">
-			<li class="page-item"><a class="page-link" href="?page=${loop.index}">${loop.index}</a></li>
+			<li class="page-item"><a class="page-link" href="?columnName=${columnName}&order=${order}&page=${loop.index}">${loop.index}</a></li>
 		</c:forEach>
 	</ul>
 </nav>
