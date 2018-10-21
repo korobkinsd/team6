@@ -1,5 +1,5 @@
-/*
-package com.staff.dao.EntityDaoImpl;
+
+package com.staff.dao.EntityDao;
 
 
 import com.staff.api.dao.IVacancyDao;
@@ -7,8 +7,8 @@ import com.staff.api.entity.IEntity;
 
 
 import com.staff.api.entity.Vacancy;
-import com.staff.dao.EntitySqlQueryImpl.VacancySql;
-import com.staff.dao.GrudDao;
+import com.staff.dao.EntitySqlQuery.VacancySql;
+import com.staff.dao.CrudDao;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -19,7 +19,7 @@ import java.sql.SQLException;
 
 
 @Repository
-public class VacancyDao extends GrudDao<Vacancy> implements IVacancyDao {
+public class VacancyDao extends CrudDao<Vacancy> implements IVacancyDao {
 
     public VacancyDao(){
         super();
@@ -58,4 +58,4 @@ public class VacancyDao extends GrudDao<Vacancy> implements IVacancyDao {
             return vacancy;
         }
     }
-}*/
+}

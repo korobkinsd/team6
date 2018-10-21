@@ -1,4 +1,4 @@
-/*
+
 package com.staff.api.service;
 
 
@@ -9,4 +9,4 @@ import java.util.List;
 public interface IVacancyService extends ICrudService<Vacancy> {
 
 }
-*/
+

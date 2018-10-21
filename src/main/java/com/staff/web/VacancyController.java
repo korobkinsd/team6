@@ -1,4 +1,4 @@
-/*
+
 package com.staff.web;
 
 
@@ -9,8 +9,10 @@ import com.staff.api.enums.Sort.SortVacancyFields;
 import com.staff.api.service.IUserService;
 import com.staff.api.service.IVacancyService;
 
-import com.staff.sort.Sort;
-import com.staff.specification.EntityRepository.VacancySpecification;
+import com.staff.dao.sort.Sort;
+import com.staff.dao.specification.EntityRepository.UserSpecification;
+import com.staff.dao.specification.EntityRepository.VacancySpecification;
+
 import com.staff.validator.VacancyFormValidator;
 
 import org.slf4j.Logger;
@@ -53,12 +55,13 @@ public class VacancyController {
 
     // list page
     @RequestMapping(value = "/vacancy", method = RequestMethod.GET)
-    public String showAllvacancy(Model model,@RequestParam(value = "page", defaultValue = "1") int page) {
+    public String showAllvacancy(Model model,@RequestParam(value = "page", defaultValue = "1") int page,@RequestParam(value = "columnName", defaultValue ="ID") String columnName,@RequestParam(value = "order", defaultValue = "ASC") String order) {
 
         model.addAttribute("pageCount",Math.ceil(vacancyService.Count(new VacancySpecification())/10.0));
-
-        model.addAttribute("vacancy", vacancyService.FindWithPaging(new VacancySpecification(), new Sort().setColumnName(SortVacancyFields.ID).setSortOrder(SortOrder.ASC), page, 10));
-
+        model.addAttribute("columnName",columnName);
+        model.addAttribute("pageNumber",page);
+        model.addAttribute("vacancy", vacancyService.FindWithPaging(new VacancySpecification(), new Sort().setColumnName(columnName).setSortOrder(order), page, 10));
+        model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
         logger.debug("showAllvacancy()");
           return "vacancy/list";
 
@@ -68,7 +71,7 @@ public class VacancyController {
     public String showAddVacancyForm(Model model) {
 
         logger.debug("showAddVacancyForm()");
-        List<User> listOfUsersobj =userService.findAll();
+        List<User> listOfUsersobj =userService.Find(new UserSpecification());
         model.addAttribute("listOfUsers", listOfUsersobj);
 
         Vacancy vacancy = new Vacancy();
@@ -101,7 +104,7 @@ public class VacancyController {
                 redirectAttributes.addFlashAttribute("msg", "vacancy updated successfully!");
             }
 
-            vacancyService.saveOrUpdate(vacancy);
+            vacancyService.saveOrUpdate(vacancy,new VacancySpecification().GetById(vacancy.getForeignKeyint()));
 
             // POST/REDIRECT/GET
             return "redirect:/vacancy/" + vacancy.getId();
@@ -118,7 +121,7 @@ public class VacancyController {
 
         logger.debug("showVacancy() id: {}", id);
 
-        Vacancy vacancy = vacancyService.findById(id);
+        Vacancy vacancy = vacancyService.Read(new VacancySpecification().GetById(id) );
         if (vacancy == null) {
             model.addAttribute("css", "danger");
             model.addAttribute("msg", "vacancy not found");
@@ -135,8 +138,8 @@ public class VacancyController {
 
         logger.debug("showUpdateVacancyForm() : {}", id);
 
-        Vacancy vacancy = vacancyService.findById(id);
-        List<User> listOfUsersobj =userService.findAll();
+        Vacancy vacancy = vacancyService.Read(new VacancySpecification().GetById(id));
+        List<User> listOfUsersobj =userService.Find(new UserSpecification());
         model.addAttribute("listOfUsers", listOfUsersobj);
         model.addAttribute("vacancyForm", vacancy);
 
@@ -150,7 +153,7 @@ public class VacancyController {
 
         logger.debug("deleteVacancy() : {}", id);
 
-        vacancyService.delete(id);
+        vacancyService.delete(new VacancySpecification().GetById(id));
 
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Vacancy is deleted!");
@@ -159,4 +162,4 @@ public class VacancyController {
 
     }
 }
-*/
+

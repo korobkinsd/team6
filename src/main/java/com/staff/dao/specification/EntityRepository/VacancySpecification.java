@@ -1,5 +1,5 @@
-/*
-package com.staff.specification.EntityRepository;
+
+package com.staff.dao.specification.EntityRepository;
 
 import com.staff.api.entity.User;
 import com.staff.api.entity.Vacancy;
@@ -7,7 +7,8 @@ import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.api.enums.Sort.SortVacancyFields;
 import com.staff.api.specification.IUserSpecification;
 import com.staff.api.specification.IVacancySpecification;
-import com.staff.specification.Specification;
+import com.staff.dao.specification.Specification;
+
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class VacancySpecification extends Specification<Vacancy> implements IVac
     @Override
     public IVacancySpecification GetByIdIn(List<Integer> ids) {
         this.setSpecification(" ".concat(SortVacancyFields.ID.toString()));
-        this.ConcatForOrListInt(ids);
+        this.ConcatForOr(ids);
         return this;
     }
 
@@ -51,4 +52,4 @@ public class VacancySpecification extends Specification<Vacancy> implements IVac
         return null;
     }
 }
-*/
+

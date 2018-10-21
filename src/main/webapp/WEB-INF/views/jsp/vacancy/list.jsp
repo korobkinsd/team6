@@ -25,12 +25,12 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>#ID</th>
-					<th>position</th>
-					<th>idDeveloper</th>
-					<th>salaryFrom</th>
-					<th>salaryTo</th>
-					<th>experienceYearsRequire</th>
+					<th><a href="?columnName=ID&order=${order}&page=${pageNumber}">ID</a></th>
+					<th><a href="?columnName=position&order=${order}&page=${pageNumber}">position</a></th>
+					<th><a href="?columnName=idDeveloper&order=${order}&page=${pageNumber}">idDeveloper</a></th>
+					<th><a href="?columnName=salaryFrom&order=${order}&page=${pageNumber}">salaryFrom</a></th>
+					<th><a href="?columnName=salaryTo&order=${order}&page=${pageNumber}">salaryTo</a></th>
+					<th><a href="?columnName=experienceYearsRequire&order=${order}&page=${pageNumber}">experienceYearsRequire</a></th>
 				</tr>
 			</thead>
 
@@ -58,6 +58,8 @@
 			</c:forEach>
 		</table>
 		${pageCount}
+		${columnName}
+		${order}
 	</div>
 
 	<jsp:include page="../layouts/footer.jsp" />

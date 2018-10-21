@@ -1,4 +1,3 @@
-/*
 
 package com.staff.validator;
 
@@ -42,4 +41,4 @@ public class VacancyFormValidator implements Validator {
         }
     }
 
-}*/
+}
