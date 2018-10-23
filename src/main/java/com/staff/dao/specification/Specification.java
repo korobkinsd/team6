@@ -25,7 +25,8 @@ public abstract class Specification<T> implements ISpecification<T> {
 
     @Override
     public ISpecification<T> And() {
-        this.setSpecification(this.getSpecification() + " and ");
+
+        this.setSpecification(  this.getSpecification() == whereStr ? this.getSpecification() : this.getSpecification() + " and "  );
         return this;
     }
 
@@ -34,7 +35,9 @@ public abstract class Specification<T> implements ISpecification<T> {
         Iterator<L> iterator = list.iterator();
         while(iterator.hasNext())
         {
+            valueString.append("'");
             valueString.append(iterator.next());
+            valueString.append("'");
             if(iterator.hasNext()){
                 valueString.append(", ");
             }
@@ -47,7 +50,7 @@ public abstract class Specification<T> implements ISpecification<T> {
     }
 
     protected  <L> void ConcatForEquals(L value){
-        String query = this.getSpecification() + " = " + value.toString() + " ";
+        String query = this.getSpecification() + " = '" + value.toString() + "' ";
         this.setSpecification(query);
     }
 }

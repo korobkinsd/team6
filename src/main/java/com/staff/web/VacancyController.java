@@ -55,12 +55,18 @@ public class VacancyController {
 
     // list page
     @RequestMapping(value = "/vacancy", method = RequestMethod.GET)
-    public String showAllvacancy(Model model,@RequestParam(value = "page", defaultValue = "1") int page,@RequestParam(value = "columnName", defaultValue ="ID") String columnName,@RequestParam(value = "order", defaultValue = "ASC") String order) {
+    public String showAllvacancy(@ModelAttribute("vacancyForm")  Vacancy vacancy,Model model,@RequestParam(value = "page", defaultValue = "1") int page,@RequestParam(value = "columnName", defaultValue ="ID") String columnName,@RequestParam(value = "order", defaultValue = "ASC") String order,@RequestParam(value = "pagesize", defaultValue = "10") int pagesize) {
+        List<User> listOfUsersobj =userService.Find(new UserSpecification());
+        List<Vacancy> listVacancy =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId()).GetByPosition(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper()).GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom()).GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()), new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
+        List<Vacancy> listVacancyWithoutPage =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId()).GetByPosition(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper()).GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom()).GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()), new Sort().setColumnName(columnName).setSortOrder(order), 1, 10000);//TODO костыль
 
-        model.addAttribute("pageCount",Math.ceil(vacancyService.Count(new VacancySpecification())/10.0));
+        model.addAttribute("listOfUsers", listOfUsersobj);
+        model.addAttribute("vacancyForm", vacancy);
+        model.addAttribute("pageCount",Math.ceil( listVacancyWithoutPage.size()/pagesize));
         model.addAttribute("columnName",columnName);
         model.addAttribute("pageNumber",page);
-        model.addAttribute("vacancy", vacancyService.FindWithPaging(new VacancySpecification(), new Sort().setColumnName(columnName).setSortOrder(order), page, 10));
+        model.addAttribute("vacancy", listVacancy);
+        model.addAttribute("currentOrder",order);
         model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
         logger.debug("showAllvacancy()");
           return "vacancy/list";

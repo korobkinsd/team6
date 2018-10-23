@@ -13,14 +13,15 @@ public interface IVacancySpecification extends ISpecification<Vacancy> {
 
     IVacancySpecification GetByIdIn(List<Integer> ids);
 
-    IVacancySpecification GetByName(String name);
+    IVacancySpecification GetByPosition(String position);
 
-    IVacancySpecification GetByNameLike(String name);
+    IVacancySpecification GetByPositionLike(String position);
 
-    IVacancySpecification GetByEmail(String email);
+    IVacancySpecification GetByIdDeveloper(Integer idDeveloper);
 
-    IVacancySpecification GetBySurname(String surname);
+     IVacancySpecification GetBySalaryTo(Double SalaryTo) ;
+     IVacancySpecification GetBySalaryFrom(Double SalaryFrom) ;
 
-    IVacancySpecification GetBySurnameLike(String surname);
+    IVacancySpecification GetByExperienceYearsRequire(Double experienceYearsRequire);
 }
 
