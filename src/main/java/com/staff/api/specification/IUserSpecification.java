@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IUserSpecification extends ISpecification<User> {
 
+    IUserSpecification GetAnd();
+
     IUserSpecification GetById(String id);
 
     IUserSpecification GetByIdIn(List<Integer> ids);
@@ -15,6 +17,8 @@ public interface IUserSpecification extends ISpecification<User> {
     IUserSpecification GetByNameLike(String name);
 
     IUserSpecification GetByEmail(String email);
+
+    IUserSpecification GetByEmailLike(String email);
 
     IUserSpecification GetBySurname(String surname);
 

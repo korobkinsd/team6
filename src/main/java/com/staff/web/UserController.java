@@ -15,16 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.staff.api.service.IUserService;
 import com.staff.validator.UserFormValidator;
+
+import java.util.List;
 
 @Controller
 public class UserController extends BaseController {
@@ -54,11 +51,28 @@ public class UserController extends BaseController {
 
 	// list page
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public String showAllUsers(Model model) {
+	public String showAllUsers(Model model, @ModelAttribute("userForm")  User user,
+							   @RequestParam(value = "columnName", defaultValue ="NAME") String columnName,
+							   @RequestParam(value = "order", defaultValue = "ASC") String order,
+							   @RequestParam(value = "page", defaultValue = "1") int page,
+							   @RequestParam(value = "pagesize", defaultValue = "10") int pagesize) {
 
 		logger.debug("showAllUsers()");
 
-		model.addAttribute("users", userService.FindWithPaging(new UserSpecification(), new Sort().setColumnName(SortUserFields.NAME.toString()).setSortOrder(SortOrder.ASC.toString()), 1, 10));
+		List<User> Users = userService.FindWithPaging(new UserSpecification().GetByNameLike(user.getName())
+				.GetAnd().GetByEmailLike(user.getEmail()).GetAnd().GetBySurnameLike(user.getSurname()),
+				new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
+
+		int userCount = userService.Count(new UserSpecification());
+		int pageCount = userCount/pagesize +1;
+
+		model.addAttribute("users", Users);
+		model.addAttribute("userForm", user);
+		model.addAttribute("columnName",columnName);
+		model.addAttribute("currentOrder",order);
+		model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
+		model.addAttribute("pageNumber",page);
+		model.addAttribute("pageCount", pageCount);
 		return "users/list";
 
 	}

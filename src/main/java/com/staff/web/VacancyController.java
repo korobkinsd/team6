@@ -57,7 +57,11 @@ public class VacancyController {
     @RequestMapping(value = "/vacancy", method = RequestMethod.GET)
     public String showAllvacancy(@ModelAttribute("vacancyForm")  Vacancy vacancy,Model model,@RequestParam(value = "page", defaultValue = "1") int page,@RequestParam(value = "columnName", defaultValue ="ID") String columnName,@RequestParam(value = "order", defaultValue = "ASC") String order,@RequestParam(value = "pagesize", defaultValue = "10") int pagesize) {
         List<User> listOfUsersobj =userService.Find(new UserSpecification());
-        List<Vacancy> listVacancy =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId()).GetByPosition(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper()).GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom()).GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()), new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
+        List<Vacancy> listVacancy =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId())
+                .GetByPosition(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper())
+                .GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom())
+                .GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()),
+                new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
         List<Vacancy> listVacancyWithoutPage =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId()).GetByPosition(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper()).GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom()).GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()), new Sort().setColumnName(columnName).setSortOrder(order), 1, 10000);//TODO костыль
 
         model.addAttribute("listOfUsers", listOfUsersobj);
