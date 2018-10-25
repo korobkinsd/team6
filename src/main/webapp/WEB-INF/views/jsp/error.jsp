@@ -5,24 +5,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<jsp:include page="layouts/header.jsp" />
+
 
 <body>
-
-	<div class="container">
-
+<jsp:include page="layouts/header.jsp" />
+<div class="container-fluid">
+	<br><br>
 		<h1>Error Page</h1>
 
 		<p>${exception.message}</p>
-		<!-- Exception: ${exception.message}.
+		${exception.message}.
 		  	<c:forEach items="${exception.stackTrace}" var="stackTrace"> 
 				${stackTrace} 
 			</c:forEach>
-	  	-->
-
-	</div>
-
-	<jsp:include page="layouts/footer.jsp" />
-
+</div>
+<jsp:include page="layouts/footer.jsp" />
 </body>
 </html>

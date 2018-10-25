@@ -1,0 +1,30 @@
+welcome=Welcome Spring MVC
+
+button.add=Добавить
+button.delete=Удалить
+button.update=Изменить
+button.cancel=Отмена
+
+label.table.column.action=Действия
+
+label.table.title.users=Пользователи
+label.table.column.user_id=#Id
+label.table.column.user_name=Имя
+label.table.column.user_surname=Фамилия
+
+
+label.table.title.candidates=Кандидаты
+label.table.column.candidate_id=#Id
+label.table.column.candidate_name=Имя
+label.table.column.candidate_surname=Фамилия
+label.table.column.candidate_salary=Зарплата
+label.table.column.candidate_birthday=Дата рождения
+label.table.column.candidate_state=Статус
+
+messages.candidates.not_found=Кандидат не найден
+messages.candidates.deleted=Кандидат удалён
+messages.candidates.updated=Кандидат обновлён
+messages.candidates.added=Кандидат добавлен
+
+label.menu.users=Пользователи
+label.menu.candidates=Кандидаты

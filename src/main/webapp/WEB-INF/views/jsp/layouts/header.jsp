@@ -5,22 +5,31 @@
 	<meta charset="utf-8">
 	<spring:url value="/resources/core/css/core.css" var="coreCss" />
 	<spring:url value="/resources/core/lib/bootstrap/css/bootstrap.min.css"	var="bootstrapCss" />
+	<spring:url value="/resources/core/lib/bootstrap/css/dashboard.css"	var="dashboardCss" />
 	<link href="${bootstrapCss}" rel="stylesheet" />
 	<link href="${coreCss}" rel="stylesheet" />
+	<link href="${dashboardCss}" rel="stylesheet">
 </head>
 
-<spring:url value="/" var="urlHome" />
-<spring:url value="/users/add" var="urlAddUser" />
-<spring:url value="/vacancy" var="urlVacancy" />
-<spring:url value="/vacancy/add" var="urlAddVacancy" />
-<spring:url value="/skill" var="urlSkill" />
-<spring:url value="/skill/add" var="urlAddSkill" />
-<nav class="navbar navbar-inverse ">
+<div class="container-fluid">
+	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+		<div class="navbar-brand col-sm-3 col-md-2 mr-0"> Job&Staff </div>
+		<ul class="navbar-nav px-3">
+			<li class="nav-item text-nowrap">
+				<span style="float: right">
+					<a href="?lang=en">en</a>
+					<a href="?lang=ru">ru</a>
+				</span>
+			</li>
+		</ul>
+	</nav>
+</div>
+	<!--nav class="navbar navbar-inverse ">
 	<div class="container">
-		<div class="navbar-header">
+
+		< div class="navbar-header">
 			<a class="navbar-brand" href="${urlHome}">List Users</a>
 			<a class="navbar-brand" href="${urlVacancy}">List Vacancy</a>
-			<a class="navbar-brand" href="${urlSkill}">List of skills</a>
 		</div>
 
 
@@ -34,9 +43,8 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="${urlAddUser}">Add User</a></li>
 				<li class="active"><a href="${urlAddVacancy}">Add vacancy</a></li>
-				<li class="active"><a href="${urlAddSkill}">Add skill</a></li>
+				<li class="active"><a href="${urlAddUser}"><spring:message code="button.add"/></a></li>
 			</ul>
 		</div>
-
 	</div>
-</nav>
+</nav -->
