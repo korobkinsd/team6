@@ -8,15 +8,17 @@ import com.staff.dao.CrudDao;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class SkillDao extends CrudDao<Skill> implements ISkillDao {
 
     public SkillDao(){
         super();
-        this.setRowMapper(new SkillDao.SkillMapper());
+        this.setRowMapper(new SkillMapper());
         this.setSqlQuery(new SkillSql());
     }
 
@@ -25,9 +27,9 @@ public class SkillDao extends CrudDao<Skill> implements ISkillDao {
 
         // Unable to handle List<String> or Array
         // BeanPropertySqlParameterSource
-        Skill Skill = (Skill)entity;
+        Skill skill = (Skill)entity;
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("name", Skill.getSkill());
+        paramSource.addValue("name", skill.getSkill());
 
         return paramSource;
     }
@@ -36,9 +38,9 @@ public class SkillDao extends CrudDao<Skill> implements ISkillDao {
 
         @Override
         public Skill mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Skill Skill = new Skill();
-            Skill.setSkill(rs.getString("name"));
-            return Skill;
+            Skill skill = new Skill();
+            skill.setSkill(rs.getString("name"));
+            return skill;
         }
     }
 }

@@ -6,22 +6,23 @@ public class SkillSql implements ISqlQuery{
 
     @Override
     public String getBaseSql() {
-        return "SELECT * FROM skill";
+        return "SELECT NAME FROM SKILL";
     }
 
     @Override
     public String getSaveSql() {
-        return null;
+        return "INSERT INTO SKILL(NAME) "
+                + "VALUES ( :name)";
     }
 
     @Override
     public String getUpdateSql() {
-        return null;
+        return "UPDATE USER SET NAME=:name  WHERE NAME=:name";
     }
 
     @Override
     public String getDeleteSql() {
-        return null;
+        return "DELETE FROM SKILL %s ";
     }
 
     @Override
@@ -31,18 +32,17 @@ public class SkillSql implements ISqlQuery{
 
     @Override
     public String getSpecificationSql() {
-        return null;
+        return " %s ";
     }
 
     @Override
     public String getSortSql() {
-        return null;
+        return " %s ";
     }
 
     @Override
     public String getPagingSql() {
-        return null;
+        return " LIMIT :LIMIT OFFSET :OFFSET ";
     }
-
 
 }

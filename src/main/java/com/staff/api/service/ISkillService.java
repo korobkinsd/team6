@@ -2,11 +2,7 @@ package com.staff.api.service;
 
 import com.staff.api.entity.Skill;
 
-import java.util.List;
 
-public interface ISkillService {
+public interface ISkillService extends ICrudService<Skill>{
 
-    Skill findById(Integer id);
-
-    List<Skill> findAll();
 }

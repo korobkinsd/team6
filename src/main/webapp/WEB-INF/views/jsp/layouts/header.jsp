@@ -13,11 +13,14 @@
 <spring:url value="/users/add" var="urlAddUser" />
 <spring:url value="/vacancy" var="urlVacancy" />
 <spring:url value="/vacancy/add" var="urlAddVacancy" />
+<spring:url value="/skill" var="urlSkill" />
+<spring:url value="/skill/add" var="urlAddSkill" />
 <nav class="navbar navbar-inverse ">
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="${urlHome}">List Users</a>
 			<a class="navbar-brand" href="${urlVacancy}">List Vacancy</a>
+			<a class="navbar-brand" href="${urlSkill}">List of skills</a>
 		</div>
 
 
@@ -31,6 +34,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="${urlAddUser}">Add User</a></li>
 				<li class="active"><a href="${urlAddVacancy}">Add vacancy</a></li>
+				<li class="active"><a href="${urlAddSkill}">Add skill</a></li>
 			</ul>
 		</div>
 
