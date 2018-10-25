@@ -23,5 +23,6 @@ public interface IVacancySpecification extends ISpecification<Vacancy> {
      IVacancySpecification GetBySalaryFrom(Double SalaryFrom) ;
 
     IVacancySpecification GetByExperienceYearsRequire(Double experienceYearsRequire);
+    IVacancySpecification GetByState(String state);
 }
 

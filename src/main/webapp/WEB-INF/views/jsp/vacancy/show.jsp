@@ -51,6 +51,10 @@
 		<label class="col-sm-2">salaryTo</label>
 		<div class="col-sm-10">${vacancy.experienceYearsRequire}</div>
 	</div>
+	<div class="row">
+		<label class="col-sm-2">State</label>
+		<div class="col-sm-10">${vacancy.state}</div>
+	</div>
 </div>
 
 <jsp:include page="../layouts/footer.jsp" />

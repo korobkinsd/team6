@@ -6,6 +6,7 @@ import com.staff.api.entity.User;
 import com.staff.api.entity.Vacancy;
 import com.staff.api.enums.Sort.SortOrder;
 import com.staff.api.enums.Sort.SortVacancyFields;
+import com.staff.api.enums.VacancyState;
 import com.staff.api.service.IUserService;
 import com.staff.api.service.IVacancyService;
 
@@ -58,13 +59,15 @@ public class VacancyController {
     public String showAllvacancy(@ModelAttribute("vacancyForm")  Vacancy vacancy,Model model,@RequestParam(value = "page", defaultValue = "1") int page,@RequestParam(value = "columnName", defaultValue ="ID") String columnName,@RequestParam(value = "order", defaultValue = "ASC") String order,@RequestParam(value = "pagesize", defaultValue = "10") int pagesize) {
         List<User> listOfUsersobj =userService.Find(new UserSpecification());
         List<Vacancy> listVacancy =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId())
-                .GetByPosition(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper())
+                .GetByPositionLike(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper())
                 .GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom())
-                .GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()),
+                .GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()).GetByState(vacancy.getState()),
                 new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
-        List<Vacancy> listVacancyWithoutPage =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId()).GetByPosition(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper()).GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom()).GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()), new Sort().setColumnName(columnName).setSortOrder(order), 1, 10000);//TODO костыль
-
+        List<Vacancy> listVacancyWithoutPage =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId()).GetByPositionLike(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper()).GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom()).GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()), new Sort().setColumnName(columnName).setSortOrder(order), 1, 10000);//TODO костыль
+        List<VacancyState> vacancyState = Arrays.asList(VacancyState.values());
+        model.addAttribute("vacancyState", vacancyState);
         model.addAttribute("listOfUsers", listOfUsersobj);
+
         model.addAttribute("vacancyForm", vacancy);
         model.addAttribute("pageCount",Math.ceil( listVacancyWithoutPage.size()/pagesize));
         model.addAttribute("columnName",columnName);
@@ -83,7 +86,8 @@ public class VacancyController {
         logger.debug("showAddVacancyForm()");
         List<User> listOfUsersobj =userService.Find(new UserSpecification());
         model.addAttribute("listOfUsers", listOfUsersobj);
-
+        List<VacancyState> vacancyState = Arrays.asList(VacancyState.values());
+        model.addAttribute("vacancyState", vacancyState);
         Vacancy vacancy = new Vacancy();
 
         // set default value
@@ -147,7 +151,8 @@ public class VacancyController {
     public String showUpdateVacancyForm(@PathVariable("id") int id, Model model) {
 
         logger.debug("showUpdateVacancyForm() : {}", id);
-
+        List<VacancyState> vacancyState = Arrays.asList(VacancyState.values());
+        model.addAttribute("vacancyState", vacancyState);
         Vacancy vacancy = vacancyService.Read(new VacancySpecification().GetById(id));
         List<User> listOfUsersobj =userService.Find(new UserSpecification());
         model.addAttribute("listOfUsers", listOfUsersobj);

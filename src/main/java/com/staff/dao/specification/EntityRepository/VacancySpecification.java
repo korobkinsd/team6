@@ -1,11 +1,11 @@
 
 package com.staff.dao.specification.EntityRepository;
 
-import com.staff.api.entity.User;
+
 import com.staff.api.entity.Vacancy;
-import com.staff.api.enums.Sort.SortUserFields;
+
 import com.staff.api.enums.Sort.SortVacancyFields;
-import com.staff.api.specification.IUserSpecification;
+
 import com.staff.api.specification.IVacancySpecification;
 import com.staff.dao.specification.Specification;
 
@@ -40,8 +40,13 @@ public class VacancySpecification extends Specification<Vacancy> implements IVac
     }
 
     @Override
-    public IVacancySpecification GetByPositionLike( String Position) {
-        return null;
+    public IVacancySpecification GetByPositionLike( String position) {
+        if (position !="" & position !=null) {
+            this.And();
+            this.setSpecification(this.getSpecification() +" ".concat(SortVacancyFields.POSITION.toString()));
+            this.ConcatForLike(position);
+        }
+        return this;
     }
 
     @Override
@@ -76,6 +81,14 @@ public class VacancySpecification extends Specification<Vacancy> implements IVac
             this.And();
             this.setSpecification(this.getSpecification() +" ".concat("experienceYearsRequire"));
             this.ConcatForEquals(experienceYearsRequire);}
+        return this;
+    }
+    @Override
+    public IVacancySpecification GetByState(String state) {
+        if (state !=null ) {
+            this.And();
+            this.setSpecification(this.getSpecification() +" ".concat("vacancyState"));
+            this.ConcatForEquals(state);}
         return this;
     }
 }

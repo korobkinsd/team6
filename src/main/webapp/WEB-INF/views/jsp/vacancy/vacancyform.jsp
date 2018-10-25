@@ -82,6 +82,25 @@
             </div>
         </spring:bind>
 
+
+		<spring:bind path="state">
+			<div class="form-group ${status.error ? 'has-error' : ''}">
+				<label class="col-sm-2 control-label">state</label>
+				<div class="col-sm-10">
+					<form:select path="state" class="form-control" id="state">
+						<c:forEach items="${vacancyState}" var="value">
+							<option     value="${value.toString()}">${value.toString()}</option>
+						</c:forEach>
+					</form:select>
+					<form:errors path="state" class="control-label" />
+				</div>
+			</div>
+		</spring:bind>
+
+
+
+
+
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>

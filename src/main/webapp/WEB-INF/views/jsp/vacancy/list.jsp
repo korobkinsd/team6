@@ -26,13 +26,26 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th><a href="?columnName=ID&order=${order}&page=${pageNumber}">ID</a></th>
-            <th><a href="?columnName=position&order=${order}&page=${pageNumber}">position</a></th>
-            <th><a href="?columnName=idDeveloper&order=${order}&page=${pageNumber}">idDeveloper</a></th>
-            <th><a href="?columnName=salaryFrom&order=${order}&page=${pageNumber}">salaryFrom</a></th>
-            <th><a href="?columnName=salaryTo&order=${order}&page=${pageNumber}">salaryTo</a></th>
+            <th>
+                <a href="?columnName=ID&order=${order}&page=${pageNumber}">ID</a>
+            </th>
+            <th>
+                <a href="?columnName=position&order=${order}&page=${pageNumber}">position</a>
+            </th>
+            <th>
+                <a href="?columnName=idDeveloper&order=${order}&page=${pageNumber}">idDeveloper</a>
+            </th>
+            <th>
+                <a href="?columnName=salaryFrom&order=${order}&page=${pageNumber}">salaryFrom</a>
+            </th>
+            <th>
+                <a href="?columnName=salaryTo&order=${order}&page=${pageNumber}">salaryTo</a>
+            </th>
             <th>
                 <a href="?columnName=experienceYearsRequire&order=${order}&page=${pageNumber}">experienceYearsRequire</a>
+            </th>
+            <th>
+                <a href="?columnName=vacancyState&order=${order}&page=${pageNumber}">vacancyState</a>
             </th>
         </tr>
 
@@ -92,6 +105,23 @@
                     </div>
                 </spring:bind>
                 </th>
+                <th><spring:bind path="state">
+
+
+                    <div class="col-sm-10">
+                        <form:select path="state" class="form-control" id="state">
+                            <option value="0">Пусто</option>
+                            <c:forEach items="${vacancyState}" var="state">
+                                <option  ${state.toString() == vacancyForm.state ? 'selected' : ''}
+                                        value="${state.toString()}">${state.toString()}</option>
+                            </c:forEach>
+                        </form:select>
+
+
+                    </div>
+                </spring:bind>
+                </th>
+                </th>
                 <th>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
@@ -116,7 +146,7 @@
                 <td>${vacancy.salaryFrom}</td>
                 <td>${vacancy.salaryTo}</td>
                 <td>${vacancy.experienceYearsRequire}</td>
-
+                <td>${vacancy.state}</td>
                 <td>
                     <spring:url value="/vacancy/${vacancy.id}" var="vacancyUrl"/>
                     <spring:url value="/vacancy/${vacancy.id}/delete" var="deleteUrl"/>

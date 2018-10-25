@@ -40,6 +40,7 @@ public class VacancyDao extends CrudDao<Vacancy> implements IVacancyDao {
         paramSource.addValue("salaryfrom", vacancy.getSalaryFrom());
         paramSource.addValue("salaryto", vacancy.getSalaryTo());
         paramSource.addValue("experienceyearsrequire", vacancy.getExperienceYearsRequire());
+        paramSource.addValue("vacancyState", vacancy.getState());
 
         return paramSource;
     }
@@ -55,6 +56,7 @@ public class VacancyDao extends CrudDao<Vacancy> implements IVacancyDao {
             vacancy.setSalaryFrom(rs.getDouble("salaryfrom"));
             vacancy.setSalaryTo(rs.getDouble("salaryto"));
             vacancy.setExperienceYearsRequire(rs.getDouble("experienceyearsrequire"));
+            vacancy.setState(rs.getString("vacancyState"));
             return vacancy;
         }
     }

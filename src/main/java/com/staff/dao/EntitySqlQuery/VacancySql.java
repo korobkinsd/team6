@@ -11,13 +11,13 @@ public class VacancySql implements ISqlQuery {
 
     @Override
     public String getSaveSql() {
-        return "INSERT INTO vacancy(position, idDeveloper,salaryFrom ,salaryTo ,experienceYearsRequire ) "
-                + "VALUES ( :position, :iddeveloper, :salaryfrom, :salaryto, :experienceyearsrequire)";
+        return "INSERT INTO vacancy(position, idDeveloper,salaryFrom ,salaryTo ,experienceYearsRequire,vacancyState ) "
+                + "VALUES ( :position, :iddeveloper, :salaryfrom, :salaryto, :experienceyearsrequire,:vacancyState)";
     }
 
     @Override
     public String getUpdateSql() {
-        return "UPDATE vacancy SET position=:position,  salaryFrom=:salaryfrom, salaryTo=:salaryto, experienceYearsRequire=:experienceyearsrequire WHERE id=:id";
+        return "UPDATE vacancy SET position=:position,  salaryFrom=:salaryfrom, salaryTo=:salaryto, experienceYearsRequire=:experienceyearsrequire,vacancyState=:vacancyState WHERE id=:id";
     }
 
     @Override

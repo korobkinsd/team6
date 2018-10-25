@@ -20,6 +20,16 @@ public class Vacancy implements IEntity<Vacancy> {
 
     double experienceYearsRequire;
 
+    String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String status) {
+        this.state = status;
+    }
+
     public double getExperienceYearsRequire() {
         return experienceYearsRequire;
     }
