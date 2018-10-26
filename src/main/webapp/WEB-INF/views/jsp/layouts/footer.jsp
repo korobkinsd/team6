@@ -16,7 +16,7 @@
 		</ul>
 
 
-			<p>&copy; team6.com 2019</p>
+			<p class="p-2 text-white">&copy; team6.com 2019</p>
 
 	<!-- /div -->
 	</nav>

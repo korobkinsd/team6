@@ -55,7 +55,7 @@ public class UserController extends BaseController {
 							   @RequestParam(value = "columnName", defaultValue ="NAME") String columnName,
 							   @RequestParam(value = "order", defaultValue = "ASC") String order,
 							   @RequestParam(value = "page", defaultValue = "1") int page,
-							   @RequestParam(value = "pagesize", defaultValue = "10") int pagesize) {
+							   @RequestParam(value = "pagesize", defaultValue = "5") int pagesize) {
 
 		logger.debug("showAllUsers()");
 

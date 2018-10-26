@@ -29,7 +29,7 @@ public class SkillDao extends CrudDao<Skill> implements ISkillDao {
         // BeanPropertySqlParameterSource
         Skill skill = (Skill)entity;
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("name", skill.getSkill());
+        paramSource.addValue("name", skill.getName());
 
         return paramSource;
     }
@@ -39,7 +39,7 @@ public class SkillDao extends CrudDao<Skill> implements ISkillDao {
         @Override
         public Skill mapRow(ResultSet rs, int rowNum) throws SQLException {
             Skill skill = new Skill();
-            skill.setSkill(rs.getString("name"));
+            skill.setName(rs.getString("name"));
             return skill;
         }
     }

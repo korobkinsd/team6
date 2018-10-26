@@ -5,10 +5,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
+<html lang="en">
+
 
 <jsp:include page="../layouts/header.jsp"/>
-
 <body>
+
 
 <div class="container"><br><br><br>
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -22,22 +24,28 @@
 		</div>
 	</c:if>
 
-	<h1>Skills</h1>
+	<h1>skills</h1>
+        <div id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+                <spring:url value="/skills/add" var="urlAddSkill" />
+                <li class="active"><a href="${urlAddSkill}"><spring:message code="button.add"/></a></li>
+            </ul>
+        </div>
 
 	<table class="table table-striped">
 		<thead>
-		<tr>
-			<th>
-				<a href="?columnName=NAME&order=${order}&page=${pageNumber}">Skills</a>
-			</th>
-		</tr>
+		<%--<tr>--%>
+			<%--<th>--%>
+				<%--<a href="?columnName=NAME&order=${order}&page=${pageNumber}">Skills</a>--%>
+			<%--</th>--%>
+		<%--</tr>--%>
 
 
 
 		<form:form class="form-horizontal" method="get" modelAttribute="skillForm" action="${skillActionUrl}">
 			<tr>
-				<th><spring:bind path="skill">
-					<form:input path="skill" type="text" class="form-control " id="skill"  placeholder="skill"/>
+				<th><spring:bind path="name">
+					<form:input path="name" type="text" class="form-control " id="name"  placeholder="name"/>
 				</spring:bind></th>
 
 				<th>
@@ -54,13 +62,13 @@
 
 		</thead>
 
-		<c:forEach var="skill" items="${skill}">
+		<c:forEach var="skill" items="${skills}">
 			<tr>
-				<td>${skill.skill}</td>
+				<td>${skill.name}</td>
 				<td>
-					<spring:url value="/skill/${skill.skill}" var="skillUrl"/>
-					<spring:url value="/skill/${skill.skill}/delete" var="deleteUrl"/>
-					<spring:url value="/skill/${skill.skill}/update" var="updateUrl"/>
+					<spring:url value="/skills/${skill.name}" var="skillUrl"/>
+					<spring:url value="/skills/${skill.name}/delete" var="deleteUrl"/>
+					<spring:url value="/skills/${skill.name}/update" var="updateUrl"/>
 
 					<button class="btn btn-info" onclick="location.href='${skillUrl}'">Show</button>
 					<button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>

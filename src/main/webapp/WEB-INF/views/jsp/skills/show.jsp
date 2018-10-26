@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
-
+<html lang="en">
 
 <jsp:include page="../layouts/header.jsp" />
 
@@ -25,7 +25,7 @@
 
     <div class="row">
         <label class="col-sm-2">NAME</label>
-        <div class="col-sm-10">${skill.skill}</div>
+        <div class="col-sm-10">${skill.name}</div>
     </div>
 </div>
 
