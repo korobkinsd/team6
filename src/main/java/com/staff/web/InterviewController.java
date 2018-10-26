@@ -20,7 +20,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.staff.api.service.IInterviewService;
 
 
 @Controller
@@ -101,7 +100,7 @@ public class InterviewController extends BaseController {
             //interviewService.saveOrUpdate(interview);
 
             // POST/REDIRECT/GET
-            return "redirect:/interviews/" + interview.getId();
+            return "redirect:/interviews"; //+ interview.getId();
 
             // POST/FORWARD/GET
             // return "user/list";

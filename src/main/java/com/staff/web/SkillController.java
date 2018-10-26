@@ -36,12 +36,14 @@ public class SkillController {
 
         logger.debug("showAllskill()");
 
-        List<Skill> listSkill =skillService.FindWithPaging(new SkillSpecification().GetBySkill(skill.getName()).GetBySkillLike(skill.getName()),
+        List<Skill> listSkill =skillService.FindWithPaging(new SkillSpecification().GetBySkillLike(skill.getName()),
                 new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
-        List<Skill> listSkillWithoutPage =skillService.FindWithPaging(new SkillSpecification().GetBySkill(skill.getName()).GetBySkillLike(skill.getName()), new Sort().setColumnName(columnName).setSortOrder(order), 1, 10000);//TODO костыль
+
+        int skillCount = skillService.Count(new SkillSpecification());
+        int pageCount = skillCount/pagesize +1;
 
         model.addAttribute("skillForm", skill);
-        model.addAttribute("pageCount",Math.ceil( listSkillWithoutPage.size()/pagesize));
+        model.addAttribute("pageCount",pageCount);
         model.addAttribute("columnName",columnName);
         model.addAttribute("pageNumber",page);
         model.addAttribute("skills", listSkill);
@@ -60,7 +62,7 @@ public class SkillController {
         Skill skill = new Skill();
 
         // set default value
-        skill.setName("JAVA");
+        skill.setName("SET SKILL");
         model.addAttribute("skillForm", skill);
 
         return "skills/skillform";
