@@ -10,7 +10,8 @@
 
 <body>
 
-<div class="container">
+<div class="container"><br><br><br>
+	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
 	<c:if test="${not empty msg}">
 		<div class="alert alert-${css} alert-dismissible" role="alert">
@@ -69,7 +70,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-
+	</main>
 </div>
 
 <jsp:include page="../layouts/footer.jsp"/>

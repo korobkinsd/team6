@@ -97,7 +97,7 @@ public class UserController extends BaseController {
 			
 			userService.saveOrUpdate(user, new UserSpecification().GetById(user.getForeignKey()));
 
-			return "redirect:/users/" + user.getId();
+			return "redirect:/users"; // + user.getId();
 		}
 
 	}

@@ -77,6 +77,7 @@
 						<button type="submit" class="btn-lg btn-primary pull-right">Update</button>
 					</c:otherwise>
 				</c:choose>
+				<a href="javascript:history.back()"><spring:message code="button.cancel" /></a>
 			</div>
 		</div>
 	</form:form>

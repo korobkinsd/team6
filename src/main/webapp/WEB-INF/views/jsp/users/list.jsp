@@ -10,8 +10,8 @@
 
 <body>
 
-	<div class="container">
-
+	<div class="container"><br><br><br>
+		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 		<c:if test="${not empty msg}">
 			<div class="alert alert-${css} alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,7 +22,13 @@
 		</c:if>
 
 		<h1>All Users</h1>
-
+		<div id="navbar">
+			<ul class="nav navbar-nav navbar-right">
+				<spring:url value="/users/add" var="urlAddUser" />
+				<li class="active"><a href="${urlAddUser}"><spring:message code="button.add"/></a></li>
+			</ul>
+		</div>
+		<div class="table-responsive">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -85,7 +91,8 @@
 				</tr>
 			</c:forEach>
 		</table>
-
+		</div>
+		</main>>
 	</div>
 
 	<jsp:include page="../layouts/footer.jsp" />

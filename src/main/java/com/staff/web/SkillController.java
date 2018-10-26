@@ -92,7 +92,7 @@ public class SkillController {
             //skillService.saveOrUpdate(skill,new SkillSpecification().GetBySkill(skill.getForeignKeyint()));
 
             // POST/REDIRECT/GET
-            return "redirect:/skill/" + skill.getSkill();
+            return "redirect:/skill"; // + skill.getSkill();
 
             // POST/FORWARD/GET
             // return "skill/list";

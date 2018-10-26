@@ -131,7 +131,7 @@ public class VacancyController {
             vacancyService.saveOrUpdate(vacancy,new VacancySpecification().GetById(vacancy.getForeignKeyint()));
 
             // POST/REDIRECT/GET
-            return "redirect:/vacancy/" + vacancy.getId();
+            return "redirect:/vacancy"; // + vacancy.getId();
 
             // POST/FORWARD/GET
             // return "vacancy/list";
