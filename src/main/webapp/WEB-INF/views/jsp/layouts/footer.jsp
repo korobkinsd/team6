@@ -2,22 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<nav aria-label="Page navigation example">
-	<ul class="pagination justify-content-center">
-		<!-- label class="col-sm-2 control-label">${pageCount}</label -->
-		<c:forEach begin="1" end="${pageCount}" varStatus="loop">
-			<li class="page-item"><a class="page-link" href="?columnName=${columnName}&order=${order}&page=${loop.index}">${loop.index}</a></li>
-		</c:forEach>
-	</ul>
-</nav>
+
 
 <div class="container-fluid">
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<!-- label class="col-sm-2 control-label">${pageCount}</label -->
+			<c:forEach begin="1" end="${pageCount}" varStatus="loop">
+				<li class="page-item"><a class="page-link" href="?columnName=${columnName}&order=${order}&page=${loop.index}">${loop.index}</a></li>
+			</c:forEach>
+		</ul>
+	</nav>
 	<nav class="navbar navbar-dark fixed-bottom bg-dark flex-md-nowrap p-0 shadow">
 	<!--div class="container" -->
-		<hr>
-		<footer>
+		<ul class="pagination justify-content-center">
+			<!-- label class="col-sm-2 control-label">${pageCount}</label -->
+			<c:forEach begin="1" end="${pageCount}" varStatus="loop">
+				<li class="page-item"><a class="page-link" href="?columnName=${columnName}&order=${order}&page=${loop.index}">${loop.index}</a></li>
+			</c:forEach>
+		</ul>
+
+
 			<p>&copy; team6.com 2019</p>
-		</footer>
+
 	<!-- /div -->
 	</nav>
 </div>

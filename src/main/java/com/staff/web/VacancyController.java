@@ -26,8 +26,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
@@ -45,6 +48,7 @@ public class VacancyController {
     }
     @Autowired
     private MessageSource messageSource;
+
 
     @Autowired
     VacancyFormValidator vacancyFormValidator;
@@ -103,19 +107,25 @@ public class VacancyController {
     // save or update user
     @RequestMapping(value = "/vacancy", method = RequestMethod.POST)
     public String saveOrUpdateVacancy(@ModelAttribute("vacancyForm") @Validated Vacancy vacancy,
-                                   BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+                                   BindingResult result, Model model, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         logger.debug("saveOrUpdateVacancy() : {}", vacancy);
 
         if (result.hasErrors()) {
+            List<User> listOfUsersobj =userService.Find(new UserSpecification());
+            model.addAttribute("listOfUsers", listOfUsersobj);
+            List<VacancyState> vacancyState = Arrays.asList(VacancyState.values());
+            model.addAttribute("vacancyState", vacancyState);
             return "vacancy/vacancyform";
         } else {
-
+            LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+            Locale locale = localeResolver.resolveLocale(request);
+            if (locale == null) {locale = Locale.getDefault();};
             redirectAttributes.addFlashAttribute("css", "success");
             if(vacancy.isNew()){
-                redirectAttributes.addFlashAttribute("msg", "vacancy added successfully!");
+                redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.vacancy.added" , null, locale ));
             }else{
-                redirectAttributes.addFlashAttribute("msg", "vacancy updated successfully!");
+                redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.vacancy.updated" , null, locale ));
             }
 
             vacancyService.saveOrUpdate(vacancy,new VacancySpecification().GetById(vacancy.getForeignKeyint()));

@@ -24,6 +24,8 @@
 		</ul>
 	</nav>
 </div>
+
+<jsp:include page="../layouts/menu.jsp" />
 	<!--nav class="navbar navbar-inverse ">
 	<div class="container">
 

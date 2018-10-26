@@ -20,44 +20,45 @@
 		</div>
 	</c:if>
 
-	<h1>vacancy Detail</h1>
+	<h1><spring:message code="label.title.showVacancy"/></h1>
 	<br />
 
 	<div class="row">
-		<label class="col-sm-2">ID</label>
+		<label class="col-sm-2"><spring:message code="label.table.column.vacancy.id"/></label>
 		<div class="col-sm-10">${vacancy.id}</div>
 	</div>
 
 	<div class="row">
-		<label class="col-sm-2">position</label>
+		<label class="col-sm-2"><spring:message code="label.table.column.vacancy.position"/></label>
 		<div class="col-sm-10">${vacancy.position}</div>
 	</div>
 
 	<div class="row">
-		<label class="col-sm-2">idDeveloper</label>
+		<label class="col-sm-2"><spring:message code="label.table.column.vacancy.IdDeveloper"/></label>
 		<div class="col-sm-10">${vacancy.idDeveloper}</div>
 	</div>
 
 	<div class="row">
-		<label class="col-sm-2">salaryFrom</label>
+		<label class="col-sm-2"><spring:message code="label.table.column.vacancy.salary_from"/></label>
 		<div class="col-sm-10">${vacancy.salaryFrom}</div>
 	</div>
 
 	<div class="row">
-		<label class="col-sm-2">salaryTo</label>
+		<label class="col-sm-2"><spring:message code="label.table.column.vacancy.salary_to"/></label>
 		<div class="col-sm-10">${vacancy.salaryTo}</div>
 	</div>
 	<div class="row">
-		<label class="col-sm-2">salaryTo</label>
+		<label class="col-sm-2"><spring:message code="label.table.column.vacancy.ExperienceYearsRequire"/></label>
 		<div class="col-sm-10">${vacancy.experienceYearsRequire}</div>
 	</div>
 	<div class="row">
-		<label class="col-sm-2">State</label>
+		<label class="col-sm-2"><spring:message code="label.table.column.vacancy.state"/></label>
 		<div class="col-sm-10">${vacancy.state}</div>
 	</div>
 </div>
 
-<jsp:include page="../layouts/footer.jsp" />
+
 
 </body>
+<footer><jsp:include page="../layouts/footer.jsp" /></footer>
 </html>

@@ -33,7 +33,7 @@ public class VacancyFormValidator implements Validator {
 
         Vacancy vacancy = (Vacancy) target;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "position", "NotEmpty.userForm.name");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "position", "NotEmpty.vacancyForm.position");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "idDeveloper", "NotEmpty.userForm.name");
 
         if(vacancy.getSalaryFrom()>vacancy.getSalaryTo()){

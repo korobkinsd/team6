@@ -21,31 +21,32 @@
         </div>
     </c:if>
 
-    <h1>All Vacancy</h1>
-
+    <h1><spring:message code="label.table.title.vacancy"/>    </h1>
+    <spring:url value="/vacancy/add" var="urlAddVacancy" />
+    <li class="active"><a href="${urlAddVacancy}"><spring:message code="button.add"/></a></li>
     <table class="table table-striped">
         <thead>
         <tr>
             <th>
-                <a href="?columnName=ID&order=${order}&page=${pageNumber}">ID</a>
+                <a href="?columnName=ID&order=${order}&page=${pageNumber}"><spring:message code="label.table.column.vacancy.id"/></a>
             </th>
             <th>
-                <a href="?columnName=position&order=${order}&page=${pageNumber}">position</a>
+                <a href="?columnName=position&order=${order}&page=${pageNumber}"><spring:message code="label.table.column.vacancy.position"/></a>
             </th>
             <th>
-                <a href="?columnName=idDeveloper&order=${order}&page=${pageNumber}">idDeveloper</a>
+                <a href="?columnName=idDeveloper&order=${order}&page=${pageNumber}"><spring:message code="label.table.column.vacancy.IdDeveloper"/></a>
             </th>
             <th>
-                <a href="?columnName=salaryFrom&order=${order}&page=${pageNumber}">salaryFrom</a>
+                <a href="?columnName=salaryFrom&order=${order}&page=${pageNumber}"><spring:message code="label.table.column.vacancy.salary_from"/></a>
             </th>
             <th>
-                <a href="?columnName=salaryTo&order=${order}&page=${pageNumber}">salaryTo</a>
+                <a href="?columnName=salaryTo&order=${order}&page=${pageNumber}"><spring:message code="label.table.column.vacancy.salary_to"/></a>
             </th>
             <th>
-                <a href="?columnName=experienceYearsRequire&order=${order}&page=${pageNumber}">experienceYearsRequire</a>
+                <a href="?columnName=experienceYearsRequire&order=${order}&page=${pageNumber}"><spring:message code="label.table.column.vacancy.ExperienceYearsRequire"/></a>
             </th>
             <th>
-                <a href="?columnName=vacancyState&order=${order}&page=${pageNumber}">vacancyState</a>
+                <a href="?columnName=vacancyState&order=${order}&page=${pageNumber}"><spring:message code="label.table.column.vacancy.state"/></a>
             </th>
         </tr>
 
@@ -54,7 +55,7 @@
         <form:form class="form-horizontal" method="get" modelAttribute="vacancyForm" action="${vacancyActionUrl}">
             <tr>
                 <th><spring:bind path="id">
-                    <form:input path="id" type="text" class="form-control " id="id"  placeholder="id"/>
+                    <form:input path="id" type="text" class="form-control " id="id"  placeholder=""/>
                 </spring:bind></th>
 
                 <th><spring:bind path="position">
@@ -110,7 +111,7 @@
 
                     <div class="col-sm-10">
                         <form:select path="state" class="form-control" id="state">
-                            <option value="0">Пусто</option>
+                            <option value="">Пусто</option>
                             <c:forEach items="${vacancyState}" var="state">
                                 <option  ${state.toString() == vacancyForm.state ? 'selected' : ''}
                                         value="${state.toString()}">${state.toString()}</option>
@@ -126,7 +127,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
 
-                            <button type="submit" class="btn-lg btn-primary pull-right">Change</button>
+                            <button type="submit" class="btn-lg btn-primary pull-right"><spring:message code="button.filter"/> </button>
 
                         </div>
                     </div>
@@ -148,13 +149,13 @@
                 <td>${vacancy.experienceYearsRequire}</td>
                 <td>${vacancy.state}</td>
                 <td>
-                    <spring:url value="/vacancy/${vacancy.id}" var="vacancyUrl"/>
+                    <spring:url value="/vacancy/${vacancy.id}" var="vacancyShowUrl"/>
                     <spring:url value="/vacancy/${vacancy.id}/delete" var="deleteUrl"/>
                     <spring:url value="/vacancy/${vacancy.id}/update" var="updateUrl"/>
 
-                    <button class="btn btn-info" onclick="location.href='${vacancyUrl}'">Show</button>
-                    <button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>
-                    <button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}')">Delete</button>
+                    <button class="btn btn-info" onclick="location.href='${vacancyShowUrl}'"><spring:message code="button.show"/></button>
+                    <button class="btn btn-primary" onclick="location.href='${updateUrl}'"><spring:message code="button.update"/></button>
+                    <button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}')"><spring:message code="button.delete"/></button>
                 </td>
 
             </tr>
@@ -163,7 +164,8 @@
 
 </div>
 
-<jsp:include page="../layouts/footer.jsp"/>
+
 
 </body>
+<footer><jsp:include page="../layouts/footer.jsp" /></footer>
 </html>

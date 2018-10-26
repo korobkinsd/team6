@@ -13,10 +13,10 @@
 
 	<c:choose>
 		<c:when test="${vacancyForm['new']}">
-			<h1>Add vacancy</h1>
+			<h1><spring:message code="label.title.addVacancy"/></h1>
 		</c:when>
 		<c:otherwise>
-			<h1>Update vacancy</h1>
+			<h1><spring:message code="label.title.updateVacancy"/></h1>
 		</c:otherwise>
 	</c:choose>
 	<br />
@@ -29,7 +29,7 @@
 
 		<spring:bind path="position">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">position</label>
+				<label class="col-sm-2 control-label"><spring:message code="label.table.column.vacancy.position"/></label>
 				<div class="col-sm-10">
 					<form:input path="position" type="text" class="form-control " id="position" placeholder="position" />
 
@@ -40,7 +40,7 @@
 
 		<spring:bind path="idDeveloper">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">idDeveloper</label>
+				<label class="col-sm-2 control-label"><spring:message code="label.table.column.vacancy.IdDeveloper"/></label>
 				<div class="col-sm-10">
 					<form:select path="idDeveloper" class="form-control" id="idDeveloper">
 						<c:forEach items="${listOfUsers}" var="listOfUsers">
@@ -54,7 +54,7 @@
 
 		<spring:bind path="salaryFrom">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">salaryFrom</label>
+				<label class="col-sm-2 control-label"><spring:message code="label.table.column.vacancy.salary_from"/></label>
 				<div class="col-sm-10">
 					<form:input path="salaryFrom" class="form-control" id="salaryTo" placeholder="salaryFrom" />
 					<form:errors path="salaryFrom" class="control-label" />
@@ -64,7 +64,7 @@
 
 		<spring:bind path="salaryTo">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">salaryTo</label>
+				<label class="col-sm-2 control-label"><spring:message code="label.table.column.vacancy.salary_to"/></label>
 				<div class="col-sm-10">
 					<form:input path="salaryTo" rows="5" class="form-control" id="salaryTo" placeholder="salaryTo" />
 					<form:errors path="salaryTo" class="control-label" />
@@ -74,7 +74,7 @@
 
         <spring:bind path="experienceYearsRequire">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <label class="col-sm-2 control-label">experienceYearsRequire</label>
+                <label class="col-sm-2 control-label"><spring:message code="label.table.column.vacancy.ExperienceYearsRequire"/></label>
                 <div class="col-sm-10">
                     <form:input path="experienceYearsRequire" rows="5" class="form-control" id="experienceYearsRequire" placeholder="experienceYearsRequire" />
                     <form:errors path="experienceYearsRequire" class="control-label" />
@@ -85,7 +85,7 @@
 
 		<spring:bind path="state">
 			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<label class="col-sm-2 control-label">state</label>
+				<label class="col-sm-2 control-label"><spring:message code="label.table.column.vacancy.state"/></label>
 				<div class="col-sm-10">
 					<form:select path="state" class="form-control" id="state">
 						<c:forEach items="${vacancyState}" var="value">
@@ -105,10 +105,10 @@
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
 					<c:when test="${vacancyForm['new']}">
-						<button type="submit" class="btn-lg btn-primary pull-right">Add</button>
+						<button type="submit" class="btn-lg btn-primary pull-right"><spring:message code="button.add"/></button>
 					</c:when>
 					<c:otherwise>
-						<button type="submit" class="btn-lg btn-primary pull-right">Update</button>
+						<button type="submit" class="btn-lg btn-primary pull-right"><spring:message code="button.update"/></button>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -117,7 +117,8 @@
 
 </div>
 
-<jsp:include page="../layouts/footer.jsp" />
+
 
 </body>
+<footer><jsp:include page="../layouts/footer.jsp" /></footer>
 </html>

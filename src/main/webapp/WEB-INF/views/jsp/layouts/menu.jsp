@@ -16,6 +16,7 @@
 <spring:url value="/candidates" var="urlCandidates" />
 <spring:url value="/vacancy" var="urlVacancy" />
 <spring:url value="/users" var="urlUsers" />
+<spring:url value="/skill" var="urlSkills" />
 <div class="container-fluid">
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="sidebar-sticky">
@@ -26,13 +27,16 @@
                     <a class="menu-item" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="menu-item" href="${urlUsers}">List Users</a>
+                    <a class="menu-item" href="${urlUsers}"><spring:message code="label.menu.users"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="menu-item" href="${urlVacancy}">List Vacancy</a>
+                    <a class="menu-item" href="${urlVacancy}"><spring:message code="label.menu.vacancy"/></a>
                 </li>
                 <li class="nav-item">
                     <a class="menu-item" href="${urlCandidates}"><spring:message code="label.menu.candidates"/></a>
+                </li>
+                <li class="nav-item">
+                    <a class="menu-item" href="${urlSkills}"><spring:message code="label.menu.skills"/></a>
                 </li>
                 <li class="nav-item">
                     <a class="menu-item" href="/about">About</a>

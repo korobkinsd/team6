@@ -85,7 +85,7 @@ public class VacancySpecification extends Specification<Vacancy> implements IVac
     }
     @Override
     public IVacancySpecification GetByState(String state) {
-        if (state !=null ) {
+        if (state !=null &  state !="" ) {
             this.And();
             this.setSpecification(this.getSpecification() +" ".concat("vacancyState"));
             this.ConcatForEquals(state);}
