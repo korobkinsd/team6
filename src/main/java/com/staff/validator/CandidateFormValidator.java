@@ -26,7 +26,7 @@ public class CandidateFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		Candidate candidate = (Candidate) target;
-
+		//ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthday", "NotEmpty.candidateForm.birthday");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.candidateForm.name");
 
 	}

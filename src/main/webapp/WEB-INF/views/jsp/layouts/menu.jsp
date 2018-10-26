@@ -17,31 +17,15 @@
 <spring:url value="/vacancy" var="urlVacancy" />
 <spring:url value="/users" var="urlUsers" />
 <spring:url value="/skill" var="urlSkills" />
-<div class="container-fluid">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-        <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-                <li class="nav-item"><br><br></li>
-                <li class="nav-divider"/>
-                <li class="nav-item">
-                    <a class="menu-item" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="menu-item" href="${urlUsers}"><spring:message code="label.menu.users"/></a>
-                </li>
-                <li class="nav-item">
-                    <a class="menu-item" href="${urlVacancy}"><spring:message code="label.menu.vacancy"/></a>
-                </li>
-                <li class="nav-item">
-                    <a class="menu-item" href="${urlCandidates}"><spring:message code="label.menu.candidates"/></a>
-                </li>
-                <li class="nav-item">
-                    <a class="menu-item" href="${urlSkills}"><spring:message code="label.menu.skills"/></a>
-                </li>
-                <li class="nav-item">
-                    <a class="menu-item" href="/about">About</a>
-                </li>
-            </ul>
-        </div>
+<spring:url value="/interview" var="urlInterview" />
+<div class="nav-scroller py-1 mb-2">
+    <nav class="nav d-flex justify-content-between">
+            <a class="p-2 text-white" href="/">Home</a>
+            <a class="p-2 text-white" href="${urlUsers}"><spring:message code="label.menu.users"/></a>
+            <a class="p-2 text-white" href="${urlVacancy}"><spring:message code="label.menu.vacancy"/></a>
+            <a class="p-2 text-white" href="${urlCandidates}"><spring:message code="label.menu.candidates"/></a>
+            <a class="p-2 text-white" href="${urlSkills}"><spring:message code="label.menu.skills"/></a>
+            <a class="p-2 text-white" href="${urlIntervew}"><spring:message code="label.menu.interview"/></a>
+            <a class="p-2 text-white" href="/about">About</a>
     </nav>
 </div>

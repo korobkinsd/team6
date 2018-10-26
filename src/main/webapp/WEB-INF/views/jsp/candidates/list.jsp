@@ -11,10 +11,9 @@
 <body>
 	<jsp:include page="../layouts/header.jsp" />
 
-
-			<jsp:include page="../layouts/menu.jsp" />
-			<div class="container-fluid">
+			<div class="container"><br><br><br>
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
 				<c:if test="${not empty msg}">
 					<div class="alert alert-${css} alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -64,6 +63,7 @@
 						</c:forEach>
 						</table>
 					</div>
+
 				</main>
 			</div>
 
