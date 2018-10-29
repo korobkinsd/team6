@@ -11,7 +11,7 @@
 		<ul class="pagination justify-content-center">
 			<!-- label class="col-sm-2 control-label">${pageCount}</label -->
 			<c:forEach begin="1" end="${pageCount}" varStatus="loop">
-				<li class="page-item"><a class="page-link" href="?columnName=${columnName}&order=${order}&page=${loop.index}">${loop.index}</a></li>
+				<li class="page-item"><a class="page-link" href="?columnName=${columnName}&order=${currentOrder}&page=${loop.index}">${loop.index}</a></li>
 			</c:forEach>
 		</ul>
 
