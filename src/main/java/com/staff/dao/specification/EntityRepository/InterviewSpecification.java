@@ -1,22 +1,17 @@
 package com.staff.dao.specification.EntityRepository;
 
 import com.staff.api.entity.Interview;
-import com.staff.api.entity.User;
 import com.staff.api.enums.Sort.SortInterviewFields;
-import com.staff.api.enums.Sort.SortUserFields;
-import com.staff.api.enums.Sort.SortVacancyFields;
 import com.staff.api.specification.IInterviewSpecification;
-import com.staff.api.specification.IUserSpecification;
 import com.staff.dao.specification.Specification;
 
 import java.util.List;
 
 public class InterviewSpecification extends Specification<Interview> implements IInterviewSpecification{
 
-    private final String _like = " like ";
-
     private String GetFilterLike(String value){
-        return this._like + " '%" + value + "%' ";
+        String _like = " like ";
+        return _like + " '%" + value + "%' ";
     }
 
     private String Stub(){

@@ -1,7 +1,5 @@
 package com.staff.api.entity;
 
-import java.util.List;
-
 public class User implements IEntity<User> {
 	// form:hidden - hidden value
 	Integer id;

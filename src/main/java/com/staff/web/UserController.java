@@ -2,8 +2,6 @@ package com.staff.web;
 
 import javax.servlet.http.HttpServletRequest;
 import com.staff.api.entity.User;
-import com.staff.api.enums.Sort.SortOrder;
-import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.dao.sort.Sort;
 import com.staff.dao.specification.EntityRepository.UserSpecification;
 import org.slf4j.Logger;
@@ -173,7 +171,7 @@ public class UserController extends BaseController {
 		logger.error("Request: {}, error ", req.getRequestURL(), ex);
 
 		ModelAndView model = new ModelAndView();
-		model.setViewName("user/show");
+		model.setViewName("users/show");
 		model.addObject("msg", "user not found");
 
 		return model;

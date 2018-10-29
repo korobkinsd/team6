@@ -9,10 +9,9 @@ import java.util.List;
 
 public class UserSpecification extends Specification<User> implements IUserSpecification{
 
-    private final String _like = " like ";
-
     private String GetFilterLike(String value){
-        return this._like + " '%" + value + "%' ";
+        String _like = " like ";
+        return _like + " '%" + value + "%' ";
     }
 
     private String Stub(){

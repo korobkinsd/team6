@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -62,13 +61,13 @@ public class SkillController {
         Skill skill = new Skill();
 
         // set default value
-        skill.setName("SET SKILL");
+        //skill.setName("SET SKILL");
         model.addAttribute("skillForm", skill);
 
         return "skills/skillform";
 
     }
-    // save or update user
+    // save or update skill
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
     public String saveOrUpdateSkill(@ModelAttribute("skillForm") @Validated Skill skill,
                                     BindingResult result, Model model, final RedirectAttributes redirectAttributes) {

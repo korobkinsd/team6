@@ -8,10 +8,9 @@ import org.springframework.stereotype.Component;
 @Component("emailValidator")
 public class EmailValidator {
 
-	private Pattern pattern;
-	private Matcher matcher;
+	private final Pattern pattern;
 
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public EmailValidator() {
@@ -20,7 +19,7 @@ public class EmailValidator {
 
 	public boolean valid(final String email) {
 
-		matcher = pattern.matcher(email);
+		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
 
 	}

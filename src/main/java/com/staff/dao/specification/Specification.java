@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Specification<T> implements ISpecification<T> {
 
     private String specification = "";
-    private String whereStr = " where ";
+    private final String whereStr = " where ";
 
     @Override
     public String getSpecification() {

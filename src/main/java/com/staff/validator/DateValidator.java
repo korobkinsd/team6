@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 @Component("dateValidator")
 public class DateValidator {
-    public  String[] validPatterns = {"dd.MM.yyyy","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy","yyyy-MM-dd"};
+    public final String[] validPatterns = {"dd.MM.yyyy","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy","yyyy-MM-dd"};
     private String validDatePattern;
 
     public boolean valid(final String value) {
@@ -14,21 +14,18 @@ public class DateValidator {
         if (value == null )
             return false;
         String validDatePattern = getValidDatePattern(value);
-        if ( validDatePattern == null ) {
-            return false;
-        }
-        return true;
+        return validDatePattern != null;
     }
 
     private String getValidDatePattern (String value) {
         // returns valid pattern which may be used for convert string to date
         SimpleDateFormat formatter = new SimpleDateFormat();
-        for (int i=0; i<validPatterns.length;i++) {
+        for (String validPattern : validPatterns) {
             try {
-                formatter.applyPattern(validPatterns[i]);
+                formatter.applyPattern(validPattern);
                 formatter.setLenient(false);
                 formatter.parse(value);
-                validDatePattern = validPatterns[i];
+                validDatePattern = validPattern;
             } catch (ParseException e) {
                 // nothing to do
             }

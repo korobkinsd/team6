@@ -26,6 +26,6 @@
             <a class="p-2 text-white" href="${urlCandidates}"><spring:message code="label.menu.candidates"/></a>
             <a class="p-2 text-white" href="${urlSkills}"><spring:message code="label.menu.skills"/></a>
             <a class="p-2 text-white" href="${urlInterview}"><spring:message code="label.menu.interview"/></a>
-            <a class="p-2 text-white" href="/about">About</a>
+            <a class="p-2 text-white" href="${urlUsers}">About</a>
     </nav>
 </div>

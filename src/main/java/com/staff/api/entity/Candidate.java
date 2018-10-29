@@ -10,8 +10,8 @@ import java.sql.Date;
 public class Candidate implements IEntity<Candidate>{
     public enum CandidateState {
         ARCHIVE("В архиве"), ACTIVE("Активен");
-        private String description;
-        private CandidateState(String description) {
+        private final String description;
+        CandidateState(String description) {
             this.description = description;
         }
         public String getDescription() {return description;}
@@ -76,12 +76,12 @@ public class Candidate implements IEntity<Candidate>{
     public void setBirthday(String birthday) {
         String[] validPatterns = {"dd.MM.yyyy","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy","yyyy-MM-dd"};
         SimpleDateFormat formatter = new SimpleDateFormat();
-        for (int i=0; i<validPatterns.length;i++) {
+        for (String validPattern : validPatterns) {
             try {
-                formatter.applyPattern(validPatterns[i]);
+                formatter.applyPattern(validPattern);
                 formatter.setLenient(false);
                 //this.birthday = formatter.parse(birthday);
-                this.birthday = new java.sql.Date((formatter.parse(birthday)).getTime());
+                this.birthday = new Date((formatter.parse(birthday)).getTime());
                 return;
             } catch (ParseException e) {
                 // nothing to do

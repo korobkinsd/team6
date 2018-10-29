@@ -31,5 +31,4 @@
 
 <jsp:include page="../layouts/footer.jsp" />
 
-</body>
 </html>

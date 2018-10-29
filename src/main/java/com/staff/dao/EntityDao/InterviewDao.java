@@ -1,6 +1,5 @@
 package com.staff.dao.EntityDao;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

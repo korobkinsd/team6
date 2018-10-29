@@ -35,12 +35,4 @@ public class SpringDBConfig {
 		return dataSource;
 	}
 
-	@PostConstruct
-	public void startDBManager() {
-
-//	    DatabaseManagerSwing.main(new String[] { "--url",
-//		 "jdbc:mysql://localhost:3306/team6", "--user", "root", "--password", "root" });
-
-	}
-
 }

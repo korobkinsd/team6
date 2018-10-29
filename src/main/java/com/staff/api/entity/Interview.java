@@ -1,10 +1,6 @@
 package com.staff.api.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
 
 public class Interview implements IEntity<Interview> {
 

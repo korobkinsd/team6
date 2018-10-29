@@ -6,7 +6,7 @@ public class ContactDetails implements IEntity<ContactDetails> {
     private Integer idCandidate;
     private String contactDetail;
     public enum ContactDetailType {EMAIL, MOBILEPHONE, HOMEPHONE, ADDRESS
-    };
+    }
 
     public int getIdCandidate() {
         return idCandidate;

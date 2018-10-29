@@ -4,8 +4,6 @@ package com.staff.web;
 
 import com.staff.api.entity.User;
 import com.staff.api.entity.Vacancy;
-import com.staff.api.enums.Sort.SortOrder;
-import com.staff.api.enums.Sort.SortVacancyFields;
 import com.staff.api.enums.VacancyState;
 import com.staff.api.service.IUserService;
 import com.staff.api.service.IVacancyService;
@@ -120,7 +118,7 @@ public class VacancyController {
         } else {
             LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
             Locale locale = localeResolver.resolveLocale(request);
-            if (locale == null) {locale = Locale.getDefault();};
+            if (locale == null) {locale = Locale.getDefault();}
             redirectAttributes.addFlashAttribute("css", "success");
             if(vacancy.isNew()){
                 redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.vacancy.added" , null, locale ));

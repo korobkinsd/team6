@@ -8,11 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.staff.api.enums.Sort.SortOrder;
 import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.dao.sort.Sort;
-import com.staff.validator.DateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
@@ -78,11 +76,11 @@ public class CandidateController extends BaseController {
 			redirectAttributes.addFlashAttribute("css", "success");
 			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 			Locale locale = localeResolver.resolveLocale(request);
-			if (locale == null) {locale = Locale.getDefault();};
+			if (locale == null) {locale = Locale.getDefault();}
 			if(candidate.isNew()){
 				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.added" , null, locale ));
 			}else{
-				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.updated" , null, locale )); ;
+				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.updated" , null, locale ));
 			}
 			candidate.setBirthday(bd);
 			candidateService.saveOrUpdate(candidate, new CandidateSpecification().GetById(candidate.getForeignKey()));
@@ -121,7 +119,7 @@ public class CandidateController extends BaseController {
 		candidateService.delete(new CandidateSpecification().GetById(id.toString()));
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		Locale locale = localeResolver.resolveLocale(request);
-		if (locale == null) {locale = Locale.getDefault();};
+		if (locale == null) {locale = Locale.getDefault();}
 		redirectAttributes.addFlashAttribute("css", "success");
 		redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.deleted" , null, locale ));
 		return "redirect:/candidates";
@@ -136,7 +134,7 @@ public class CandidateController extends BaseController {
 		if (candidate == null) {
 			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 			Locale locale = localeResolver.resolveLocale(request);
-			if (locale == null) {locale = Locale.getDefault();};
+			if (locale == null) {locale = Locale.getDefault();}
 			model.addAttribute("css", "danger");
 			model.addAttribute("msg", messageSource.getMessage("messages.candidates.not_found" , null, locale ));
 		}
@@ -152,7 +150,7 @@ public class CandidateController extends BaseController {
 		model.setViewName("candidates/show");
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		Locale locale = localeResolver.resolveLocale(request);
-		if (locale == null) {locale = Locale.getDefault();};
+		if (locale == null) {locale = Locale.getDefault();}
 		model.addObject("msg", messageSource.getMessage("messages.candidates.not_found" , null, locale ));
 		return model;
 	}

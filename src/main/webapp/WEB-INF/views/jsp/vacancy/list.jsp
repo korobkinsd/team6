@@ -123,7 +123,6 @@
                     </div>
                 </spring:bind>
                 </th>
-                </th>
                 <th>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
@@ -169,4 +168,3 @@
 
 </body>
 <footer><jsp:include page="../layouts/footer.jsp" /></footer>
-</html>
