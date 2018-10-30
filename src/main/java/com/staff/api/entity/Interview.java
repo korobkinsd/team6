@@ -42,7 +42,10 @@ public class Interview implements IEntity<Interview> {
     @Override
     public String getForeignKey() {
         /*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
-        return this.id != null ? this.id.toString() : "0000000000000000000000000000";
+        return this.id != null ? this.id.toString()  : "0000000000000000000000000000";
     }
 
+    public int getForeignKeyInt() {
+        return this.id != null ? this.id : 0;
+    }
 }

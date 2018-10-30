@@ -96,7 +96,8 @@ public class InterviewController extends BaseController {
                 redirectAttributes.addFlashAttribute("msg", "Interview updated successfully!");
             }
 
-            interviewService.saveOrUpdate(interview,new InterviewSpecification().GetById(interview.getId()));
+            interviewService.saveOrUpdate(interview, new InterviewSpecification().GetById(interview.getForeignKeyInt()));
+
             //interviewService.saveOrUpdate(interview);
 
             // POST/REDIRECT/GET
