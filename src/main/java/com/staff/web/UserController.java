@@ -83,7 +83,7 @@ public class UserController extends BaseController {
 		logger.debug("saveOrUpdateUser() : {}", user);
 
 		if (result.hasErrors()) {
-			return "users/userForm";
+			return "users/userform";
 		} else {
 
 			redirectAttributes.addFlashAttribute("css", "success");
@@ -115,7 +115,7 @@ public class UserController extends BaseController {
 
 		model.addAttribute("userForm", user);
 
-		return "users/userForm";
+		return "users/userform";
 
 	}
 
@@ -128,7 +128,7 @@ public class UserController extends BaseController {
 		User user = userService.Read(new UserSpecification().GetById(String.valueOf(id)));
 		model.addAttribute("userForm", user);
 		
-		return "users/userForm";
+		return "users/userform";
 
 	}
 
