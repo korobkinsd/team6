@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -14,12 +15,11 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @ComponentScan({ "com.staff.web", "com.staff.service", "com.staff.dao",
 		"com.staff.exception", "com.staff.validator" })
-public class SpringWebConfig extends WebMvcConfigurerAdapter  {
+public class SpringWebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**")
-				.addResourceLocations("/resources/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
 	@Bean
