@@ -1,17 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<head>
-    <title>Team 6</title>
-    <meta charset="utf-8">
-    <spring:url value="/resources/core/css/core.css" var="coreCss" />
-    <spring:url value="/resources/core/lib/bootstrap/css/bootstrap.min.css"	var="bootstrapCss" />
-    <spring:url value="/resources/core/lib/bootstrap/css/dashboard.css"	var="dashboardCss" />
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${coreCss}" rel="stylesheet" />
-    <link href="${dashboardCss}" rel="stylesheet">
-
-</head>
-
 <spring:url value="/" var="urlHome" />
 <spring:url value="/candidates" var="urlCandidates" />
 <spring:url value="/vacancy" var="urlVacancy" />

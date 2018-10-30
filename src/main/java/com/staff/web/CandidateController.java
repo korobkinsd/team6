@@ -1,6 +1,8 @@
 package com.staff.web;
 
 import com.staff.api.entity.Candidate;
+import com.staff.api.enums.Sort.SortCandidateFields;
+import com.staff.api.specification.ISpecification;
 import com.staff.dao.specification.EntityRepository.CandidateSpecification;
 import com.staff.api.service.ICandidateService;
 import com.staff.validator.CandidateFormValidator;
@@ -39,7 +41,7 @@ public class CandidateController extends BaseController {
 	@Autowired
 	private MessageSource messageSource;
 
-	@InitBinder("candidateForm")
+	@InitBinder({"candidateForm"})
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(candidateFormValidator);
 	}
@@ -53,14 +55,35 @@ public class CandidateController extends BaseController {
 
 	// list page
 	@RequestMapping(value = "/candidates", method = RequestMethod.GET)
-	public String showAllCandidates(Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "pagesize", defaultValue = "3") int pagesize) {
-		logger.debug("showAllCandidates()");
-		CandidateSpecification spec = new CandidateSpecification();
-		List<Candidate> listCandidates = candidateService.FindWithPaging(spec, new Sort().setColumnName(SortUserFields.NAME.toString()).setSortOrder(SortOrder.ASC.toString()), page, pagesize);
+	public String showAllCandidates(  Model model
+                                    , @ModelAttribute("candidatesFilter") Candidate candidate
+                                    , @RequestParam(value = "columnName", defaultValue = "ID") String columnName
+                                    , @RequestParam(value = "order", defaultValue = "ASC") String order
+                                    , @RequestParam(value = "page", defaultValue = "1") int page
+                                    , @RequestParam(value = "pagesize", defaultValue = "3") int pagesize) {
+
+
+		ISpecification<Candidate> spec = new CandidateSpecification().GetByNameLike(candidate.getName())
+                                        .GetAnd().GetBySurnameLike(candidate.getSurname());
+                                        //.GetAnd().GetBySalary(candidate.getSalary());
+        List<Candidate> listCandidates = candidateService.FindWithPaging( spec, new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 		int total = candidateService.Count(spec);
 		model.addAttribute("candidates", listCandidates);
+        model.addAttribute("candidatesFilter", candidate);
+        //model.addAttribute("filterName", filterName);
+        //model.addAttribute("filterSurname", filterSurname);
+        //model.addAttribute("filterSalaryFrom", filterSalaryFrom);
+        //model.addAttribute("filterSalaryTo", filterSalaryTo);
+        //model.addAttribute("filterBirthday", filterBirthday);
+        //model.addAttribute("filterCandidateState", filterCandidateState);
+        model.addAttribute("columnName",columnName);
+        model.addAttribute("currentOrder",order);
+        model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
+		model.addAttribute("currentOrder",order.toUpperCase() );
 		model.addAttribute("pageCount", Math.ceil ( (double)total/pagesize));
 		model.addAttribute("pageNumber",page);
+        model.addAttribute("listCandidateState", Candidate.CandidateState.values());
+        logger.debug("showAllCandidates() done");
 		return "candidates/list";
 	}
 

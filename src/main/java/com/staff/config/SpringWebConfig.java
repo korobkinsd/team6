@@ -4,9 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @ComponentScan({ "com.staff.web", "com.staff.service", "com.staff.dao",
 		"com.staff.exception", "com.staff.validator" })
-public class SpringWebConfig extends WebMvcConfigurationSupport {
+public class SpringWebConfig extends WebMvcConfigurerAdapter  {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -38,4 +39,8 @@ public class SpringWebConfig extends WebMvcConfigurationSupport {
 		return rb;
 	}
 
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
 }
