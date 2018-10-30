@@ -72,14 +72,14 @@ public class VacancyController {
         List<VacancyState> vacancyState = Arrays.asList(VacancyState.values());
 
 
-        int skillCount = vacancyService.Count(new VacancySpecification());
-        int pageCount = skillCount/pagesize;
+        int vacancyCount = listVacancyWithoutPage.size();
+        double pageCount = (double) vacancyCount/pagesize;
 
         model.addAttribute("vacancyState", vacancyState);
         model.addAttribute("listOfUsers", listOfUsersobj);
 
         model.addAttribute("vacancyForm", vacancy);
-        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("pageCount",Math.ceil( pageCount));
         model.addAttribute("columnName",columnName);
         model.addAttribute("pageNumber",page);
         model.addAttribute("vacancy", listVacancy);
