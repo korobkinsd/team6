@@ -39,7 +39,7 @@ public class SkillController {
                 new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 
         int skillCount = skillService.Count(new SkillSpecification());
-        int pageCount = skillCount/pagesize +1;
+        int pageCount = (int) Math.ceil((double) skillCount/pagesize);
 
         model.addAttribute("skillForm", skill);
         model.addAttribute("pageCount",pageCount);
@@ -85,7 +85,7 @@ public class SkillController {
                 redirectAttributes.addFlashAttribute("msg", "skill updated successfully!");
             }
 
-            //skillService.saveOrUpdate(skill,new SkillSpecification().GetBySkill(skill.getForeignKey()));
+            skillService.saveSkill(skill);
 
             // POST/REDIRECT/GET
             return "redirect:/skills";// + name.getSkill();

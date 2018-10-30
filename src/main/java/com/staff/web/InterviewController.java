@@ -118,10 +118,12 @@ public class InterviewController extends BaseController {
         Interview interview = new Interview();
 
         // set default value
-        interview.setIdCandidate(100);
-        interview.setIdVacancy(201);
+        //interview.setIdCandidate(100);
+        //interview.setIdVacancy(201);
 
-        return "interviews/interviewForm";
+        model.addAttribute("interviewForm", interview);
+
+        return "interviews/interviewform";
     }
 
     // show update form

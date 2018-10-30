@@ -58,7 +58,10 @@ public class VacancyController {
 
     // list page
     @RequestMapping(value = "/vacancy", method = RequestMethod.GET)
-    public String showAllvacancy(@ModelAttribute("vacancyForm")  Vacancy vacancy,Model model,@RequestParam(value = "page", defaultValue = "1") int page,@RequestParam(value = "columnName", defaultValue ="ID") String columnName,@RequestParam(value = "order", defaultValue = "ASC") String order,@RequestParam(value = "pagesize", defaultValue = "10") int pagesize) {
+    public String showAllvacancy(@ModelAttribute("vacancyform")  Vacancy vacancy,Model model,@RequestParam(value = "page", defaultValue = "1") int page,@RequestParam(value = "columnName", defaultValue ="ID") String columnName,@RequestParam(value = "order", defaultValue = "ASC") String order,@RequestParam(value = "pagesize", defaultValue = "10") int pagesize) {
+
+        logger.debug("showAllvacancy()");
+        
         List<User> listOfUsersobj =userService.Find(new UserSpecification());
         List<Vacancy> listVacancy =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId())
                 .GetByPositionLike(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper())
@@ -67,17 +70,22 @@ public class VacancyController {
                 new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
         List<Vacancy> listVacancyWithoutPage =vacancyService.FindWithPaging(new VacancySpecification().GetById(vacancy.getId()).GetByPositionLike(vacancy.getPosition()).GetByIdDeveloper(vacancy.getIdDeveloper()).GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom()).GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()), new Sort().setColumnName(columnName).setSortOrder(order), 1, 10000);//TODO костыль
         List<VacancyState> vacancyState = Arrays.asList(VacancyState.values());
+
+
+        int skillCount = vacancyService.Count(new VacancySpecification());
+        int pageCount = skillCount/pagesize;
+
         model.addAttribute("vacancyState", vacancyState);
         model.addAttribute("listOfUsers", listOfUsersobj);
 
         model.addAttribute("vacancyForm", vacancy);
-        model.addAttribute("pageCount",Math.ceil( listVacancyWithoutPage.size()/pagesize));
+        model.addAttribute("pageCount",pageCount);
         model.addAttribute("columnName",columnName);
         model.addAttribute("pageNumber",page);
         model.addAttribute("vacancy", listVacancy);
         model.addAttribute("currentOrder",order);
         model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
-        logger.debug("showAllvacancy()");
+        
           return "vacancy/list";
 
     }
@@ -114,7 +122,7 @@ public class VacancyController {
             model.addAttribute("listOfUsers", listOfUsersobj);
             List<VacancyState> vacancyState = Arrays.asList(VacancyState.values());
             model.addAttribute("vacancyState", vacancyState);
-            return "vacancy/vacancyform";
+            return "vacancy/vacancyForm";
         } else {
             LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
             Locale locale = localeResolver.resolveLocale(request);
@@ -166,7 +174,7 @@ public class VacancyController {
         model.addAttribute("listOfUsers", listOfUsersobj);
         model.addAttribute("vacancyForm", vacancy);
 
-        return "vacancy/vacancyform";
+        return "vacancy/vacancyForm";
 
     }
 

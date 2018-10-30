@@ -3,6 +3,7 @@ package com.staff.dao;
 import com.staff.api.dao.ICrudDao;
 import com.staff.api.dao.ISqlQuery;
 import com.staff.api.entity.IEntity;
+import com.staff.api.entity.Skill;
 import com.staff.api.enums.Paging;
 import com.staff.api.sort.ISort;
 import com.staff.api.specification.ISpecification;
@@ -22,7 +23,7 @@ import java.util.*;
 public abstract class CrudDao<T> implements ICrudDao<T> {
 
     protected RowMapper<T> rowMapper;
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     protected ISqlQuery sqlQuery;
 
     public CrudDao(){}
@@ -58,6 +59,10 @@ public abstract class CrudDao<T> implements ICrudDao<T> {
 
     @Override
     public void update(IEntity<T> entity) {
+        String  m = getSqlQuery().getUpdateSql();
+        SqlParameterSource n =  getSqlParameterByModel(entity);
+        System.out.print(n);
+        System.out.print(m);
         namedParameterJdbcTemplate.update(getSqlQuery().getUpdateSql(), getSqlParameterByModel(entity));
     }
 
