@@ -11,7 +11,7 @@ public class Candidate implements IEntity<Candidate>{
     public enum CandidateState {
         ARCHIVE("В архиве"), ACTIVE("Активен");
         private final String description;
-        CandidateState(String description) {
+        CandidateState(final String description) {
             this.description = description;
         }
         public String getDescription() {return description;}
@@ -25,47 +25,47 @@ public class Candidate implements IEntity<Candidate>{
     private CandidateState candidateState;
     private List<ContactDetails> contactDetailsList;
 
-    public boolean isNew() {
+    public final boolean isNew() {
         return (this.id == null);
     }
 
-    public Integer getId() {
+    public final Integer getId() {
         return id;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public String getSurname() {
+    public final String getSurname() {
         return surname;
     }
 
-    public double getSalary() {
+    public final double getSalary() {
         return salary;
     }
 
-    public Date getBirthday() {
+    public final Date getBirthday() {
         return birthday;
     }
 
-    public CandidateState getCandidateState() {
+    public final CandidateState getCandidateState() {
         return candidateState;
     }
 
-    public void setId(Integer id) {
+    public final void setId(Integer id) {
         this.id = id;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
-    public void setSurname(String surname) {
+    public final void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public void setSalary(double salary) {
+    public final void setSalary(double salary) {
         this.salary = salary;
     }
 
@@ -73,7 +73,7 @@ public class Candidate implements IEntity<Candidate>{
     //    this.birthday = birthday;
     //}
 
-    public void setBirthday(String birthday) {
+    public final void setBirthday(String birthday) {
         String[] validPatterns = {"dd.MM.yyyy","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy","yyyy-MM-dd"};
         SimpleDateFormat formatter = new SimpleDateFormat();
         for (String validPattern : validPatterns) {
@@ -88,7 +88,7 @@ public class Candidate implements IEntity<Candidate>{
             }
         }
     }
-    public void setCandidateState(String st) {
+    public final void setCandidateState(String st) {
         CandidateState[] states = CandidateState.values();
 
         for(CandidateState c : states) {
@@ -98,19 +98,19 @@ public class Candidate implements IEntity<Candidate>{
         }
     }
 
-    public void setCandidateState(CandidateState candidateState) {
+    public final void setCandidateState(CandidateState candidateState) {
         this.candidateState = candidateState;
     }
 
-    public List<ContactDetails> getContactDetailsList() {
+    public final List<ContactDetails> getContactDetailsList() {
         return contactDetailsList;
     }
 
-    public void setContactDetailsList(List<ContactDetails> contactDetailsList) {
+    public final void setContactDetailsList(List<ContactDetails> contactDetailsList) {
         this.contactDetailsList = contactDetailsList;
     }
 
-    public String getBirthdayAsString() {
+    public final String getBirthdayAsString() {
         if (!(this.birthday == null)) {
             Format formatter = new SimpleDateFormat("dd.MM.yyyy");
             return (formatter.format(birthday));
@@ -138,9 +138,13 @@ public class Candidate implements IEntity<Candidate>{
     }*/
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public final boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Candidate candidate = (Candidate) o;
         return id == candidate.id &&
                 Double.compare(candidate.salary, salary) == 0 &&
@@ -151,12 +155,12 @@ public class Candidate implements IEntity<Candidate>{
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(id, name, surname, salary, birthday, candidateState);
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "Candidate [" +
                 "id=" + id +
                 ", name='" + name + '\'' +
@@ -168,13 +172,12 @@ public class Candidate implements IEntity<Candidate>{
     }
 
     @Override
-    public void setForeignKey(String foreignKey) {
+    public final void setForeignKey(final String foreignKey) {
         this.id = Integer.parseInt(foreignKey);
     }
 
     @Override
-    public String getForeignKey() {
-        /*TODO: */
+    public final String getForeignKey() {
         return this.id != null ? this.id.toString() : "-1";
     }
 }

@@ -5,27 +5,26 @@ import java.util.Objects;
 public class ContactDetails implements IEntity<ContactDetails> {
     private Integer idCandidate;
     private String contactDetail;
-    public enum ContactDetailType {EMAIL, MOBILEPHONE, HOMEPHONE, ADDRESS
-    }
+    public enum ContactDetailType {EMAIL, MOBILEPHONE, HOMEPHONE, ADDRESS}
 
-    public int getIdCandidate() {
+    public final int getIdCandidate() {
         return idCandidate;
     }
 
-    public void setIdCandidate(Integer idCandidate) {
+    public final void setIdCandidate(final Integer idCandidate) {
         this.idCandidate = idCandidate;
     }
 
-    public String getContactDetail() {
+    public final String getContactDetail() {
         return contactDetail;
     }
 
-    public void setContactDetail(String contactDetail) {
+    public final void setContactDetail(final String contactDetail) {
         this.contactDetail = contactDetail;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "ContactDetails{" +
                 "idCandidate=" + idCandidate +
                 ", contactDetail='" + contactDetail + '\'' +
@@ -33,27 +32,30 @@ public class ContactDetails implements IEntity<ContactDetails> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public final boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ContactDetails that = (ContactDetails) o;
         return idCandidate == that.idCandidate &&
                 Objects.equals(contactDetail, that.contactDetail);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(idCandidate, contactDetail);
     }
 
     @Override
-    public void setForeignKey(String foreignKey) {
+    public final void setForeignKey(final String foreignKey) {
         this.idCandidate = Integer.parseInt(foreignKey);
     }
 
     @Override
-    public String getForeignKey() {
-        /*TODO: */
+    public final String getForeignKey() {
         return this.idCandidate != null ? this.idCandidate.toString() : null;
     }
 }

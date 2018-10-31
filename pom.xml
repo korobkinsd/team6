@@ -130,7 +130,7 @@
 			</plugin>
 
 			<!-- configure Eclipse workspace -->
-			<plugin>
+			<!-- plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.9</version>
@@ -149,6 +149,10 @@
                 <executions>
                     <execution>
                         <phase>validate</phase>
+						<configuration>
+							<suppressionsLocation>suppressions.xml</suppressionsLocation>
+							<suppressionsFileExpression>suppressions.file</suppressionsFileExpression>
+						</configuration>
                         <goals>
                             <goal>check</goal>
                         </goals>
