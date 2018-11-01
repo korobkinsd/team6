@@ -111,6 +111,7 @@ public class CandidateController extends BaseController {
 			}
 			candidate.setBirthday(bd);
 			logger.debug("saveOrUpdateCandidate() : new {}", candidate);
+
 			/*if (candidateOriginal != null) {
 				return "redirect:/candidates/message";
 			}*/

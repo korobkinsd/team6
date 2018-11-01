@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <body>
 	<jsp:include page="../layouts/header.jsp" />
 
