@@ -5,10 +5,10 @@
 	<meta charset="utf-8">
 	<spring:url value="/resources/core/css/core.css" var="coreCss" />
 	<spring:url value="/resources/core/lib/bootstrap/css/bootstrap.min.css"	var="bootstrapCss" />
-	<spring:url value="/resources/core/lib/bootstrap/css/dashboard.css"	var="dashboardCss" />
+	<!--spring:url value="/resources/core/lib/bootstrap/css/dashboard.css"	var="dashboardCss" / -->
 	<link href="${bootstrapCss}" rel="stylesheet" />
 	<link href="${coreCss}" rel="stylesheet" />
-	<link href="${dashboardCss}" rel="stylesheet" />
+	<!-- link href="${dashboardCss}" rel="stylesheet" /-->
 </head>
 
 <div class="container">
