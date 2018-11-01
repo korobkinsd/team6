@@ -16,4 +16,10 @@ public class SkillService extends CrudService<Skill> implements ISkillService {
         this.dao = skillDao;
     }
 
+    @Override
+    public void saveSkill(Skill skill) {
+        ISkillDao d = (ISkillDao)this.dao;
+        d.saveSkill(skill);
+    }
+
 }

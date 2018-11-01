@@ -1,8 +1,5 @@
 package com.staff.dao.sort;
 
-import com.staff.api.enums.Sort.SortOrder;
-import com.staff.api.enums.Sort.SortUserFields;
-import com.staff.api.enums.Sort.SortVacancyFields;
 import com.staff.api.sort.ISort;
 
 public class Sort implements ISort {

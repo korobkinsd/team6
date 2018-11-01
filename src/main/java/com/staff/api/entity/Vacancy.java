@@ -40,9 +40,7 @@ public class Vacancy implements IEntity<Vacancy> {
 
 
 
-    public boolean isNew() {
-        return (this.id == null);
-    }
+    public boolean isNew() { return this.id == null;    }
 
     public Integer getId() {
         return id;

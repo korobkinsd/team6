@@ -22,7 +22,7 @@ import java.util.*;
 public abstract class CrudDao<T> implements ICrudDao<T> {
 
     protected RowMapper<T> rowMapper;
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     protected ISqlQuery sqlQuery;
 
     public CrudDao(){}
@@ -58,6 +58,10 @@ public abstract class CrudDao<T> implements ICrudDao<T> {
 
     @Override
     public void update(IEntity<T> entity) {
+        String  m = getSqlQuery().getUpdateSql();
+        SqlParameterSource n =  getSqlParameterByModel(entity);
+        System.out.print(n);
+        System.out.print(m);
         namedParameterJdbcTemplate.update(getSqlQuery().getUpdateSql(), getSqlParameterByModel(entity));
     }
 
@@ -75,7 +79,7 @@ public abstract class CrudDao<T> implements ICrudDao<T> {
 
     @Override
     public List<T> FindWithPaging(ISpecification<T> specification, ISort sort, int page, int pageSize) {
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put(Paging.LIMIT.toString(), pageSize);
         params.put(Paging.OFFSET.toString(), page*pageSize-pageSize);
         return namedParameterJdbcTemplate.query(String.format(getSqlQuery().getFullSql(), specification.Builder(), sort.Builder()), params, rowMapper);
@@ -87,9 +91,9 @@ public abstract class CrudDao<T> implements ICrudDao<T> {
         ISqlQuery sqlQuery = getSqlQuery();
         T result = null;
         try {
-            result = namedParameterJdbcTemplate.queryForObject(String.format(sqlQuery.getBaseSql().concat(sqlQuery.getSpecificationSql()), specification.Builder(), ""), new HashMap<String, Object>(), rowMapper);
+            result = namedParameterJdbcTemplate.queryForObject(String.format(sqlQuery.getBaseSql().concat(sqlQuery.getSpecificationSql()), specification.Builder(), ""), new HashMap<>(), rowMapper);
         } catch (EmptyResultDataAccessException e) {
-            // do nothing, return null
+            result = null;
         }
 
         return result;
@@ -107,7 +111,7 @@ public abstract class CrudDao<T> implements ICrudDao<T> {
 
     protected static List<String> convertDelimitedStringToList(String delimitedString) {
 
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         if (!StringUtils.isEmpty(delimitedString)) {
             result = Arrays.asList(StringUtils.delimitedListToStringArray(delimitedString, ","));

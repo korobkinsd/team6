@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.staff.api.entities.VacancycandidatesEntity" table="vacancycandidates" schema="team6">
+        <property name="idVacancy" column="idVacancy"/>
+        <property name="idCandidate" column="idCandidate"/>
+        <property name="idSuitableState" column="idSuitableState"/>
+        <property name="reason" column="reason"/>
+        <many-to-one name="vacancyByIdVacancy" class="com.staff.api.entities.VacancyEntity">
+            <column name="idVacancy"/>
+        </many-to-one>
+        <many-to-one name="candidateByIdCandidate" class="com.staff.api.entities.CandidateEntity">
+            <column name="idCandidate"/>
+        </many-to-one>
+        <many-to-one name="suitablestateByIdSuitableState" class="com.staff.api.entities.SuitablestateEntity">
+            <column name="idSuitableState" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

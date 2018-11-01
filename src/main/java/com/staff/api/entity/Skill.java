@@ -1,6 +1,6 @@
 package com.staff.api.entity;
 
-public class Skill {
+public class Skill implements IEntity<Skill> {
 
 //    enum SkillEnum {
 //        C, JAVA, SQL , PYTHON, PHP
@@ -26,7 +26,7 @@ public class Skill {
     String name;
 
     public boolean isNew() {
-        return (this.name == null);
+        return this.name == null;
     }
 
 
@@ -42,17 +42,18 @@ public class Skill {
     public String toString() {
         return "Skill " + name;
     }
-//
-//    @Override
-//    public void setForeignKey(String foreignKey) {
-//        this.name = foreignKey;
-//    }
-//
-//    @Override
-//    public String getForeignKey() {
-//        /*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
-//        return this.name != null ? this.name : "0000000000000000000000000000";
-//    }
+
+
+    @Override
+    public void setForeignKey(String foreignKey) {
+        this.name = foreignKey;
+    }
+
+    @Override
+    public String getForeignKey() {
+        /*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
+        return this.name != null ? this.name : "0000000000000000000000000000";
+    }
 
 
 }

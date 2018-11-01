@@ -1,10 +1,11 @@
 package com.staff.api.specification;
 
 import com.staff.api.entity.Candidate;
-
 import java.util.List;
 
 public interface ICandidateSpecification extends ISpecification<Candidate> {
+
+    ICandidateSpecification GetAnd();
 
     ICandidateSpecification GetById(String id);
 
@@ -17,5 +18,12 @@ public interface ICandidateSpecification extends ISpecification<Candidate> {
     ICandidateSpecification GetBySurname(String surname);
 
     ICandidateSpecification GetBySurnameLike(String surname);
+
+    ICandidateSpecification GetBySalary(Double salary);
+
+    ICandidateSpecification GetByBirthday(String birthday);
+
+
+
 }
 

@@ -1,10 +1,6 @@
 package com.staff.api.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
 
 public class Interview implements IEntity<Interview> {
 
@@ -16,7 +12,7 @@ public class Interview implements IEntity<Interview> {
 
 
     public boolean isNew() {
-        return (this.id == null);
+        return this.id == null;
     }
     public Integer getId() {  return id; }
     public void setId(Integer id) {
@@ -46,7 +42,10 @@ public class Interview implements IEntity<Interview> {
     @Override
     public String getForeignKey() {
         /*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
-        return this.id != null ? this.id.toString() : "0000000000000000000000000000";
+        return this.id != null ? this.id.toString()  : "0000000000000000000000000000";
     }
 
+    public int getForeignKeyInt() {
+        return this.id != null ? this.id : 0;
+    }
 }

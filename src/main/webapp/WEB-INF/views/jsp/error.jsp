@@ -14,7 +14,7 @@
 		<h1>Error Page</h1>
 
 		<p>${exception.message}</p>
-		${exception.message}.
+		${exception.message}
 		  	<c:forEach items="${exception.stackTrace}" var="stackTrace"> 
 				${stackTrace} 
 			</c:forEach>

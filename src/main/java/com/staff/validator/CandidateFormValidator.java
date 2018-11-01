@@ -2,7 +2,6 @@ package com.staff.validator;
 
 import com.staff.api.entity.Candidate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -25,7 +24,7 @@ public class CandidateFormValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 
-		Candidate candidate = (Candidate) target;
+
 		//ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthday", "NotEmpty.candidateForm.birthday");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.candidateForm.name");
 

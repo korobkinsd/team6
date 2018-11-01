@@ -8,7 +8,7 @@ public interface IUserSpecification extends ISpecification<User> {
 
     IUserSpecification GetAnd();
 
-    IUserSpecification GetById(String id);
+    IUserSpecification GetById(Integer id);
 
     IUserSpecification GetByIdIn(List<Integer> ids);
 

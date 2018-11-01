@@ -32,10 +32,10 @@
 				<label class="col-sm-2 control-label"><spring:message code="label.table.column.vacancy.position"/></label>
 				<div class="col-sm-10">
 					<form:input path="position" type="text" class="form-control " id="position" placeholder="position" />
-
-					<form:errors path="position" class="control-label" />
 				</div>
+
 			</div>
+			<div class="col-sm-10">	<form:errors path="position" class="alert alert-danger alert-dismissible" /></div>
 		</spring:bind>
 
 		<spring:bind path="idDeveloper">
@@ -117,9 +117,6 @@
 	</form:form>
 
 </div>
-
-
-
 </body>
 <footer><jsp:include page="../layouts/footer.jsp" /></footer>
 </html>

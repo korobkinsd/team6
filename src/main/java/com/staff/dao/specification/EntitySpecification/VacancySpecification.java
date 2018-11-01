@@ -1,5 +1,5 @@
 
-package com.staff.dao.specification.EntityRepository;
+package com.staff.dao.specification.EntitySpecification;
 
 
 import com.staff.api.entity.Vacancy;

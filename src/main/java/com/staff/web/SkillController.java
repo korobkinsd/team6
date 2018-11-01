@@ -3,7 +3,7 @@ package com.staff.web;
 import com.staff.api.entity.Skill;
 import com.staff.api.service.ISkillService;
 import com.staff.dao.sort.Sort;
-import com.staff.dao.specification.EntityRepository.SkillSpecification;
+import com.staff.dao.specification.EntitySpecification.SkillSpecification;
 import com.staff.validator.SkillFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -40,7 +39,7 @@ public class SkillController {
                 new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 
         int skillCount = skillService.Count(new SkillSpecification());
-        int pageCount = skillCount/pagesize +1;
+        int pageCount = (int) Math.ceil((double) skillCount/pagesize);
 
         model.addAttribute("skillForm", skill);
         model.addAttribute("pageCount",pageCount);
@@ -62,13 +61,13 @@ public class SkillController {
         Skill skill = new Skill();
 
         // set default value
-        skill.setName("SET SKILL");
+        //skill.setName("SET SKILL");
         model.addAttribute("skillForm", skill);
 
         return "skills/skillform";
 
     }
-    // save or update user
+    // save or update skill
     @RequestMapping(value = "/skills", method = RequestMethod.POST)
     public String saveOrUpdateSkill(@ModelAttribute("skillForm") @Validated Skill skill,
                                     BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
@@ -86,7 +85,7 @@ public class SkillController {
                 redirectAttributes.addFlashAttribute("msg", "skill updated successfully!");
             }
 
-            //skillService.saveOrUpdate(skill,new SkillSpecification().GetBySkill(skill.getForeignKey()));
+            skillService.saveSkill(skill);
 
             // POST/REDIRECT/GET
             return "redirect:/skills";// + name.getSkill();

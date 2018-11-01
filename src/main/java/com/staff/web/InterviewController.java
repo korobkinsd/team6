@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.staff.api.entity.Interview;
 import com.staff.api.service.IInterviewService;
 import com.staff.dao.sort.Sort;
-import com.staff.dao.specification.EntityRepository.InterviewSpecification;
+import com.staff.dao.specification.EntitySpecification.InterviewSpecification;
 import com.staff.validator.InterviewFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,7 +96,8 @@ public class InterviewController extends BaseController {
                 redirectAttributes.addFlashAttribute("msg", "Interview updated successfully!");
             }
 
-            interviewService.saveOrUpdate(interview,new InterviewSpecification().GetById(interview.getId()));
+            interviewService.saveOrUpdate(interview, new InterviewSpecification().GetById(interview.getForeignKeyInt()));
+
             //interviewService.saveOrUpdate(interview);
 
             // POST/REDIRECT/GET
@@ -118,10 +119,12 @@ public class InterviewController extends BaseController {
         Interview interview = new Interview();
 
         // set default value
-        interview.setIdCandidate(100);
-        interview.setIdVacancy(201);
+        //interview.setIdCandidate(100);
+        //interview.setIdVacancy(201);
 
-        return "interviews/interviewForm";
+        model.addAttribute("interviewForm", interview);
+
+        return "interviews/interviewform";
     }
 
     // show update form

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.staff.api.entities.InterviewfeedbackEntity" table="interviewfeedback" schema="team6">
+        <property name="idInterview" column="idInterview"/>
+        <property name="idInterviewer" column="idInterviewer"/>
+        <property name="idFeedbackState" column="idFeedbackState"/>
+        <property name="reason" column="reason"/>
+        <many-to-one name="interviewByIdInterview" class="com.staff.api.entities.InterviewEntity">
+            <column name="idInterview"/>
+        </many-to-one>
+        <many-to-one name="userByIdInterviewer" class="com.staff.api.entities.UserEntity">
+            <column name="idInterviewer"/>
+        </many-to-one>
+        <many-to-one name="feedbackstateByIdFeedbackState" class="com.staff.api.entities.FeedbackstateEntity">
+            <column name="idFeedbackState"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,4 +1,4 @@
-package com.staff.dao.specification.EntityRepository;
+package com.staff.dao.specification.EntitySpecification;
 
 import com.staff.api.entity.Skill;
 import com.staff.api.enums.Sort.SortSkillFields;

@@ -1,18 +1,17 @@
 package com.staff.web;
 
 import com.staff.api.entity.Candidate;
-import com.staff.dao.specification.EntityRepository.CandidateSpecification;
+import com.staff.api.specification.ISpecification;
+import com.staff.dao.specification.EntitySpecification.CandidateSpecification;
 import com.staff.api.service.ICandidateService;
 import com.staff.validator.CandidateFormValidator;
 import javax.servlet.http.HttpServletRequest;
-import com.staff.api.enums.Sort.SortOrder;
-import com.staff.api.enums.Sort.SortUserFields;
+import javax.servlet.http.HttpSession;
+
 import com.staff.dao.sort.Sort;
-import com.staff.validator.DateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
@@ -31,6 +30,7 @@ import java.util.Locale;
 
 
 @Controller
+@SessionAttributes("candidateOriginal")
 public class CandidateController extends BaseController {
 
 	private final Logger logger = LoggerFactory.getLogger(CandidateController.class);
@@ -41,7 +41,7 @@ public class CandidateController extends BaseController {
 	@Autowired
 	private MessageSource messageSource;
 
-	@InitBinder("candidateForm")
+	@InitBinder({"candidateForm"})
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(candidateFormValidator);
 	}
@@ -55,14 +55,35 @@ public class CandidateController extends BaseController {
 
 	// list page
 	@RequestMapping(value = "/candidates", method = RequestMethod.GET)
-	public String showAllCandidates(Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "pagesize", defaultValue = "3") int pagesize) {
-		logger.debug("showAllCandidates()");
-		CandidateSpecification spec = new CandidateSpecification();
-		List<Candidate> listCandidates = candidateService.FindWithPaging(spec, new Sort().setColumnName(SortUserFields.NAME.toString()).setSortOrder(SortOrder.ASC.toString()), page, pagesize);
+	public String showAllCandidates(  Model model
+                                    , @ModelAttribute("candidatesFilter") Candidate candidate
+                                    , @RequestParam(value = "columnName", defaultValue = "ID") String columnName
+                                    , @RequestParam(value = "order", defaultValue = "ASC") String order
+                                    , @RequestParam(value = "page", defaultValue = "1") int page
+                                    , @RequestParam(value = "pagesize", defaultValue = "3") int pagesize) {
+
+
+		ISpecification<Candidate> spec = new CandidateSpecification().GetByNameLike(candidate.getName())
+                                        .GetAnd().GetBySurnameLike(candidate.getSurname());
+                                        //.GetAnd().GetBySalary(candidate.getSalary());
+        List<Candidate> listCandidates = candidateService.FindWithPaging( spec, new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 		int total = candidateService.Count(spec);
 		model.addAttribute("candidates", listCandidates);
+        model.addAttribute("candidatesFilter", candidate);
+        //model.addAttribute("filterName", filterName);
+        //model.addAttribute("filterSurname", filterSurname);
+        //model.addAttribute("filterSalaryFrom", filterSalaryFrom);
+        //model.addAttribute("filterSalaryTo", filterSalaryTo);
+        //model.addAttribute("filterBirthday", filterBirthday);
+        //model.addAttribute("filterCandidateState", filterCandidateState);
+        model.addAttribute("columnName",columnName);
+        model.addAttribute("currentOrder",order);
+        model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
+		model.addAttribute("currentOrder",order.toUpperCase() );
 		model.addAttribute("pageCount", Math.ceil ( (double)total/pagesize));
 		model.addAttribute("pageNumber",page);
+        model.addAttribute("listCandidateState", Candidate.CandidateState.values());
+        logger.debug("showAllCandidates() done");
 		return "candidates/list";
 	}
 
@@ -70,21 +91,27 @@ public class CandidateController extends BaseController {
 	@RequestMapping(value = "/candidates", method = RequestMethod.POST)
 	public String saveOrUpdateCandidate(@ModelAttribute("candidateForm") @Validated Candidate candidate,
 										@ModelAttribute("birthdayAsString") String bd,
-			BindingResult result, Model model, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
-		logger.debug("saveOrUpdateCandidate() : {}", candidate);
+			BindingResult result, Model model, final RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
+		Candidate candidateOriginal = (Candidate)session.getAttribute("candidateOriginal");
+		logger.debug("saveOrUpdateCandidate() original: {}", candidateOriginal);
 		if (result.hasErrors()) {
 			return "candidates/editform";
 		} else {
 			redirectAttributes.addFlashAttribute("css", "success");
 			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 			Locale locale = localeResolver.resolveLocale(request);
-			if (locale == null) {locale = Locale.getDefault();};
+			if (locale == null) {locale = Locale.getDefault();}
 			if(candidate.isNew()){
 				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.added" , null, locale ));
 			}else{
-				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.updated" , null, locale )); ;
+				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.updated" , null, locale ));
 			}
 			candidate.setBirthday(bd);
+			logger.debug("saveOrUpdateCandidate() : new {}", candidate);
+
+			/*if (candidateOriginal != null) {
+				return "redirect:/candidates/message";
+			}*/
 			candidateService.saveOrUpdate(candidate, new CandidateSpecification().GetById(candidate.getForeignKey()));
 			return "redirect:/candidates";   ///" + candidate.getId();
 		}
@@ -105,10 +132,11 @@ public class CandidateController extends BaseController {
 
 	// show update-form
 	@RequestMapping(value = "/candidates/{id}/update", method = RequestMethod.GET)
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+	public String showUpdateForm(@PathVariable("id") Integer id, Model model, HttpSession session) {
 		logger.debug("showUpdateForm() : {}", id);
 		Candidate candidate = candidateService.Read(new CandidateSpecification().GetById(id.toString()));
 		model.addAttribute("candidateForm", candidate);
+		session.setAttribute( "candidateOriginal", candidate);
 		model.addAttribute( "birthdayAsString", candidate.getBirthdayAsString());
 		model.addAttribute("listCandidateState", Candidate.CandidateState.values());
 		return "candidates/editform";
@@ -121,7 +149,7 @@ public class CandidateController extends BaseController {
 		candidateService.delete(new CandidateSpecification().GetById(id.toString()));
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		Locale locale = localeResolver.resolveLocale(request);
-		if (locale == null) {locale = Locale.getDefault();};
+		if (locale == null) {locale = Locale.getDefault();}
 		redirectAttributes.addFlashAttribute("css", "success");
 		redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.deleted" , null, locale ));
 		return "redirect:/candidates";
@@ -136,7 +164,7 @@ public class CandidateController extends BaseController {
 		if (candidate == null) {
 			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 			Locale locale = localeResolver.resolveLocale(request);
-			if (locale == null) {locale = Locale.getDefault();};
+			if (locale == null) {locale = Locale.getDefault();}
 			model.addAttribute("css", "danger");
 			model.addAttribute("msg", messageSource.getMessage("messages.candidates.not_found" , null, locale ));
 		}
@@ -152,7 +180,7 @@ public class CandidateController extends BaseController {
 		model.setViewName("candidates/show");
 		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		Locale locale = localeResolver.resolveLocale(request);
-		if (locale == null) {locale = Locale.getDefault();};
+		if (locale == null) {locale = Locale.getDefault();}
 		model.addObject("msg", messageSource.getMessage("messages.candidates.not_found" , null, locale ));
 		return model;
 	}

@@ -1,4 +1,4 @@
-package com.staff.dao.specification.EntityRepository;
+package com.staff.dao.specification.EntitySpecification;
 
 import com.staff.api.entity.User;
 import com.staff.api.enums.Sort.SortUserFields;
@@ -9,10 +9,9 @@ import java.util.List;
 
 public class UserSpecification extends Specification<User> implements IUserSpecification{
 
-    private final String _like = " like ";
-
     private String GetFilterLike(String value){
-        return this._like + " '%" + value + "%' ";
+        String _like = " like ";
+        return _like + " '%" + value + "%' ";
     }
 
     private String Stub(){
@@ -26,7 +25,7 @@ public class UserSpecification extends Specification<User> implements IUserSpeci
     }
 
     @Override
-    public IUserSpecification GetById(String id) {
+    public IUserSpecification GetById(Integer id) {
         this.setSpecification(this.getSpecification() + " ".concat(SortUserFields.ID.toString()));
         this.ConcatForEquals(id);
         return this;

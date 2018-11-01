@@ -11,8 +11,7 @@ public class SkillSql implements ISqlQuery{
 
     @Override
     public String getSaveSql() {
-        return "INSERT INTO SKILL(NAME) "
-                + "VALUES ( :name)";
+        return "INSERT INTO SKILL(NAME) VALUES ( :name)";
     }
 
     @Override

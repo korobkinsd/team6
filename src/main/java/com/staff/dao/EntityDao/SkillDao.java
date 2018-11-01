@@ -16,6 +16,13 @@ import java.sql.SQLException;
 @Repository
 public class SkillDao extends CrudDao<Skill> implements ISkillDao {
 
+    @Override
+    public void saveSkill(Skill skill) {
+
+        this.namedParameterJdbcTemplate.update(getSqlQuery().getSaveSql(), getSqlParameterByModel(skill));
+        skill.setForeignKey(String.valueOf(skill.getName()));
+    }
+
     public SkillDao(){
         super();
         this.setRowMapper(new SkillMapper());

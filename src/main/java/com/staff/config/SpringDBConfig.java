@@ -1,8 +1,9 @@
 package com.staff.config;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 
+//import org.hibernate.SessionFactory;
+
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,17 +31,16 @@ public class SpringDBConfig {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUrl("jdbc:mysql://localhost:3306/team6?useSll=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
 		dataSource.setUsername("root");
-		dataSource.setPassword("");
+		dataSource.setPassword("A2t=A2t=");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		return dataSource;
 	}
 
-	@PostConstruct
-	public void startDBManager() {
-
-//	    DatabaseManagerSwing.main(new String[] { "--url",
-//		 "jdbc:mysql://localhost:3306/team6", "--user", "root", "--password", "root" });
-
-	}
+	/*@Bean
+	public SessionFactory getSessionFactory() {
+		return new org.hibernate.cfg.Configuration()
+				.configure()
+				.buildSessionFactory();
+	}*/
 
 }
