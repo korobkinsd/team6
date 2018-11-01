@@ -1,12 +1,16 @@
 package com.staff.web;
 
 import com.staff.api.entity.Candidate;
-
+import com.staff.api.enums.Sort.SortCandidateFields;
 import com.staff.api.specification.ISpecification;
 import com.staff.dao.specification.EntityRepository.CandidateSpecification;
 import com.staff.api.service.ICandidateService;
 import com.staff.validator.CandidateFormValidator;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import com.staff.api.enums.Sort.SortOrder;
+import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.dao.sort.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +33,7 @@ import java.util.Locale;
 
 
 @Controller
+@SessionAttributes("candidateOriginal")
 public class CandidateController extends BaseController {
 
 	private final Logger logger = LoggerFactory.getLogger(CandidateController.class);
@@ -89,8 +94,9 @@ public class CandidateController extends BaseController {
 	@RequestMapping(value = "/candidates", method = RequestMethod.POST)
 	public String saveOrUpdateCandidate(@ModelAttribute("candidateForm") @Validated Candidate candidate,
 										@ModelAttribute("birthdayAsString") String bd,
-			BindingResult result, Model model, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
-		logger.debug("saveOrUpdateCandidate() : {}", candidate);
+			BindingResult result, Model model, final RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
+		Candidate candidateOriginal = (Candidate)session.getAttribute("candidateOriginal");
+		logger.debug("saveOrUpdateCandidate() original: {}", candidateOriginal);
 		if (result.hasErrors()) {
 			return "candidates/editform";
 		} else {
@@ -104,6 +110,11 @@ public class CandidateController extends BaseController {
 				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.updated" , null, locale ));
 			}
 			candidate.setBirthday(bd);
+			logger.debug("saveOrUpdateCandidate() : new {}", candidate);
+
+			/*if (candidateOriginal != null) {
+				return "redirect:/candidates/message";
+			}*/
 			candidateService.saveOrUpdate(candidate, new CandidateSpecification().GetById(candidate.getForeignKey()));
 			return "redirect:/candidates";   ///" + candidate.getId();
 		}
@@ -124,10 +135,11 @@ public class CandidateController extends BaseController {
 
 	// show update-form
 	@RequestMapping(value = "/candidates/{id}/update", method = RequestMethod.GET)
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+	public String showUpdateForm(@PathVariable("id") Integer id, Model model, HttpSession session) {
 		logger.debug("showUpdateForm() : {}", id);
 		Candidate candidate = candidateService.Read(new CandidateSpecification().GetById(id.toString()));
 		model.addAttribute("candidateForm", candidate);
+		session.setAttribute( "candidateOriginal", candidate);
 		model.addAttribute( "birthdayAsString", candidate.getBirthdayAsString());
 		model.addAttribute("listCandidateState", Candidate.CandidateState.values());
 		return "candidates/editform";
@@ -150,6 +162,7 @@ public class CandidateController extends BaseController {
 	@RequestMapping(value = "/candidates/{id}", method = RequestMethod.GET)
 	public String showCandidate(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
 		logger.debug("showCandidate() id: {}", id);
+		Locale l = Locale.getDefault();
 		Candidate candidate = candidateService.Read(new CandidateSpecification().GetById(id.toString()));
 		if (candidate == null) {
 			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
