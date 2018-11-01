@@ -17,7 +17,7 @@ public class User implements IEntity<User> {
 
 
 	public boolean isNew() {
-		return (this.id == null);
+		return this.id == null;
 	}
 
 	public Integer getId() {

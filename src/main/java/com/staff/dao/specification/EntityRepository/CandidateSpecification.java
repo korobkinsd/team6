@@ -4,8 +4,6 @@ import com.staff.api.entity.Candidate;
 import com.staff.api.enums.Sort.SortCandidateFields;
 import com.staff.api.specification.ICandidateSpecification;
 import com.staff.dao.specification.Specification;
-
-import java.sql.Date;
 import java.util.List;
 
 public class CandidateSpecification extends Specification<Candidate> implements ICandidateSpecification {

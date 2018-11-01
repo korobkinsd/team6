@@ -27,7 +27,7 @@ public class DateValidator {
                 formatter.parse(value);
                 validDatePattern = validPattern;
             } catch (ParseException e) {
-                // nothing to do
+                return ""; //TODO Переделать
             }
         }
         return validDatePattern;

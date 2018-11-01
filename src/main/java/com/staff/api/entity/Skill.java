@@ -26,7 +26,7 @@ public class Skill implements IEntity<Skill> {
     String name;
 
     public boolean isNew() {
-        return (this.name == null);
+        return this.name == null;
     }
 
 

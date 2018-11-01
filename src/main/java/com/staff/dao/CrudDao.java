@@ -3,7 +3,6 @@ package com.staff.dao;
 import com.staff.api.dao.ICrudDao;
 import com.staff.api.dao.ISqlQuery;
 import com.staff.api.entity.IEntity;
-import com.staff.api.entity.Skill;
 import com.staff.api.enums.Paging;
 import com.staff.api.sort.ISort;
 import com.staff.api.specification.ISpecification;
@@ -94,7 +93,7 @@ public abstract class CrudDao<T> implements ICrudDao<T> {
         try {
             result = namedParameterJdbcTemplate.queryForObject(String.format(sqlQuery.getBaseSql().concat(sqlQuery.getSpecificationSql()), specification.Builder(), ""), new HashMap<>(), rowMapper);
         } catch (EmptyResultDataAccessException e) {
-            // do nothing, return null
+            result = null;
         }
 
         return result;
