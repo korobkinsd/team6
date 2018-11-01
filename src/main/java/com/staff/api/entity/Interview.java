@@ -12,7 +12,7 @@ public class Interview implements IEntity<Interview> {
 
 
     public boolean isNew() {
-        return (this.id == null);
+        return this.id == null;
     }
     public Integer getId() {  return id; }
     public void setId(Integer id) {

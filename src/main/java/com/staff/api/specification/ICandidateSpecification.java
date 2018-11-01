@@ -1,8 +1,6 @@
 package com.staff.api.specification;
 
 import com.staff.api.entity.Candidate;
-
-import java.sql.Date;
 import java.util.List;
 
 public interface ICandidateSpecification extends ISpecification<Candidate> {

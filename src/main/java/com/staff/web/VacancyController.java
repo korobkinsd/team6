@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +30,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-@Controller
+@RestController
 public class VacancyController {
     private final Logger logger = LoggerFactory.getLogger(VacancyController.class);
     private IVacancyService vacancyService;
@@ -147,7 +146,7 @@ public class VacancyController {
     }
     // show vacancy
     @RequestMapping(value = "/vacancy/{id}", method = RequestMethod.GET)
-    public String showVacancy(@PathVariable("id") int id, Model model) {
+    public Vacancy showVacancy(@PathVariable("id") int id, Model model) {
 
         logger.debug("showVacancy() id: {}", id);
 
@@ -157,8 +156,8 @@ public class VacancyController {
             model.addAttribute("msg", "vacancy not found");
         }
         model.addAttribute("vacancy", vacancy);
-
-        return "vacancy/show";
+return vacancy;
+     //   return "vacancy/show";
 
     }
 

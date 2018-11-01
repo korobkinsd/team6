@@ -26,7 +26,7 @@ public class Candidate implements IEntity<Candidate>{
     private List<ContactDetails> contactDetailsList;
 
     public final boolean isNew() {
-        return (this.id == null);
+        return this.id == null;
     }
 
     public final Integer getId() {
@@ -81,10 +81,10 @@ public class Candidate implements IEntity<Candidate>{
                 formatter.applyPattern(validPattern);
                 formatter.setLenient(false);
                 //this.birthday = formatter.parse(birthday);
-                this.birthday = new Date((formatter.parse(birthday)).getTime());
+                this.birthday = new Date(formatter.parse(birthday).getTime());
                 return;
             } catch (ParseException e) {
-                // nothing to do
+                return;//TODO Доделать
             }
         }
     }
@@ -113,9 +113,9 @@ public class Candidate implements IEntity<Candidate>{
     public final String getBirthdayAsString() {
         if (!(this.birthday == null)) {
             Format formatter = new SimpleDateFormat("dd.MM.yyyy");
-            return (formatter.format(birthday));
+            return formatter.format(birthday);
         } else {
-            return ("");
+            return "";
         }
         //return String.format("%td.%tm.%tY",birthday,birthday,birthday);
     }

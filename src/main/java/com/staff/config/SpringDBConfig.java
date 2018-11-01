@@ -1,8 +1,7 @@
 package com.staff.config;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,8 +28,8 @@ public class SpringDBConfig {
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUrl("jdbc:mysql://localhost:3306/team6?useSll=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-		dataSource.setUsername("root");
-		dataSource.setPassword("12345");
+		dataSource.setUsername("Max");
+		dataSource.setPassword("qaz.12345");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		return dataSource;
 	}

@@ -1,14 +1,12 @@
 package com.staff.web;
 
 import com.staff.api.entity.Candidate;
-import com.staff.api.enums.Sort.SortCandidateFields;
+
 import com.staff.api.specification.ISpecification;
 import com.staff.dao.specification.EntityRepository.CandidateSpecification;
 import com.staff.api.service.ICandidateService;
 import com.staff.validator.CandidateFormValidator;
 import javax.servlet.http.HttpServletRequest;
-import com.staff.api.enums.Sort.SortOrder;
-import com.staff.api.enums.Sort.SortUserFields;
 import com.staff.dao.sort.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,7 +150,6 @@ public class CandidateController extends BaseController {
 	@RequestMapping(value = "/candidates/{id}", method = RequestMethod.GET)
 	public String showCandidate(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
 		logger.debug("showCandidate() id: {}", id);
-		Locale l = Locale.getDefault();
 		Candidate candidate = candidateService.Read(new CandidateSpecification().GetById(id.toString()));
 		if (candidate == null) {
 			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
