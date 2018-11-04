@@ -57,4 +57,13 @@ public abstract class Specification<T> implements ISpecification<T> {
         String query = this.getSpecification() + " LIKE '%" + value.toString() + "%' ";
         this.setSpecification(query);
     }
+    protected  <L> void ConcatForGreateThan(L value){
+        String query = this.getSpecification() + " >= " + value.toString() + " ";
+        this.setSpecification(query);
+    }
+    protected  <L> void ConcatForLessThan(L value){
+        String query = this.getSpecification() + " <= " + value.toString() + " ";
+        this.setSpecification(query);
+    }
+
 }

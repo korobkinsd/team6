@@ -6,6 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.sql.Date;
+//import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 public class Candidate implements IEntity<Candidate>{
     public enum CandidateState {
@@ -18,11 +23,20 @@ public class Candidate implements IEntity<Candidate>{
     }
 
     private Integer id;
+
+    @Size(min=3, max=255, message="Your full name must be between 3 and 255 characters long.")
     private String name;
+
     private String surname;
+
+    @Min(0)
     private double salary;
+
+    @Past
     private Date birthday;
+
     private CandidateState candidateState;
+
     private List<ContactDetails> contactDetailsList;
 
     public final boolean isNew() {

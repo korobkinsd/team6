@@ -83,23 +83,36 @@ public class CandidateSpecification extends Specification<Candidate> implements 
     }
 
     @Override
-    public ICandidateSpecification GetBySalary(Double salary) {
-        if (salary > 0) {
+    public ICandidateSpecification GetBySalary(Double salaryFrom, Double salaryTo) {
+        if (salaryFrom > 0) {
             this.And();
             this.setSpecification(this.getSpecification() +" ".concat(SortCandidateFields.SALARY.toString()));
-            this.ConcatForEquals(salary);
+            this.ConcatForGreateThan(salaryFrom);
         } else {
             this.setSpecification(this.Stub());
         }
 
+        if (salaryTo > 0) {
+            this.And();
+            this.setSpecification(this.getSpecification() +" ".concat(SortCandidateFields.SALARY.toString()));
+            this.ConcatForLessThan(salaryTo);
+        } else {
+            this.setSpecification(this.Stub());
+        }
         return this;
     }
 
     @Override
-    public ICandidateSpecification GetByBirthday(String birthday) {
-        if (birthday != null && !birthday.isEmpty()){
+    public ICandidateSpecification GetByBirthday(String birthdayFrom, String birthdayTo) {
+        if (birthdayFrom != null && !birthdayFrom.isEmpty()){
             this.setSpecification(this.getSpecification() + " ".concat(SortCandidateFields.BIRTHDAY.toString()) );
-            this.ConcatForEquals(birthday);
+            this.ConcatForGreateThan(birthdayFrom);
+        }else{
+            this.setSpecification(this.Stub());
+        }
+        if (birthdayTo != null && !birthdayTo.isEmpty()){
+            this.setSpecification(this.getSpecification() + " ".concat(SortCandidateFields.BIRTHDAY.toString()) );
+            this.ConcatForGreateThan(birthdayTo);
         }else{
             this.setSpecification(this.Stub());
         }
