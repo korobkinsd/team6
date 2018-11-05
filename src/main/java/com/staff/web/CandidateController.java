@@ -66,9 +66,9 @@ public class CandidateController extends BaseController {
 		CandidateFilter candidateFilter = mapper.readValue(filter, CandidateFilter.class);
 
 		ISpecification<Candidate> spec = new CandidateSpecification().GetByNameLike(candidateFilter.getName())
-                                        .GetAnd().GetBySurnameLike(candidateFilter.getSurname())
-                                        .GetAnd().GetBySalary( candidateFilter.getSalaryFrom(), candidateFilter.getSalaryTo() )
-										.GetAnd().GetByBirthday( candidateFilter.getBirthdayFromAsString(), candidateFilter.getBirthdayToAsString() );
+                                        .GetAnd().GetBySurnameLike(candidateFilter.getSurname());
+                                        //.GetAnd().GetBySalary( candidateFilter.getSalaryFrom(), candidateFilter.getSalaryTo() )
+										//.GetAnd().GetByBirthday( candidateFilter.getBirthdayFromAsString(), candidateFilter.getBirthdayToAsString() );
 
         List<Candidate> listCandidates = candidateService.FindWithPaging( spec, new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 		int total = candidateService.Count(spec);
