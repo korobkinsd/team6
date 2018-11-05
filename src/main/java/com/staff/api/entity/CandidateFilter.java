@@ -1,11 +1,14 @@
 package com.staff.api.entity;
 
+import com.staff.api.Utils.DataConverter;
+
 import java.sql.Date;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 /*
-* Filter for searching canodates
+* Filter for searching candidates
 */
 public class CandidateFilter {
     private String name;
@@ -39,21 +42,20 @@ public class CandidateFilter {
         this.surname = surname;
     }
 
+    public void setBirthdayFrom(String birthdayFrom) {
+        this.birthdayFrom = DataConverter.toDate(birthdayFrom);
+    }
+
     public Date getBirthdayFrom() {
         return birthdayFrom;
     }
 
     public final String getBirthdayFromAsString() {
-        if (!(this.birthdayFrom == null)) {
-            Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-            return formatter.format(birthdayFrom);
-        } else {
-            return "";
-        }
+        return DataConverter.toStr(birthdayFrom);
     }
 
-    public void setBirthdayFrom(Date birthdayFrom) {
-        this.birthdayFrom = birthdayFrom;
+    public void setBirthdayTo(String birthdayTo) {
+        this.birthdayTo = DataConverter.toDate(birthdayTo);
     }
 
     public Date getBirthdayTo() {
@@ -61,16 +63,7 @@ public class CandidateFilter {
     }
 
     public final String getBirthdayToAsString() {
-        if (!(this.birthdayTo == null)) {
-            Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-            return formatter.format(birthdayTo);
-        } else {
-            return "";
-        }
-    }
-
-    public void setBirthdayTo(Date birthdayTo) {
-        this.birthdayTo = birthdayTo;
+        return DataConverter.toStr(this.birthdayTo);
     }
 
     public Double getSalaryFrom() {

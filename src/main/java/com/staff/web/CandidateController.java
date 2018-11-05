@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/candidates")
 public class CandidateController extends BaseController {
 
@@ -54,6 +54,7 @@ public class CandidateController extends BaseController {
 	}
 
 	// list of candidates
+    // http://localhost:8080/candidates?filter={"salaryFrom": "100", "salaryTo": "1000"}&columnName=NAME&order=DESC&page=1
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody List<Candidate> showAllCandidates(
                                       @RequestParam(value = "filter") String filter

@@ -1,9 +1,13 @@
 package com.staff.dao.specification.EntitySpecification;
 
+import com.staff.api.Utils.DataConverter;
 import com.staff.api.entity.Candidate;
 import com.staff.api.enums.Sort.SortCandidateFields;
 import com.staff.api.specification.ICandidateSpecification;
 import com.staff.dao.specification.Specification;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CandidateSpecification extends Specification<Candidate> implements ICandidateSpecification {
@@ -85,17 +89,16 @@ public class CandidateSpecification extends Specification<Candidate> implements 
     @Override
     public ICandidateSpecification GetBySalary(Double salaryFrom, Double salaryTo) {
         if (salaryFrom > 0) {
-            this.And();
-            this.setSpecification(this.getSpecification() +" ".concat(SortCandidateFields.SALARY.toString()));
-            this.ConcatForGreateThan(salaryFrom);
+            this.setSpecification(this.getSpecification() + " ".concat(SortCandidateFields.SALARY.toString()));
+            this.ConcatForGreaterThan(salaryFrom.toString());
         } else {
             this.setSpecification(this.Stub());
         }
 
         if (salaryTo > 0) {
             this.And();
-            this.setSpecification(this.getSpecification() +" ".concat(SortCandidateFields.SALARY.toString()));
-            this.ConcatForLessThan(salaryTo);
+            this.setSpecification(this.getSpecification() + " ".concat(SortCandidateFields.SALARY.toString()));
+            this.ConcatForLessThan(salaryTo.toString());
         } else {
             this.setSpecification(this.Stub());
         }
@@ -104,15 +107,17 @@ public class CandidateSpecification extends Specification<Candidate> implements 
 
     @Override
     public ICandidateSpecification GetByBirthday(String birthdayFrom, String birthdayTo) {
+
         if (birthdayFrom != null && !birthdayFrom.isEmpty()){
             this.setSpecification(this.getSpecification() + " ".concat(SortCandidateFields.BIRTHDAY.toString()) );
-            this.ConcatForGreateThan(birthdayFrom);
+            this.ConcatForGreaterThan(birthdayFrom);
         }else{
             this.setSpecification(this.Stub());
         }
         if (birthdayTo != null && !birthdayTo.isEmpty()){
+            this.And();
             this.setSpecification(this.getSpecification() + " ".concat(SortCandidateFields.BIRTHDAY.toString()) );
-            this.ConcatForGreateThan(birthdayTo);
+            this.ConcatForLessThan(birthdayTo);
         }else{
             this.setSpecification(this.Stub());
         }
