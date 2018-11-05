@@ -1,36 +1,33 @@
 package com.staff.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.staff.api.dao.ICandidateDao;
 import com.staff.api.entity.Candidate;
+import com.staff.api.entity.CandidateFilter;
 import com.staff.api.specification.ISpecification;
 import com.staff.dao.specification.EntitySpecification.CandidateSpecification;
 import com.staff.api.service.ICandidateService;
+import com.staff.exception.ResourceNotFoundException;
 import com.staff.validator.CandidateFormValidator;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import com.staff.dao.sort.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
-
-@Controller
-@SessionAttributes("candidateOriginal")
+@RestController
+@RequestMapping("/candidates")
 public class CandidateController extends BaseController {
 
 	private final Logger logger = LoggerFactory.getLogger(CandidateController.class);
@@ -40,6 +37,9 @@ public class CandidateController extends BaseController {
 
 	@Autowired
 	private MessageSource messageSource;
+
+	@Autowired
+	private ICandidateDao candidateDao;
 
 	@InitBinder({"candidateForm"})
 	protected void initBinder(WebDataBinder binder) {
@@ -53,135 +53,89 @@ public class CandidateController extends BaseController {
 		this.candidateService = candidateService;
 	}
 
-	// list page
-	@RequestMapping(value = "/candidates", method = RequestMethod.GET)
-	public String showAllCandidates(  Model model
-                                    , @ModelAttribute("candidatesFilter") Candidate candidate
+	// list of candidates
+    // http://localhost:8080/candidates?filter={"salaryFrom": "100", "salaryTo": "1000"}&columnName=NAME&order=DESC&page=1
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody List<Candidate> showAllCandidates(
+                                      @RequestParam(value = "filter") String filter
                                     , @RequestParam(value = "columnName", defaultValue = "ID") String columnName
                                     , @RequestParam(value = "order", defaultValue = "ASC") String order
                                     , @RequestParam(value = "page", defaultValue = "1") int page
-                                    , @RequestParam(value = "pagesize", defaultValue = "3") int pagesize) {
+                                    , @RequestParam(value = "pagesize", defaultValue = "3") int pagesize) throws IOException {
 
+		ObjectMapper mapper = new ObjectMapper();
+		CandidateFilter candidateFilter = mapper.readValue(filter, CandidateFilter.class);
 
-		ISpecification<Candidate> spec = new CandidateSpecification().GetByNameLike(candidate.getName())
-                                        .GetAnd().GetBySurnameLike(candidate.getSurname());
-                                        //.GetAnd().GetBySalary(candidate.getSalary());
+		ISpecification<Candidate> spec = new CandidateSpecification().GetByNameLike(candidateFilter.getName())
+                                        .GetAnd().GetBySurnameLike(candidateFilter.getSurname());
+                                        //.GetAnd().GetBySalary( candidateFilter.getSalaryFrom(), candidateFilter.getSalaryTo() )
+										//.GetAnd().GetByBirthday( candidateFilter.getBirthdayFromAsString(), candidateFilter.getBirthdayToAsString() );
+
         List<Candidate> listCandidates = candidateService.FindWithPaging( spec, new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 		int total = candidateService.Count(spec);
-		model.addAttribute("candidates", listCandidates);
-        model.addAttribute("candidatesFilter", candidate);
-        //model.addAttribute("filterName", filterName);
-        //model.addAttribute("filterSurname", filterSurname);
-        //model.addAttribute("filterSalaryFrom", filterSalaryFrom);
-        //model.addAttribute("filterSalaryTo", filterSalaryTo);
-        //model.addAttribute("filterBirthday", filterBirthday);
-        //model.addAttribute("filterCandidateState", filterCandidateState);
-        model.addAttribute("columnName",columnName);
-        model.addAttribute("currentOrder",order);
-        model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
-		model.addAttribute("currentOrder",order.toUpperCase() );
-		model.addAttribute("pageCount", Math.ceil ( (double)total/pagesize));
-		model.addAttribute("pageNumber",page);
-        model.addAttribute("listCandidateState", Candidate.CandidateState.values());
         logger.debug("showAllCandidates() done");
-		return "candidates/list";
-	}
-
-	// save or update candidate
-	@RequestMapping(value = "/candidates", method = RequestMethod.POST)
-	public String saveOrUpdateCandidate(@ModelAttribute("candidateForm") @Validated Candidate candidate,
-										@ModelAttribute("birthdayAsString") String bd,
-			BindingResult result, Model model, final RedirectAttributes redirectAttributes, HttpServletRequest request, HttpSession session) {
-		Candidate candidateOriginal = (Candidate)session.getAttribute("candidateOriginal");
-		logger.debug("saveOrUpdateCandidate() original: {}", candidateOriginal);
-		if (result.hasErrors()) {
-			return "candidates/editform";
-		} else {
-			redirectAttributes.addFlashAttribute("css", "success");
-			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-			Locale locale = localeResolver.resolveLocale(request);
-			if (locale == null) {locale = Locale.getDefault();}
-			if(candidate.isNew()){
-				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.added" , null, locale ));
-			}else{
-				redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.updated" , null, locale ));
-			}
-			candidate.setBirthday(bd);
-			logger.debug("saveOrUpdateCandidate() : new {}", candidate);
-
-			/*if (candidateOriginal != null) {
-				return "redirect:/candidates/message";
-			}*/
-			candidateService.saveOrUpdate(candidate, new CandidateSpecification().GetById(candidate.getForeignKey()));
-			return "redirect:/candidates";   ///" + candidate.getId();
-		}
-	}
-
-	// show add-form
-	@RequestMapping(value = "/candidates/add", method = RequestMethod.GET)
-	public String showAddForm(Model model) {
-		logger.debug("showAddForm()");
-		Candidate candidate = new Candidate();
-		candidate.setName("Name");
-		candidate.setSurname("Surname");
-		candidate.setCandidateState(Candidate.CandidateState.ACTIVE);
-		model.addAttribute("candidateForm", candidate);
-		model.addAttribute("listCandidateState", Candidate.CandidateState.values());
-		return "candidates/editform";
-	}
-
-	// show update-form
-	@RequestMapping(value = "/candidates/{id}/update", method = RequestMethod.GET)
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model, HttpSession session) {
-		logger.debug("showUpdateForm() : {}", id);
-		Candidate candidate = candidateService.Read(new CandidateSpecification().GetById(id.toString()));
-		model.addAttribute("candidateForm", candidate);
-		session.setAttribute( "candidateOriginal", candidate);
-		model.addAttribute( "birthdayAsString", candidate.getBirthdayAsString());
-		model.addAttribute("listCandidateState", Candidate.CandidateState.values());
-		return "candidates/editform";
-	}
-
-	// delete user
-	@RequestMapping(value = "/candidates/{id}/delete", method = RequestMethod.POST)
-	public String deleteCandidate(@PathVariable("id") Integer id, final RedirectAttributes redirectAttributes, HttpServletRequest request) {
-		logger.debug("deleteCandidate() : {}", id);
-		candidateService.delete(new CandidateSpecification().GetById(id.toString()));
-		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-		Locale locale = localeResolver.resolveLocale(request);
-		if (locale == null) {locale = Locale.getDefault();}
-		redirectAttributes.addFlashAttribute("css", "success");
-		redirectAttributes.addFlashAttribute("msg", messageSource.getMessage("messages.candidates.deleted" , null, locale ));
-		return "redirect:/candidates";
+		return listCandidates;
 	}
 
 	// show candidate read only
-	@RequestMapping(value = "/candidates/{id}", method = RequestMethod.GET)
-	public String showCandidate(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public @ResponseBody Candidate showCandidate(@PathVariable("id") Integer id) {
 		logger.debug("showCandidate() id: {}", id);
-		Locale l = Locale.getDefault();
 		Candidate candidate = candidateService.Read(new CandidateSpecification().GetById(id.toString()));
-		if (candidate == null) {
-			LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-			Locale locale = localeResolver.resolveLocale(request);
-			if (locale == null) {locale = Locale.getDefault();}
-			model.addAttribute("css", "danger");
-			model.addAttribute("msg", messageSource.getMessage("messages.candidates.not_found" , null, locale ));
+		if (candidate != null){
+			return candidate;
+		} else {
+			throw new ResourceNotFoundException();
 		}
-		model.addAttribute("candidate", candidate);
-		return "candidates/show";
 	}
 
-	@ExceptionHandler(EmptyResultDataAccessException.class)
-	public ModelAndView handleEmptyData(HttpServletRequest request, Exception ex) {
-		logger.debug("handleEmptyData()");
-		logger.error("Request: {}, error ", request.getRequestURL(), ex);
-		ModelAndView model = new ModelAndView();
-		model.setViewName("candidates/show");
-		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-		Locale locale = localeResolver.resolveLocale(request);
-		if (locale == null) {locale = Locale.getDefault();}
-		model.addObject("msg", messageSource.getMessage("messages.candidates.not_found" , null, locale ));
-		return model;
+	@ResponseStatus(HttpStatus.CREATED)
+	@RequestMapping(method = RequestMethod.PUT)
+	public @ResponseBody Candidate saveCandidate(@Valid @RequestBody Candidate candidate,
+									   BindingResult result) throws BindException {
+
+		logger.debug("saveCandidate() : {}", candidate);
+		if (result.hasErrors()) {
+			throw new BindException(result);
+		} else {
+			candidateService.saveOrUpdate(candidate, new CandidateSpecification().GetById(candidate.getForeignKey()));
+			return candidate;
+		}
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void updateCandidate(@PathVariable("id") Integer id, @Valid @RequestBody Candidate candidate,
+						   BindingResult result) throws BindException{
+
+		logger.debug("updateCandidate() : {}", candidate);
+		if (result.hasErrors()) {
+			throw new BindException(result);
+		} else {
+
+			Candidate updCandidate = candidateDao.Read(new CandidateSpecification().GetById(id.toString()));
+			if (updCandidate== null) {
+				throw new ResourceNotFoundException();
+			} else {
+				updCandidate.setName(candidate.getName());
+				updCandidate.setBirthday(candidate.getBirthdayAsString());
+				updCandidate.setSalary(candidate.getSalary());
+				updCandidate.setSurname(candidate.getSurname());
+				candidateDao.update(updCandidate);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteCandidate(@PathVariable("id") Integer id) {
+
+		logger.debug("deleteCandidate() : {}", id);
+		Candidate candidate = candidateDao.Read(new CandidateSpecification().GetById(id.toString()));
+		if (candidate != null){
+			candidateDao.delete(new CandidateSpecification().GetById(id.toString()));
+		} else {
+			throw new ResourceNotFoundException();
+		}
 	}
 }

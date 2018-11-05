@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 @Component("dateValidator")
 public class DateValidator {
-    public final String[] validPatterns = {"dd.MM.yyyy","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy","yyyy-MM-dd"};
+    private final String[] validPatterns = {"dd.MM.yyyy","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy","yyyy-MM-dd"};
     private String validDatePattern;
 
     public boolean valid(final String value) {

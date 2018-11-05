@@ -19,9 +19,9 @@ public interface ICandidateSpecification extends ISpecification<Candidate> {
 
     ICandidateSpecification GetBySurnameLike(String surname);
 
-    ICandidateSpecification GetBySalary(Double salary);
+    ICandidateSpecification GetBySalary(Double salaryFrom, Double salaryTo);
 
-    ICandidateSpecification GetByBirthday(String birthday);
+    ICandidateSpecification GetByBirthday(String birthdayFrom, String birthdayTo);
 
 
 

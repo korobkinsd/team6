@@ -1,143 +1,120 @@
 package com.staff.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.staff.api.dao.ISkillDao;
 import com.staff.api.entity.Skill;
-import com.staff.api.service.ISkillService;
+import com.staff.api.specification.ISkillSpecification;
 import com.staff.dao.sort.Sort;
 import com.staff.dao.specification.EntitySpecification.SkillSpecification;
-import com.staff.validator.SkillFormValidator;
+import com.staff.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequestMapping("/skills")
 public class SkillController {
+    
     private final Logger logger = LoggerFactory.getLogger(SkillController.class);
-    private ISkillService skillService;
-    @Autowired
-    public void setSkillService(ISkillService skillService) {
-        this.skillService = skillService;
-    }
 
     @Autowired
-    SkillFormValidator skillFormValidator;
+    private ISkillDao skillDao;
 
-    // list page
-    @RequestMapping(value = "/skills", method = RequestMethod.GET)
-    public String showAllskill(@ModelAttribute("skillForm") Skill skill, Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "columnName", defaultValue ="NAME") String columnName, @RequestParam(value = "order", defaultValue = "ASC") String order, @RequestParam(value = "pagesize", defaultValue = "5") int pagesize) {
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody List<Skill> showAllSkills(@RequestParam(value = "filter") String filter,
+                                                 @RequestParam(value = "columnName", defaultValue ="NAME") String columnName,
+                                                 @RequestParam(value = "order", defaultValue = "ASC") String order,
+                                                 @RequestParam(value = "page", defaultValue = "1") int page,
+                                                 @RequestParam(value = "pagesize", defaultValue = "5") int pagesize) throws IOException {
 
-        logger.debug("showAllskill()");
+        logger.debug("showAllSkills()");
+        ObjectMapper mapper = new ObjectMapper();
+        Skill skillFilter = mapper.readValue(filter, Skill.class);
 
-        List<Skill> listSkill =skillService.FindWithPaging(new SkillSpecification().GetBySkillLike(skill.getName()),
+        ISkillSpecification specSkill = new SkillSpecification();
+        if (skillFilter != null){
+            specSkill = specSkill.GetBySkillLike(skillFilter.getName());
+        }
+        List<Skill> skills = skillDao.FindWithPaging(specSkill,
                 new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 
-        int skillCount = skillService.Count(new SkillSpecification());
-        int pageCount = (int) Math.ceil((double) skillCount/pagesize);
-
-        model.addAttribute("skillForm", skill);
-        model.addAttribute("pageCount",pageCount);
-        model.addAttribute("columnName",columnName);
-        model.addAttribute("pageNumber",page);
-        model.addAttribute("skills", listSkill);
-        model.addAttribute("currentOrder",order);
-        model.addAttribute("order",order.toUpperCase().equals("ASC") ? "DESC" : "ASC");
-
-        return "skills/list";
-
+        //return mapper.writeValueAsString(skills);
+        return skills;
     }
-    // show add skill form
-    @RequestMapping(value = "/skills/add", method = RequestMethod.GET)
-    public String showAddSkillForm(Model model) {
 
-        logger.debug("showAddSkillForm()");
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    public @ResponseBody Skill showSkill(@PathVariable("name") String name) {
 
-        Skill skill = new Skill();
+        logger.debug("showSkill() name: {}", name);
 
-        // set default value
-        //skill.setName("SET SKILL");
-        model.addAttribute("skillForm", skill);
-
-        return "skills/skillform";
-
+        Skill skill = skillDao.Read(new SkillSpecification().GetBySkill(name));
+        if (skill != null){
+            return skill;
+        }else{
+            throw new ResourceNotFoundException();
+        }
     }
-    // save or update skill
-    @RequestMapping(value = "/skills", method = RequestMethod.POST)
-    public String saveOrUpdateSkill(@ModelAttribute("skillForm") @Validated Skill skill,
-                                    BindingResult result, Model model, final RedirectAttributes redirectAttributes) {
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(method = RequestMethod.PUT)
+    public @ResponseBody Skill saveSkill(@Valid @RequestBody Skill skill,
+                                       BindingResult result) throws BindException {
+
+        logger.debug("saveSkill() : {}", skill);
+
+        if (result.hasErrors()) {
+            throw new BindException(result);
+        } else {
+            skillDao.saveSkill(skill);
+            return skill;
+        }
+    }
+
+    @RequestMapping(value = "/{name}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateSkill(@PathVariable("name") String name, @Valid @RequestBody Skill skill,
+                           BindingResult result) throws BindException{
 
         logger.debug("saveOrUpdateSkill() : {}", skill);
 
         if (result.hasErrors()) {
-            return "skills/skillform";
+            throw new BindException(result);
         } else {
 
-            redirectAttributes.addFlashAttribute("css", "success");
-            if(skill.isNew()){
-                redirectAttributes.addFlashAttribute("msg", "skill added successfully!");
-            }else{
-                redirectAttributes.addFlashAttribute("msg", "skill updated successfully!");
+            Skill updSkill = skillDao.Read(new SkillSpecification().GetBySkill(name));
+            if (updSkill== null) {
+                throw new ResourceNotFoundException();
+            } else {
+                updSkill.setName(skill.getName());
+                skillDao.saveSkill(updSkill);
             }
-
-            skillService.saveSkill(skill);
-
-            // POST/REDIRECT/GET
-            return "redirect:/skills";// + name.getSkill();
-
-            // POST/FORWARD/GET
-            // return "skill/list";
-
         }
 
     }
-    // show skill
-    @RequestMapping(value = "/skills/{name}", method = RequestMethod.GET)
-    public String showSkill(@PathVariable("name") String name, Model model) {
 
-        logger.debug("showSkill() name: {}", name);
-
-        Skill skill = skillService.Read(new SkillSpecification().GetBySkill(name) );
-        if (skill == null) {
-            model.addAttribute("css", "danger");
-            model.addAttribute("msg", "skill not found");
-        }
-        model.addAttribute("skill", skill);
-
-        return "skills/show";
-
-    }
-
-    // show update form
-    @RequestMapping(value = "/skills/{name}/update", method = RequestMethod.GET)
-    public String showUpdateSkillForm(@PathVariable("name") String name, Model model) {
-
-        logger.debug("showUpdateSkillForm() : {}", name);
-        Skill skill = skillService.Read(new SkillSpecification().GetBySkill(name));
-        model.addAttribute("skillForm", skill);
-
-        return "skills/skillform";
-
-    }
-
-    // delete user
-    @RequestMapping(value = "/skills/{name}/delete", method = RequestMethod.POST)
-    public String deleteSkill(@PathVariable("name")  String name, final RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSkill(@PathVariable("name") String name) {
 
         logger.debug("deleteSkill() : {}", name);
 
-        skillService.delete(new SkillSpecification().GetBySkill(name));
 
-        redirectAttributes.addFlashAttribute("css", "success");
-        redirectAttributes.addFlashAttribute("msg", "Skill is deleted!");
-
-        return "redirect:/skills";
-
+        Skill skill = skillDao.Read(new SkillSpecification().GetBySkill(name));
+        if (skill != null){
+            skillDao.delete(new SkillSpecification().GetBySkill(name));
+        }else{
+            throw new ResourceNotFoundException();
+        }
     }
+
 }
 

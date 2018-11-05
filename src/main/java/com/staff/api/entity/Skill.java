@@ -1,5 +1,8 @@
 package com.staff.api.entity;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class Skill implements IEntity<Skill> {
 
 //    enum SkillEnum {
@@ -23,34 +26,36 @@ public class Skill implements IEntity<Skill> {
 //    }
 
     // form:input - textbox
-    String name;
+    @Size(min=1, max=80, message="Field shouldn't be empty")
+    @Pattern(regexp="[A-Za-z._%+-]", message="Only letters and symbols")
+    private String name;
 
     public boolean isNew() {
         return this.name == null;
     }
 
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "Skill " + name;
     }
 
 
     @Override
-    public void setForeignKey(String foreignKey) {
+    public final void setForeignKey(String foreignKey) {
         this.name = foreignKey;
     }
 
     @Override
-    public String getForeignKey() {
+    public final String getForeignKey() {
         /*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
         return this.name != null ? this.name : "0000000000000000000000000000";
     }

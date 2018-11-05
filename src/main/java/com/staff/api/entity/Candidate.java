@@ -1,11 +1,20 @@
 package com.staff.api.entity;
 
+import com.staff.api.Utils.DataConverter;
+
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.sql.Date;
+//import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+import static com.staff.api.Utils.DataConverter.toDate;
 
 public class Candidate implements IEntity<Candidate>{
     public enum CandidateState {
@@ -18,11 +27,20 @@ public class Candidate implements IEntity<Candidate>{
     }
 
     private Integer id;
+
+    @Size(min=3, max=255, message="Your full name must be between 3 and 255 characters long.")
     private String name;
+
     private String surname;
+
+    @Min(0)
     private double salary;
+
+    @Past
     private Date birthday;
+
     private CandidateState candidateState;
+
     private List<ContactDetails> contactDetailsList;
 
     public final boolean isNew() {
@@ -53,9 +71,7 @@ public class Candidate implements IEntity<Candidate>{
         return candidateState;
     }
 
-    public final void setId(Integer id) {
-        this.id = id;
-    }
+    public final void setId(Integer id) { this.id = id; }
 
     public final void setName(String name) {
         this.name = name;
@@ -74,20 +90,9 @@ public class Candidate implements IEntity<Candidate>{
     //}
 
     public final void setBirthday(String birthday) {
-        String[] validPatterns = {"dd.MM.yyyy","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy","yyyy-MM-dd"};
-        SimpleDateFormat formatter = new SimpleDateFormat();
-        for (String validPattern : validPatterns) {
-            try {
-                formatter.applyPattern(validPattern);
-                formatter.setLenient(false);
-                //this.birthday = formatter.parse(birthday);
-                this.birthday = new Date(formatter.parse(birthday).getTime());
-                return;
-            } catch (ParseException e) {
-                return;//TODO Доделать
-            }
-        }
+        this.birthday = toDate(birthday);
     }
+
     public final void setCandidateState(String st) {
         CandidateState[] states = CandidateState.values();
 
