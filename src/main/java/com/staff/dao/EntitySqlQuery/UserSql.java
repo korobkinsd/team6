@@ -43,4 +43,9 @@ public class UserSql implements ISqlQuery {
     public String getPagingSql() {
         return " LIMIT :LIMIT OFFSET :OFFSET ";
     }
+
+    @Override
+    public String getCountSpl() {
+        return "SELECT count(*) FROM user";
+    }
 }

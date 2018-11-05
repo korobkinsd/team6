@@ -1,23 +1,40 @@
 package com.staff.api.entity;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users", schema = "staff")
 public class User implements IEntity<User> {
 
-	Integer id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
+    @Basic
+    @Column(name = "name")
 	@Size(min=3, max=50, message="Your full name must be between 3 and 50 characters long.")
-	String name;
+    private String name;
 
+    @Basic
+    @Column(name = "email")
 	@Pattern(regexp="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message="Invalid email address.")
-	String email;
+    private String email;
 
+    @Basic
+    @Column(name = "password")
 	@Size(min=6, max=20, message="The password must be at least 6 characters long.")
-	String password;
+    private String password;
 
+    @Basic
+    @Column(name = "surname")
 	@Size(min=3, max=50, message="Your full name must be between 3 and 50 characters long.")
-	String surname;
+    private String surname;
 
 
 	public boolean isNew() {

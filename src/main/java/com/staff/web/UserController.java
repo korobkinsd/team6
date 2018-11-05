@@ -1,5 +1,6 @@
 package com.staff.web;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.staff.api.dao.IUserDao;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 public class UserController extends BaseController {
 
@@ -31,6 +32,7 @@ public class UserController extends BaseController {
 	private IUserDao userDao;
 
 	@RequestMapping(method = RequestMethod.GET)
+    @Transactional
 	public @ResponseBody List<User> showAllUsers(@RequestParam(value = "filter") String filter,
 							   @RequestParam(value = "columnName", defaultValue ="NAME") String columnName,
 							   @RequestParam(value = "order", defaultValue = "ASC") String order,

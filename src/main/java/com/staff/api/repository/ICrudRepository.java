@@ -13,7 +13,7 @@ public interface ICrudRepository<T> {
 
     void delete(ISpecification<T> specification);
 
-    List<T> Find(ISpecification<T> specification);
+    List<T> Find(ISpecification<T> specification, ISort sort);
     List<T> FindWithPaging(ISpecification<T> specification, ISort sort, int page, int pageSize);
 
     T Read(ISpecification<T> specification);

@@ -9,4 +9,5 @@ public interface ISqlQuery {
     String getSpecificationSql();
     String getSortSql();
     String getPagingSql();
+    String getCountSpl();
 }

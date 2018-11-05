@@ -44,4 +44,9 @@ public class SkillSql implements ISqlQuery{
         return " LIMIT :LIMIT OFFSET :OFFSET ";
     }
 
+    @Override
+    public String getCountSpl() {
+        return null;
+    }
+
 }
