@@ -38,7 +38,7 @@ public class InterviewDao extends CrudDao<Interview> implements IInterviewDao {
         return paramSource;
     }
 
-    protected static final class InterviewMapper implements RowMapper<Interview> {
+    static final class InterviewMapper implements RowMapper<Interview> {
 
         @Override
         public Interview mapRow(ResultSet rs, int rowNum) throws SQLException {

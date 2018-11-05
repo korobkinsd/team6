@@ -2,28 +2,9 @@ package com.staff.api.entity;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 public class Skill implements IEntity<Skill> {
-
-//    enum SkillEnum {
-//        C, JAVA, SQL , PYTHON, PHP
-//    }
-//
-//    private SkillEnum skill;
-//
-//    public String getSkill() {
-//        return this.skill.name();
-//    }
-//
-//    public void setSkill(String status) {
-//        this.skill = SkillEnum.valueOf(status);
-//    }
-//
-//
-//    @Override
-//    public String toString() {
-//        return "Skill " + getSkill();
-//    }
 
     // form:input - textbox
     @Size(min=1, max=80, message="Field shouldn't be empty")
@@ -44,19 +25,36 @@ public class Skill implements IEntity<Skill> {
     }
 
     @Override
-    public final String toString() {
-        return "Skill " + name;
+    public final boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Skill skill = (Skill) o;
+        return name == skill.name;
     }
 
+    @Override
+    public final int hashCode() {
+        return Objects.hash( name);
+    }
 
     @Override
-    public final void setForeignKey(String foreignKey) {
+    public final String toString() {
+        return "Skill [" +
+                " name='" + name +
+                "]";
+    }
+
+    @Override
+    public final void setForeignKey(final String foreignKey) {
         this.name = foreignKey;
     }
 
     @Override
     public final String getForeignKey() {
-        /*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
         return this.name != null ? this.name : "0000000000000000000000000000";
     }
 

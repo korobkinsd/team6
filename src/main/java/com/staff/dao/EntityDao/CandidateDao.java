@@ -37,7 +37,7 @@ public class CandidateDao extends CrudDao<Candidate> implements ICandidateDao {
         return paramSource;
     }
 
-    protected static final class CandidateMapper implements RowMapper<Candidate> {
+    static final class CandidateMapper implements RowMapper<Candidate> {
 
         @Override
         public Candidate mapRow(ResultSet rs, int rowNum) throws SQLException {

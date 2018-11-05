@@ -3,9 +3,6 @@ package com.staff.api.entity;
 import com.staff.api.Utils.DataConverter;
 
 import java.sql.Date;
-import java.text.Format;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 /*
 * Filter for searching candidates

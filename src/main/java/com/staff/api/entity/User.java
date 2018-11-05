@@ -1,11 +1,15 @@
 package com.staff.api.entity;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
+import javax.persistence.Id;
 import javax.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.Basic;
+import javax.persistence.GenerationType;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "users", schema = "staff")

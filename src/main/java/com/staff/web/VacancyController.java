@@ -12,7 +12,6 @@ import com.staff.validator.VacancyFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -29,9 +28,6 @@ public class VacancyController {
     public void setVacancyService(IVacancyService vacancyService) {
         this.vacancyService = vacancyService;
     }
-    @Autowired
-    private MessageSource messageSource;
-
 
     @Autowired
     VacancyFormValidator vacancyFormValidator;

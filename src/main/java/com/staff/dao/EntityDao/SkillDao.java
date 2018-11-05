@@ -41,7 +41,7 @@ public class SkillDao extends CrudDao<Skill> implements ISkillDao {
         return paramSource;
     }
 
-    protected static final class SkillMapper implements RowMapper<Skill> {
+    static final class SkillMapper implements RowMapper<Skill> {
 
         @Override
         public Skill mapRow(ResultSet rs, int rowNum) throws SQLException {

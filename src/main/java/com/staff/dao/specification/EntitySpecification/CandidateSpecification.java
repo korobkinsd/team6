@@ -1,13 +1,10 @@
 package com.staff.dao.specification.EntitySpecification;
 
-import com.staff.api.Utils.DataConverter;
 import com.staff.api.entity.Candidate;
 import com.staff.api.enums.Sort.SortCandidateFields;
 import com.staff.api.specification.ICandidateSpecification;
 import com.staff.dao.specification.Specification;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CandidateSpecification extends Specification<Candidate> implements ICandidateSpecification {

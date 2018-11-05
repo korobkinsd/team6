@@ -10,14 +10,11 @@ import com.staff.api.service.ICandidateService;
 import com.staff.exception.ResourceNotFoundException;
 import com.staff.validator.CandidateFormValidator;
 import javax.validation.Valid;
-
 import com.staff.dao.sort.Sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,9 +31,6 @@ public class CandidateController extends BaseController {
 
 	@Autowired
 	CandidateFormValidator candidateFormValidator;
-
-	@Autowired
-	private MessageSource messageSource;
 
 	@Autowired
 	private ICandidateDao candidateDao;
@@ -72,7 +66,7 @@ public class CandidateController extends BaseController {
 										//.GetAnd().GetByBirthday( candidateFilter.getBirthdayFromAsString(), candidateFilter.getBirthdayToAsString() );
 
         List<Candidate> listCandidates = candidateService.FindWithPaging( spec, new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
-		int total = candidateService.Count(spec);
+		//int total = candidateService.Count(spec);
         logger.debug("showAllCandidates() done");
 		return listCandidates;
 	}

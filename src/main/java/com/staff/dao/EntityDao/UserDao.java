@@ -37,7 +37,7 @@ public class UserDao extends CrudDao<User> implements IUserDao {
 		return paramSource;
 	}
 
-	protected static final class UserMapper implements RowMapper<User> {
+	static final class UserMapper implements RowMapper<User> {
 
 		@Override
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {

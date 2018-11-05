@@ -129,17 +129,13 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-<<<<<<< HEAD
-			<version>5.3.1.Final</version>
+			<version>5.3.6.Final</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.3.1.Final</version>
-=======
 			<version>5.3.6.Final</version>
->>>>>>> 818c5caf558d721e89a0a56dff58ea4661735fcf
 		</dependency>
 
 		<dependency>
@@ -206,36 +202,36 @@
 			<!--</plugin>-->
 
 			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-checkstyle-plugin</artifactId>-->
-				<!--<version>2.17</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>validate</phase>-->
-						<!--<configuration>-->
-							<!--<suppressionsLocation>suppressions.xml</suppressionsLocation>-->
-							<!--<suppressionsFileExpression>suppressions.file</suppressionsFileExpression>-->
-						<!--</configuration>-->
-                        <!--<goals>-->
-                            <!--<goal>check</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-			<!--</plugin>-->
+			<!--<groupId>org.apache.maven.plugins</groupId>-->
+			<!--<artifactId>maven-checkstyle-plugin</artifactId>-->
+			<!--<version>2.17</version>-->
+			<!--<executions>-->
+				<!--<execution>-->
+					<!--<phase>validate</phase>-->
+					<!--<configuration>-->
+						<!--<suppressionsLocation>suppressions.xml</suppressionsLocation>-->
+						<!--<suppressionsFileExpression>suppressions.file</suppressionsFileExpression>-->
+					<!--</configuration>-->
+					<!--<goals>-->
+						<!--<goal>check</goal>-->
+					<!--</goals>-->
+				<!--</execution>-->
+			<!--</executions>-->
+		<!--</plugin>-->
 
-			    <!--<plugin>-->
-                     <!--<groupId>org.apache.maven.plugins</groupId>-->
-                     <!--<artifactId>maven-pmd-plugin</artifactId>-->
-                     <!--<version>3.10.0</version>-->
-                     <!--<executions>-->
-                         <!--<execution>-->
-                             <!--<phase>validate</phase>-->
-                             <!--<goals>-->
-                                 <!--<goal>check</goal>-->
-                             <!--</goals>-->
-                         <!--</execution>-->
-                     <!--</executions>-->
-                 <!--</plugin>-->
+			    <plugin>
+                     <groupId>org.apache.maven.plugins</groupId>
+                     <artifactId>maven-pmd-plugin</artifactId>
+                     <version>3.10.0</version>
+                     <executions>
+                         <execution>
+                             <phase>validate</phase>
+                             <goals>
+                                 <goal>check</goal>
+                             </goals>
+                         </execution>
+                     </executions>
+                 </plugin>
 
 
 		</plugins>

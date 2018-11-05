@@ -17,6 +17,7 @@ public class DataConverter {
                 return new Date(formatter.parse(value).getTime());
             } catch (ParseException e) {
                 //ok, just take next pattern
+                return null; //TODO add exception
             }
         }
         return null;

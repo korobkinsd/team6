@@ -45,7 +45,7 @@ public class VacancyDao extends CrudDao<Vacancy> implements IVacancyDao {
         return paramSource;
     }
 
-    protected static final class VacancyMapper implements RowMapper<Vacancy> {
+    static final class VacancyMapper implements RowMapper<Vacancy> {
 
         @Override
         public Vacancy mapRow(ResultSet rs, int rowNum) throws SQLException {

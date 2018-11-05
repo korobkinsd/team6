@@ -11,7 +11,7 @@ public class Interview implements IEntity<Interview> {
     private Date factDate; //Date
 
 
-    public boolean isNew() {
+    private boolean isNew() {
         return this.id == null;
     }
     public final Integer getId() {  return id; }
