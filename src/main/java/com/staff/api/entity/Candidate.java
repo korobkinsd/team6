@@ -71,9 +71,7 @@ public class Candidate implements IEntity<Candidate>{
         return candidateState;
     }
 
-    public final void setId(Integer id) {
-        this.id = id;
-    }
+    public final void setId(Integer id) { this.id = id; }
 
     public final void setName(String name) {
         this.name = name;
