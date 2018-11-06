@@ -19,14 +19,11 @@ import java.util.logging.Logger;
 public abstract class CrudRepository<T> implements ICrudRepository<T> {
     private static final Logger logger = (Logger) LoggerFactory.getLogger(CrudRepository.class);
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     protected ISqlQuery sqlQuery;
 
-    //@Autowired
-    public void setSessionFactory(SessionFactory sessionFactory){
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     public void save(IEntity<T> entity) {

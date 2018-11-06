@@ -48,7 +48,7 @@ public class VacancyController {
                 .GetBySalaryTo(vacancy.getSalaryTo()).GetBySalaryFrom(vacancy.getSalaryFrom())
                 .GetByExperienceYearsRequire(vacancy.getExperienceYearsRequire()).GetByState(vacancy.getState()),
                 new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
-        
+
           return listVacancy;
 
     }

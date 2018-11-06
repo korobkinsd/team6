@@ -1,9 +1,11 @@
 package com.staff.api.entity;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@Entity
 public class Skill implements IEntity<Skill> {
     
     @Size(min=3, max=80, message="Your full name must be between 3 and 80 characters long.")

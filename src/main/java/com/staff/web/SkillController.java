@@ -25,7 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/skills")
 public class SkillController {
-    
+
     private final Logger logger = LoggerFactory.getLogger(SkillController.class);
 
     @Autowired

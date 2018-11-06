@@ -2,7 +2,9 @@
 package com.staff.api.entity;
 
 
+import javax.persistence.Entity;
 
+@Entity
 public class Vacancy implements IEntity<Vacancy> {
     // form:hidden - hidden value
     private Integer id;

@@ -6,12 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.sql.Date;
+import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import static com.staff.api.Utils.DataConverter.toDate;
 
+@Entity
 public class Candidate implements IEntity<Candidate>{
     public enum CandidateState {
         ARCHIVE("В архиве"), ACTIVE("Активен");

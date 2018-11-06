@@ -7,6 +7,7 @@ import java.util.List;
 /*
 * Filter for searching candidates
 */
+
 public class CandidateFilter {
     private String name;
 
