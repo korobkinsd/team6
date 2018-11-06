@@ -27,7 +27,7 @@ public class UserController extends BaseController {
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	private IUserDao userDao;
+	protected IUserDao userDao;
 
 	@RequestMapping(method = RequestMethod.GET)
     @Transactional

@@ -13,7 +13,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @Configuration
 public class SpringDBConfig {
 
-	@Autowired
+	@Autowired()
+	//@Qualifier("myDataSource")
 	DataSource dataSource;
 
 	/*@Bean

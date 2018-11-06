@@ -5,10 +5,9 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Skill implements IEntity<Skill> {
-
-    // form:input - textbox
-    @Size(min=1, max=80, message="Field shouldn't be empty")
-    @Pattern(regexp="[A-Za-z._%+-]", message="Only letters and symbols")
+    
+    @Size(min=3, max=80, message="Your full name must be between 3 and 80 characters long.")
+    @Pattern(regexp="[A-Za-z]", message="Only letters")
     private String name;
 
     public boolean isNew() {
@@ -43,9 +42,7 @@ public class Skill implements IEntity<Skill> {
 
     @Override
     public final String toString() {
-        return "Skill [" +
-                " name='" + name +
-                "]";
+        return "Skill [" +" name='" + name +"]";
     }
 
     @Override
