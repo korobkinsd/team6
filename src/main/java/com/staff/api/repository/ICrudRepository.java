@@ -7,6 +7,7 @@ import com.staff.api.specification.ISpecification;
 import java.util.List;
 
 public interface ICrudRepository<T> {
+
     void save(IEntity<T> entity);
 
     void update(IEntity<T> entity);

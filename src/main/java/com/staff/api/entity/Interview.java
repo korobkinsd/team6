@@ -3,7 +3,7 @@ package com.staff.api.entity;
 import javax.persistence.Entity;
 import java.sql.Date;
 
-@Entity
+//@Entity
 public class Interview implements IEntity<Interview> {
 
     private Integer id;

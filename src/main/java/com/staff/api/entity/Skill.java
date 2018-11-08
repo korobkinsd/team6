@@ -1,15 +1,22 @@
 package com.staff.api.entity;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
+@Table(name = "skill", schema = "team6")
 public class Skill implements IEntity<Skill> {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Size(min=3, max=80, message="Your full name must be between 3 and 80 characters long.")
     @Pattern(regexp="[A-Za-z]", message="Only letters")
+    @Column(name = "name")
     private String name;
 
     public boolean isNew() {

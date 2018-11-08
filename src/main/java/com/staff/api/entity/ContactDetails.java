@@ -3,7 +3,7 @@ package com.staff.api.entity;
 import javax.persistence.Entity;
 import java.util.Objects;
 
-@Entity
+//@Entity
 public class ContactDetails implements IEntity<ContactDetails> {
     private Integer idCandidate;
     private String contactDetail;

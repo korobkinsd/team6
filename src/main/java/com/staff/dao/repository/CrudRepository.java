@@ -90,4 +90,9 @@ public abstract class CrudRepository<T> implements ICrudRepository<T> {
         Query query = session.createQuery(hql);
         return ((Number) query.uniqueResult()).intValue();
     }
+
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
 }

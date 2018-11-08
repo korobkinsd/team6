@@ -5,7 +5,9 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.staff.api.dao.IUserDao;
 import com.staff.api.entity.User;
+import com.staff.api.repository.IUserRepository;
 import com.staff.api.specification.IUserSpecification;
+import com.staff.dao.repository.UserRepository;
 import com.staff.dao.sort.Sort;
 import com.staff.dao.specification.EntitySpecification.UserSpecification;
 import com.staff.exception.ResourceNotFoundException;
@@ -26,8 +28,8 @@ public class UserController extends BaseController {
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	@Autowired
-	protected IUserDao userDao;
+	//@Autowired
+	protected IUserRepository userRepository;
 
 	@RequestMapping(method = RequestMethod.GET)
     @Transactional
@@ -46,7 +48,7 @@ public class UserController extends BaseController {
 			specUser = specUser.GetByNameLike(userFilter.getName())
 					.GetAnd().GetByEmailLike(userFilter.getEmail()).GetAnd().GetBySurnameLike(userFilter.getSurname());
 		}
-		List<User> users = userDao.FindWithPaging(specUser,
+		List<User> users = userRepository.FindWithPaging(specUser,
 				new Sort().setColumnName(columnName).setSortOrder(order), page, pagesize);
 
 		//return mapper.writeValueAsString(users);
@@ -58,7 +60,7 @@ public class UserController extends BaseController {
 
 		logger.debug("showUser() id: {}", id);
 
-		User user = userDao.Read(new UserSpecification().GetById(id));
+		User user = userRepository.Read(new UserSpecification().GetById(id));
 		if (user != null){
 			return user;
 		}else{
@@ -76,7 +78,7 @@ public class UserController extends BaseController {
 		if (result.hasErrors()) {
 			throw new BindException(result);
 		} else {
-			userDao.save(user);
+			userRepository.save(user);
 			return user;
 		}
 	}
@@ -92,7 +94,7 @@ public class UserController extends BaseController {
 			throw new BindException(result);
 		} else {
 
-			User updUser = userDao.Read(new UserSpecification().GetById(id));
+			User updUser = userRepository.Read(new UserSpecification().GetById(id));
 			if (updUser== null) {
 				throw new ResourceNotFoundException();
 			} else {
@@ -100,7 +102,7 @@ public class UserController extends BaseController {
 				updUser.setEmail(user.getEmail());
 				updUser.setPassword(user.getPassword());
 				updUser.setSurname(user.getSurname());
-				userDao.update(updUser);
+				userRepository.update(updUser);
 			}
 		}
 
@@ -113,9 +115,9 @@ public class UserController extends BaseController {
 		logger.debug("deleteUser() : {}", id);
 
 
-		User user = userDao.Read(new UserSpecification().GetById(id));
+		User user = userRepository.Read(new UserSpecification().GetById(id));
 		if (user != null){
-			userDao.delete(new UserSpecification().GetById(id));
+			userRepository.delete(new UserSpecification().GetById(id));
 		}else{
 			throw new ResourceNotFoundException();
 		}
