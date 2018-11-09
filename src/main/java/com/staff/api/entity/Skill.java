@@ -1,57 +1,66 @@
 package com.staff.api.entity;
 
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.Objects;
+
+@Entity
+@Table(name = "skill", schema = "team6")
 public class Skill implements IEntity<Skill> {
 
-//    enum SkillEnum {
-//        C, JAVA, SQL , PYTHON, PHP
-//    }
-//
-//    private SkillEnum skill;
-//
-//    public String getSkill() {
-//        return this.skill.name();
-//    }
-//
-//    public void setSkill(String status) {
-//        this.skill = SkillEnum.valueOf(status);
-//    }
-//
-//
-//    @Override
-//    public String toString() {
-//        return "Skill " + getSkill();
-//    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    // form:input - textbox
-    String name;
+    @Size(min=3, max=80, message="Your full name must be between 3 and 80 characters long.")
+    @Pattern(regexp="[A-Za-z]", message="Only letters")
+    @Column(name = "name")
+    private String name;
 
     public boolean isNew() {
         return this.name == null;
     }
 
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
     @Override
-    public String toString() {
-        return "Skill " + name;
+    public final boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Skill skill = (Skill) o;
+        return name == skill.name;
     }
 
+    @Override
+    public final int hashCode() {
+        return Objects.hash( name);
+    }
 
     @Override
-    public void setForeignKey(String foreignKey) {
+    public final String toString() {
+        return "Skill [" +" name='" + name +"]";
+    }
+
+    @Override
+    public final void setForeignKey(final String foreignKey) {
         this.name = foreignKey;
     }
 
     @Override
-    public String getForeignKey() {
-        /*TODO: не думаю, что это правильно, но не придумал, как сделать лучше*/
+    public final String getForeignKey() {
         return this.name != null ? this.name : "0000000000000000000000000000";
     }
 

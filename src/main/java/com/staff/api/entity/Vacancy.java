@@ -2,25 +2,27 @@
 package com.staff.api.entity;
 
 
+import javax.persistence.Entity;
 
+//@Entity
 public class Vacancy implements IEntity<Vacancy> {
     // form:hidden - hidden value
-    Integer id;
+    private Integer id;
 
     // form:input - textbox
-    String position;
+    private String position;
 
     // form:input - textbox
-    int idDeveloper;
+    private int idDeveloper;
 
     // form:input - password
-    double salaryFrom;
+    private double salaryFrom;
 
-    double salaryTo;
+    private double salaryTo;
 
-    double experienceYearsRequire;
+    private double experienceYearsRequire;
 
-    String state;
+    private String state;
 
     public String getState() {
         return state;
@@ -40,7 +42,7 @@ public class Vacancy implements IEntity<Vacancy> {
 
 
 
-    public boolean isNew() { return this.id == null;    }
+    private boolean isNew() { return this.id == null;    }
 
     public Integer getId() {
         return id;

@@ -42,6 +42,4 @@
   <suppress checks="VisibilityModifier" files="."/>
   <suppress checks="NeedBraces" files="."/>
 
-
-
 </suppressions>

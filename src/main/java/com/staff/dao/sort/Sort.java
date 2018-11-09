@@ -4,8 +4,8 @@ import com.staff.api.sort.ISort;
 
 public class Sort implements ISort {
 
-    protected String columnName;
-    protected String sortOrder;
+    private String columnName;
+    private String sortOrder;
 
     @Override
     public String getColumnName() {

@@ -21,18 +21,18 @@ import java.util.*;
 
 public abstract class CrudDao<T> implements ICrudDao<T> {
 
-    protected RowMapper<T> rowMapper;
+    private RowMapper<T> rowMapper;
     protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    protected ISqlQuery sqlQuery;
+    private ISqlQuery sqlQuery;
 
-    public CrudDao(){}
+    protected CrudDao(){}
 
     @Autowired
     public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) throws DataAccessException {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    protected RowMapper<T> getRowMapper(){
+    private RowMapper<T> getRowMapper(){
         return this.rowMapper;
     }
 

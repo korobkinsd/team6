@@ -45,7 +45,7 @@ public abstract class Specification<T> implements ISpecification<T> {
         this.WrapForOperationIn(valueString.toString());
     }
 
-    protected void WrapForOperationIn(String valueString){
+    void WrapForOperationIn(String valueString){
         this.setSpecification(this.getSpecification() + " in ( " + valueString + " ) ");
     }
 

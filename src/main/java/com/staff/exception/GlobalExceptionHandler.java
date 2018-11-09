@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-	public static final String DEFAULT_ERROR_VIEW = "error";
+	private static final String DEFAULT_ERROR_VIEW = "error";
 
 	private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 	
