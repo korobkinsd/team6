@@ -1,34 +1,51 @@
 package com.staff.api.entity;
 
-import com.staff.api.Utils.DataConverter;
+import com.staff.web.CandidateController;
+import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.Table;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.text.Format;
 import java.text.ParseException;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 import java.sql.Date;
-//import javax.validation.constraints.Pattern;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import static com.staff.api.Utils.DataConverter.toDate;
 
+@Entity
+@Table("candidate")
 public class Candidate implements IEntity<Candidate>{
+
     public enum CandidateState {
-        ARCHIVE("В архиве"), ACTIVE("Активен");
+          ARCHIVE("В архиве")
+        , ACTIVE("Активен");
+
         private final String description;
+
         CandidateState(final String description) {
             this.description = description;
         }
-        public String getDescription() {return description;}
-    }
 
+        public String getDescription() { return description; }
+    }
+    private Collection<ContactDetails> contactDetailsById;
+
+    private final Logger logger = LoggerFactory.getLogger(CandidateController.class);
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(min=3, max=255, message="Your full name must be between 3 and 255 characters long.")
+    @NotNull(message="is required")
+    @Size(min=3, max=255, message="name must be between 3 and 255 characters long")
     private String name;
 
     private String surname;
@@ -37,11 +54,30 @@ public class Candidate implements IEntity<Candidate>{
     private double salary;
 
     @Past
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
+    @NotNull(message="is required")
     private CandidateState candidateState;
 
-    private List<ContactDetails> contactDetailsList;
+    @OneToMany(mappedBy = "candidateByIdCandidate")
+    private Collection<ContactDetails> getContactDetailsById() {
+        return this.contactDetailsById;
+    };
+
+    public final List<ContactDetails> getContactDetailsList() {
+        return contactDetailsList;
+    }
+
+    public void setContactdetailsById(Collection<ContactDetails> contactdetailsById) {
+        this.contactdetailsById = contactdetailsById;
+    }
+
+    public final void setContactDetailsList(List<ContactDetails> contactDetailsList) {
+        this.contactDetailsList = contactDetailsList;
+    }
+
 
     public final boolean isNew() {
         return this.id == null;
@@ -92,7 +128,20 @@ public class Candidate implements IEntity<Candidate>{
     //}
 
     public final void setBirthday(String birthday) {
-        this.birthday = toDate(birthday);
+        String[] validPatterns = {"dd.MM.yyyy","yyyy-MM-dd","dd/MM/yyyy","dd-MM-yyyy","dd/mm/yy"};
+        SimpleDateFormat formatter = new SimpleDateFormat();
+        for (String validPattern : validPatterns) {
+            try {
+                formatter.applyPattern(validPattern);
+                formatter.setLenient(false);
+                Date ret = new Date(formatter.parse(birthday).getTime());
+                this.birthday = ret;
+                return;
+            } catch (ParseException e) {
+                //ok, just take next pattern
+            }
+        }
+        logger.debug("Pattern for [" + birthday + "] is not supported!");
     }
 
     public final void setCandidateState(String st) {
@@ -107,14 +156,6 @@ public class Candidate implements IEntity<Candidate>{
 
     public final void setCandidateState(CandidateState candidateState) {
         this.candidateState = candidateState;
-    }
-
-    public final List<ContactDetails> getContactDetailsList() {
-        return contactDetailsList;
-    }
-
-    public final void setContactDetailsList(List<ContactDetails> contactDetailsList) {
-        this.contactDetailsList = contactDetailsList;
     }
 
     public final String getBirthdayAsString() {
