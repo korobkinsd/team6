@@ -1,6 +1,6 @@
 package com.staff.api.entity;
 
-import com.staff.api.Utils.DataConverter;
+import com.staff.api.utils.DataConverter;
 
 import java.sql.Date;
 import java.util.List;
@@ -24,27 +24,27 @@ public class CandidateFilter {
     private List<Candidate.CandidateState> candidateStates;
 
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
-    public String getSurname() {
+    public final String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    public final void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public void setBirthdayFrom(String birthdayFrom) {
+    public final void setBirthdayFrom(String birthdayFrom) {
         this.birthdayFrom = DataConverter.toDate(birthdayFrom);
     }
 
-    public Date getBirthdayFrom() {
+    public final Date getBirthdayFrom() {
         return birthdayFrom;
     }
 
@@ -52,11 +52,11 @@ public class CandidateFilter {
         return DataConverter.toStr(birthdayFrom);
     }
 
-    public void setBirthdayTo(String birthdayTo) {
+    public final void setBirthdayTo(String birthdayTo) {
         this.birthdayTo = DataConverter.toDate(birthdayTo);
     }
 
-    public Date getBirthdayTo() {
+    public final Date getBirthdayTo() {
         return birthdayTo;
     }
 
@@ -64,32 +64,32 @@ public class CandidateFilter {
         return DataConverter.toStr(this.birthdayTo);
     }
 
-    public Double getSalaryFrom() {
+    public final Double getSalaryFrom() {
         return salaryFrom;
     }
 
-    public void setSalaryFrom(Double salaryFrom) {
+    public final void setSalaryFrom(Double salaryFrom) {
         this.salaryFrom = salaryFrom;
     }
 
-    public Double getSalaryTo() {
+    public final Double getSalaryTo() {
         return salaryTo;
     }
 
-    public void setSalaryTo(Double salaryTo) {
+    public final void setSalaryTo(Double salaryTo) {
         this.salaryTo = salaryTo;
     }
 
-    public List<Candidate.CandidateState> getCandidateStates() {
+    public final List<Candidate.CandidateState> getCandidateStates() {
         return candidateStates;
     }
 
-    public void setCandidateStates(List<Candidate.CandidateState> candidateStates) {
+    public final void setCandidateStates(List<Candidate.CandidateState> candidateStates) {
         this.candidateStates = candidateStates;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "CandidateFilter{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
